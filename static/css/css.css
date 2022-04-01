@@ -42,3 +42,12 @@ body {
 .button{
     border-radius: 10px;
 }
+/* input bg หน้าall course */
+.bg_course{
+  background-color:#D6F0F9;
+}
+
+/* ทำให้รูปในcard ขอบมน */
+.card-round{
+  border-radius:10px;
+}
