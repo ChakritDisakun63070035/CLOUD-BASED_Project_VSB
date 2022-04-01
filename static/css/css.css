@@ -8,3 +8,19 @@ body {
 #backgroud_nav {
   background-color: #9addf2;
 }
+
+/* color ปุ่มGet start */
+.button_start {
+  background-color: #9ADDF2;
+  border: none;
+  border-radius:25px;
+  box-shadow: 3px 3px #888888;
+  color: black;
+  padding: 15px 32px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
