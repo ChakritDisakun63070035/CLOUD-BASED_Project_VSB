@@ -59,7 +59,8 @@ body {
 } */
 /* รูปหัวข้อหน้าpreview */
 .hero-image {
-  background-image: url("https://cdn.discordapp.com/attachments/876025140490698753/960100342371065957/unknown.png");
+  /* background-image: url('sql.png'); */
+  background-image: url(/static/uploads/sql.png);
   height: 50%;
   background-position: center;
   background-repeat: no-repeat;
