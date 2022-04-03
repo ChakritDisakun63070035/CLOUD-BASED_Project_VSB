@@ -35,7 +35,7 @@ body {
   width: 100%;
 }
 
-.icon{
+.iconfooter{
     font-size: 1.5rem;
 }
 
@@ -80,4 +80,7 @@ body {
 .no-line{
   text-decoration: none;
   
+}
+.iconcart{
+  font-size: 1.3rem;
 }
