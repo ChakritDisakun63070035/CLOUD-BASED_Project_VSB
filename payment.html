@@ -1,0 +1,232 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cart</title>
+    <link rel="icon" href="/static/uploads/logo.png" />
+    <link href="static/css/bootstrap.css" rel="stylesheet" />
+    <link href="/static/css/css.css" rel="stylesheet" />
+    <script src="static/js/bootstrap.bundle.js"></script>
+  </head>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#index">
+          <img src="/static/uploads/logo.png" alt="" width="60" height="60" />
+        </a>
+
+        <div class="d-flex">
+          <a class="navbar-brand" href="#">
+            <i class="bi bi-book fs-4"></i>
+            My Course
+          </a>
+          <a class="navbar-brand" href="#">
+            <i class="bi bi-cart4 fs-4"></i>
+            My Cart
+          </a>
+          <li class="nav dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <img src="/static/uploads/profile.png" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+              Jerry
+            </a>
+            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+              <li><a class="dropdown-item" href="#">Profile</a></li>
+              <li><a class="dropdown-item" href="#">Logout</a></li>
+            </ul>
+          </li>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <body>
+    <div class="container">
+      <h1 class="my-5">CHECKOUT</h1>
+      <div class="card w-75 mx-auto">
+        <div class="card-header">
+          <ul class="nav nav-tabs card-header-tabs" role="tablist">
+            <li class="nav-item">
+              <button class="nav-link active text-dark" data-bs-toggle="tab" data-bs-target="#bank" type="button">Internet & Mobile Banking</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link text-dark" data-bs-toggle="tab" data-bs-target="#credit" type="button">Credit Card</button>
+            </li>
+            <li class="nav-item">
+              <button class="nav-link text-dark" data-bs-toggle="tab" data-bs-target="#qrcode" type="button">QR Code</button>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content">
+            <div class="tab-pane fade show active" id="bank" role="tabpanel">
+              <div class="row my-5 mx-5">
+                <div class="col-6">
+                  <img src="/static/uploads/kma.png" width="80vw" />
+                  <span>Krungsri Bank (KMA)</span>
+                </div>
+                <div class="col-6">
+                  <img src="/static/uploads/bbl.jpg" width="80vw" />
+                  <span>Bangkok Bank (BBL)</span>
+                </div>
+              </div>
+              <div class="row my-5 mx-5">
+                <div class="col-6">
+                  <img src="/static/uploads/kbank.png" width="80vw" />
+                  <span>Kasikorn Bank (KBANK)</span>
+                </div>
+                <div class="col-6">
+                  <img src="/static/uploads/ktb.png" width="80vw" />
+                  <span>Krungthai Bank (KTB)</span>
+                </div>
+              </div>
+              <div class="row my-5 mx-5">
+                <div class="col-6">
+                  <img src="/static/uploads/scb.png" width="80vw" />
+                  <span>Siam Commercial Bank (SCB)</span>
+                </div>
+                <div class="col-6">
+                  <img src="/static/uploads/ttb.png" width="80vw" />
+                  <span>TMBThanachart Bank (TTB)</span>
+                </div>
+              </div>
+              <div class="row mt-5">
+                <button class="btn btn-success col-6 mx-auto">Make Payment</button>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="credit" role="tabpanel">
+              <div class="form">
+                <div class="my-3">
+                  <label class="form-label">Billing Address</label>
+                  <select class="form-select">
+                    <option selected disabled>Country</option>
+                    <option>Thailand</option>
+                  </select>
+                </div>
+                <div class="my-3">
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="typecard" />
+                    <label class="form-check-label"> Credit/Debit Card </label>
+                  </div>
+                  <div class="form-check">
+                    <input class="form-check-input" type="radio" name="typecard" />
+                    <label class="form-check-label"> PayPal </label>
+                  </div>
+                </div>
+                <div class="my-3">
+                  <input type="input" class="form-control" placeholder="Name on Card" />
+                </div>
+                <div class="my-3">
+                  <input type="input" class="form-control" placeholder="Card Number" />
+                </div>
+                <div class="row my-3">
+                  <div class="col-4">
+                    <select class="form-select">
+                      <option selected disabled>MM</option>
+                      <option>01</option>
+                      <option>02</option>
+                      <option>03</option>
+                      <option>04</option>
+                      <option>05</option>
+                      <option>06</option>
+                      <option>07</option>
+                      <option>08</option>
+                      <option>10</option>
+                      <option>11</option>
+                      <option>12</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <select class="form-select">
+                      <option selected disabled>YY</option>
+                      <option>22</option>
+                      <option>23</option>
+                      <option>24</option>
+                      <option>25</option>
+                      <option>26</option>
+                      <option>27</option>
+                      <option>28</option>
+                      <option>29</option>
+                      <option>30</option>
+                      <option>31</option>
+                      <option>32</option>
+                    </select>
+                  </div>
+                  <div class="col-4">
+                    <input type="input" class="form-control" placeholder="Security Code" />
+                  </div>
+                </div>
+                <div class="form-check my-3">
+                  <input class="form-check-input" type="checkbox" value="" />
+                  <label class="form-check-label">Remember this card</label>
+                </div>
+                <div class="row mt-4">
+                  <button class="btn btn-success col-8 mx-auto">Pay Now</button>
+                </div>
+              </div>
+            </div>
+            <div class="tab-pane fade" id="qrcode" role="tabpanel">0321456</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <footer class="footer py-3 mt-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <h5>Browse popular topics</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">ABC</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Math</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Eng</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5>Popular courses and articles</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">ABC</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Math</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Eng</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5>VSB</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">About</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Team</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 border-top my-4"></div>
+        <div class="col-9 mt-2">
+          <small class="text-muted">© 2022 VSB. All rights reserved</small>
+        </div>
+        <div class="col-3 iconfooter">
+          <i class="bi bi-facebook text-primary mx-2"></i>
+          <i class="bi bi-twitter text-info mx-2"></i>
+          <i class="bi bi-github mx-2"></i>
+          <i class="bi bi-linkedin text-primary mx-2"></i>
+          <i class="bi bi-youtube text-danger mx-2"></i>
+        </div>
+      </div>
+    </div>
+  </footer>
+</html>
