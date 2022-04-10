@@ -14,4 +14,15 @@ router.get("/", async function (req, res, next) {
       }
 });
 
+router.get("/allcourse", async function (req, res, next) {
+  try {
+      const [rows, fields] = await pool.query(
+        'SELECT * FROM course'
+      );
+      return res.render("allcourse", { courses: JSON.stringify(rows) });
+    } catch (err) {
+      return next(err)
+    }
+});
+
 exports.router = router;
