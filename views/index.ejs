@@ -1,0 +1,170 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VSB</title>
+    <link rel="icon" href="uploads/logo.png" />
+    <link href="css/bootstrap.css" rel="stylesheet" />
+    <link href="../css/css.css" rel="stylesheet" />
+    <script src="js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
+  <header>
+    <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+      <div class="container-fluid">
+        <!-- logo -->
+        <a class="navbar-brand" href="#">
+          <img src="uploads/logo.png" alt="" width="60" height="60" />
+        </a>
+        <div class="d-flex">
+          <a class="nav-link active text-dark fs-6" aria-current="page" href="#">Sign up</a>
+          <a class="nav-link text-dark fs-6" href="#">Login</a>
+        </div>
+      </div>
+    </nav>
+  </header>
+  <body>
+    <h1 class="text-dark text-center mt-4">
+      <b>VSB ONLINE<br />LEARNING</b>
+    </h1>
+    <div class="container" id="app">
+      <!-- <button class="btn btn-outline-primary">Press Me</button> -->
+      <h3>
+        <b>Learn without <br />limits</b>
+      </h3>
+      <div class="row">
+        <div class="col">
+          <p>
+            Get that "ready for anything" feeling with more than 5,000 courses,
+            <br />Professional Certificates, and degrees from world-class universities <br />and companies.
+          </p>
+        </div>
+        <div class="col">
+          <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
+                        sed do eiusmod tempor incididunt ut labore et dolore 
+                       magna aliqua. Ut enim ad minim veniam, quis nostrud 
+                       exercitation ullamco laboris nisi ut aliquip ex ea </p> -->
+        </div>
+      </div>
+      <div class="row mb-5">
+        <div class="col">
+          <a href="#" class="button_start">Get Started - It’s Free</a>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-12 mb-3"><b>Explore Course</b></div>
+      </div>
+      <div class="row d-flex justify-content-center" v-for="course in courses">
+        <div class="card sm-3 mx-3 p-0" style="max-width: 380px">
+          <div class="row g-0">
+            <div class="col-md-7">
+              <img src="uploads/cat.jpg" class="img-fluid" alt="..." />
+            </div>
+            <div class="col-md-5">
+              <div class="card-body">
+                <h5 class="card-title">
+                  <b> {{ course.course_name }} </b>
+                </h5>
+                <p class="card-text">20 course</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!-- <div class="card sm-3 mx-3 p-0" style="max-width: 380px">
+          <div class="row g-0">
+            <div class="col-md-7">
+              <img src="/static/uploads/cat.jpg" class="img-fluid" alt="..." />
+            </div>
+            <div class="col-md-5">
+              <div class="card-body">
+                <h5 class="card-title"><b>English</b></h5>
+                <p class="card-text">20 course</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card sm-3 mx-3 p-0" style="max-width: 380px">
+          <div class="row g-0">
+            <div class="col-md-7">
+              <img src="/static/uploads/cat.jpg" class="img-fluid" alt="..." />
+            </div>
+            <div class="col-md-5">
+              <div class="card-body">
+                <h5 class="card-title"><b>English</b></h5>
+                <p class="card-text">20 course</p>
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </div>
+    </div>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          courses: JSON.parse(`<%- courses %>`),
+        },
+      })
+    </script>
+  </body>
+  <footer class="footer py-3 mt-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <h5>Browse popular topics</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">ABC</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Math</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Eng</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5>Popular courses and articles</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">ABC</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Math</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Eng</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5>VSB</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">About</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Team</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 border-top my-4"></div>
+        <div class="col-9 mt-2">
+          <small class="text-muted">© 2022 VSB. All rights reserved</small>
+        </div>
+        <div class="col-3 iconfooter">
+          <i class="bi bi-facebook text-primary mx-2"></i>
+          <i class="bi bi-twitter text-info mx-2"></i>
+          <i class="bi bi-github mx-2"></i>
+          <i class="bi bi-linkedin text-primary mx-2"></i>
+          <i class="bi bi-youtube text-danger mx-2"></i>
+        </div>
+      </div>
+    </div>
+  </footer>
+</html>
