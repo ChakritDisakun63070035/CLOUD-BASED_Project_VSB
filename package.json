@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/ChutimaNakaew/Project_VSB#readme",
   "dependencies": {
+    "body-parser": "^1.20.0",
     "ejs": "^3.1.6",
     "express": "^4.17.3",
     "multer": "^1.4.4",
