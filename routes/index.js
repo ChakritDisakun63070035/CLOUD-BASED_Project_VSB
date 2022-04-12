@@ -27,6 +27,14 @@ router.get("/allcourse", async function (req, res, next) {
     }
 });
 
+// exports.router = router;
+//   try {
+//     const [rows, fields] = await pool.query("SELECT * FROM course")
+//     return res.render("index", { courses: JSON.stringify(rows) })
+//   } catch (err) {
+//     return next(err)
+//   }
+// })
 
 exports.router = router;
   
