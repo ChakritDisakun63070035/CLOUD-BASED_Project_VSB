@@ -68,27 +68,36 @@ router.post("/sign-up", async function (req, res, next) {
 })
 
 router.get("/course/:id",async function (req, res, next) {
-  const promise1 = pool.query("SELECT * FROM course WHERE course_id=?", [
-    req.params.id,
+  // const promise1 = pool.query("SELECT * FROM course WHERE course_id=?", [
+  //   req.params.id,
     
-    console.log(req.body),
+    // console.log(req.body),
     // res.render("preview")
-  ]);
-  
-  Promise.all([promise1])
-    .then((results) => {
-      const course = results[0];
-      
-      //เอาตัวแปรมารับ
-      console.log(course)
-      res.render("preview", {
-        course: course[0][0],
-        error: null,
-      });
-    })
-    .catch((err) => {
-      return next(err);
-    });
+  // ]);
+  // const promise2 = pool.query("SELECT * FROM teacher join course using(teacher_id) WHERE course_id=?", [
+  //   req.params.id,
+  // ]);
+
+  const [rows, fields] = await pool.query(
+    'SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?', 
+    [req.params.id]
+  );
+  return res.render("preview", { data: JSON.stringify(rows) });
+//   Promise.all([promise1, promise2])
+//     .then((results) => {
+//       const course = results[0];
+//       const teacher = results[1];
+//       //เอาตัวแปรมารับ
+//       // console.log(teacher)
+//       res.render("preview", {
+//         course: course[0][0],
+//         teacher: teacher[0],
+//         error: null,
+//       });
+//     })
+//     .catch((err) => {
+//       return next(err);
+//     });
 });
 
 exports.router = router
