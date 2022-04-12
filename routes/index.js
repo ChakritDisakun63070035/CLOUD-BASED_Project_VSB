@@ -36,6 +36,9 @@ router.get("/allcourse", async function (req, res, next) {
 //   }
 // })
 
+exports.router = router;
+  
+
 router.get("/sign-up", async function (req, res, next) {
   res.render("user/sign-up")
 })
@@ -71,5 +74,29 @@ router.post("/sign-up", async function (req, res, next) {
     await conn.release()
   }
 })
+
+router.get("/course/:id",async function (req, res, next) {
+  const promise1 = pool.query("SELECT * FROM course WHERE course_id=?", [
+    req.params.id,
+    
+    console.log(req.body),
+    // res.render("preview")
+  ]);
+  
+  Promise.all([promise1])
+    .then((results) => {
+      const course = results[0];
+      
+      //เอาตัวแปรมารับ
+      console.log(course)
+      res.render("preview", {
+        course: course[0][0],
+        error: null,
+      });
+    })
+    .catch((err) => {
+      return next(err);
+    });
+});
 
 exports.router = router
