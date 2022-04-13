@@ -1,7 +1,8 @@
 const express = require("express")
 const path = require("path")
 const bodyParser = require('body-parser')
-
+const session = require('express-session')
+const flash = require('connect-flash')
 const app = express();
 
 // set the view engine to ejs
@@ -18,6 +19,14 @@ app.use(express.urlencoded({ extended: true })) // for parsing application/x-www
 // Encode body
 app.use(bodyParser.urlencoded({ extended: false}));
 
+app.use(session({
+  secret: 'secret',
+  cookie: {maxAge: 60000},
+  resave: false,
+  saveUninitialized: false
+}))
+
+app.use(flash())
 // routers
 const indexRouter = require('./routes/index')
 
