@@ -7,79 +7,50 @@
     <title>VSB</title>
     <link rel="icon" href="/uploads/logo.png" />
     <link href="/css/bootstrap.css" rel="stylesheet" />
-    <link href="../css/css.css" rel="stylesheet" />
+    <link href="/css/css.css" rel="stylesheet" />
     <script src="/js/bootstrap.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <style>
-        .form-inline {
-            display: inline-block;
-            width: 50%;
-            vertical-align: middle;
-        }
-
-        a.myAnim:hover {
-            animation: myAnim 1s ease 0s 1 normal forwards;
-            box-shadow: 0 0 15px gray;
-        }
-
-
-        @keyframes myAnim {
-            0% {
-                transform: scale(1);
-            }
-
-            50% {
-                transform: scale(1.1);
-            }
-
-            100% {
-                transform: scale(1);
-            }
-        }
-    </style>
 </head>
-<header>
-    <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-        <div class="container-fluid">
-
-            <a class="navbar-brand" href="index">
-                <img src="/uploads/logo.png" alt="" width="60" height="60" />
-            </a>
-
-            <div class="d-flex">
-                <a class="navbar-brand" href="#">
-                    <i class="bi bi-book fs-4"></i>
-                    My Course
+<body>    
+    <div class="" id="app">
+        <header>
+        <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+            <div class="container-fluid">
+    
+                <a class="navbar-brand" href="/">
+                    <img src="/uploads/logo.png" alt="" width="60" height="60" />
                 </a>
-                <a class="navbar-brand" href="#">
-                    <i class="bi bi-cart4 fs-4"></i>
-                    My Cart
-                </a>
-                <li class="nav dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                        data-bs-toggle="dropdown" aria-expanded="false">
-                        <img src="/uploads/profile.png" alt="" width="32" height="32"
-                            class="d-inline-block align-text-top" />
-                        Jerry
+    
+                <div class="d-flex">
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-book fs-4"></i>
+                        My Course
                     </a>
-                    <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                        <li><a class="dropdown-item" href="#">Profile</a></li>
-                        <li><a class="dropdown-item" href="#">Logout</a></li>
-                    </ul>
-                </li>
+                    <a class="navbar-brand" href="#">
+                        <i class="bi bi-cart4 fs-4"></i>
+                        My Cart
+                    </a>
+                    <li class="nav dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                            data-bs-toggle="dropdown" aria-expanded="false">
+                            <img src="/uploads/profile.png" alt="" width="32" height="32"
+                                class="d-inline-block align-text-top" />
+                            Jerry
+                        </a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" v-for="user in users">
+                            <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a></li>
+                            <li><a class="dropdown-item" :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                        </ul>
+                    </li>
+                </div>
             </div>
-        </div>
-    </nav>
-</header>
-
-<body>
-    <div class="container" id="app">
-
+        </nav>
+    </header>
+        <div class="container">
         <div class="row mt-4">
             <div class="col-md-6 col-sm-12">
-                <img src="./uploads/search.png" alt="Girl in a jacket" width="50px" height="50px">
-                <input type="text" class="form-control form-inline
-                        bg_course" placeholder="Search">
+                <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px">
+                <input type="text" class="form-control form-inline bg_course" placeholder="Search" >
             </div>
 
             <div class="col-md-6 col-sm-12 text-md-end mt-sm-3 mt-md-0">
@@ -123,9 +94,10 @@
         </div>
         <div class="row px-4">
             <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-                <a href="/course/4" class="card myAnim bg-light" style="width: 20rem; text-decoration: none;
-                        color:black;">
-                    <img src="uploads/ielts.png" class="card-img-top" alt="...">
+                <a href="/course/4" class="card myAnim bg-light"
+                    style="width: 20rem; text-decoration: none; color:black;">
+                    <img src="/uploads/ielts.png"
+                        class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center"><b>IELTS Full
                                 Course</b></h5>
@@ -148,9 +120,10 @@
             </div>
 
             <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-                <a href="/course/15" class="card myAnim bg-light" style="width: 20rem; text-decoration: none;
-                        color:black;">
-                    <img src="uploads/cyber-secure.png" class="card-img-top" alt="...">
+                <a href="/course/15" class="card myAnim bg-light"
+                    style="width: 20rem; text-decoration: none; color:black;">
+                    <img src="/uploads/cyber-secure.png"
+                        class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center"><b>Cyber Security
                                 learning</b></h5>
@@ -173,9 +146,10 @@
             </div>
 
             <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-                <a href="/course/14" class="card myAnim bg-light" style="width: 20rem; text-decoration: none;
-                        color:black;">
-                    <img src="uploads/design-thinking.png" class="card-img-top" alt="...">
+                <a href="/course/14" class="card myAnim bg-light"
+                    style="width: 20rem; text-decoration: none; color:black;">
+                    <img src="/uploads/design-thinking.png"
+                        class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center"><b>Design
                                 thinking</b></h5>
@@ -202,12 +176,11 @@
             <h5>All Course</h5>
         </div>
         <div class="row px-4">
-            <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
-                    computedCourses">
-                <a :href="'/course/' + course.course_id" class="card myAnim
-                        bg-light" style="width: 20rem; text-decoration: none;
-                        color:black;">
-                    <img :src=course.image class="card-img-top" alt="...">
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
+                <a :href="'/course/' + course.course_id" class="card myAnim bg-light"
+                    style="width: 20rem; text-decoration: none; color:black;">
+                    <img :src="'/' + course.image"
+                        class="card-img-top" alt="...">
                     <div class="card-body">
                         <h5 class="card-title text-center"><b> {{
                                 course.course_name }} </b></h5>
@@ -228,9 +201,7 @@
                 </a>
             </div>
         </div>
-
-
-
+    </div>
     </div>
     <script>
         var app = new Vue({
