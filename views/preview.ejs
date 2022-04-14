@@ -5,61 +5,62 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>VSB</title>
-        <link rel="icon" href="/uploads/logo.png" />
+        <link rel="icon" href="../uploads/logo.png" />
         <link href="/css/bootstrap.css" rel="stylesheet" />
         <link href="../css/css.css" rel="stylesheet" />
         <script src="/js/bootstrap.bundle.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     </head>
     <header>
-        <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-            <div class="container-fluid">
-
-                <a class="navbar-brand" href="#index">
-                    <img src="/static/uploads/logo.png" alt="" width="60" height="60" />
-                </a>
-
-                <div class="d-flex">
-                    <a class="navbar-brand" href="own_course.html">
-                        <i class="bi bi-book fs-4"></i>
-                        My Course
-                    </a>
-                    <a class="navbar-brand" href="#">
-                        <i class="bi bi-cart4 fs-4"></i>
-                        My Cart
-                    </a>
-                    <li class="nav dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
-                            data-bs-toggle="dropdown" aria-expanded="false">
-                            <img src="../uploads/profile.png" alt="" width="32" height="32"
-                                class="d-inline-block align-text-top" />
-                            Jerry
-                        </a>
-                        <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                            <li><a class="dropdown-item" href="user_profile.html">Profile</a></li>
-                            <li><a class="dropdown-item" href="#">Logout</a></li>
-                        </ul>
-                    </li>
-                </div>
-            </div>
-        </nav>
+        
     </header>
 
     <body>
         <div id="app">
             <div v-for="info in data">
-                <div class="hero-image">
+                <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+                    <div class="container-fluid">
+        
+                        <a class="navbar-brand" href="/">
+                            <img src="../uploads/logo.png" alt="" width="60" height="60" />
+                        </a>
+        
+                        <div class="d-flex">
+                            <a class="navbar-brand" href="/mycourse">
+                                <i class="bi bi-book fs-4"></i>
+                                My Course
+                            </a>
+                            <a class="navbar-brand" href="/mycart">
+                                <i class="bi bi-cart4 fs-4"></i>
+                                My Cart
+                            </a>
+                            <li class="nav dropdown">
+                                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button"
+                                    data-bs-toggle="dropdown" aria-expanded="false">
+                                    <img src="../uploads/profile.png" alt="" width="32" height="32"
+                                        class="d-inline-block align-text-top" />
+                                    Jerry
+                                </a>
+                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                    <li><a class="dropdown-item" href="user_profile.html">Profile</a></li>
+                                    <li><a class="dropdown-item" href="#">Logout</a></li>
+                                </ul>
+                            </li>
+                        </div>
+                    </div>
+                </nav>
+                <!-- <div class="hero-image">
 
                     <br>
-                    <a class="ps-5 no-line text-dark" href="allcourse.html">All
+                    <a class="ps-5 no-line text-dark" href="/allcourse">All
                         course</a>
-                    <span>> <a href="preview.html" class="text-dark"> Preview
+                    <span>> <a href="" class="text-dark"> Preview
                             course
                         </a></span>
                     <br><br><br><br>
                     <h1 class="text-center mt-5">{{info.course_name}}</h1>
-                </div>
-
+                </div> -->
+                <img src="../uploads/preview3.png" alt="Girl in a jacket" width="100%" height="400">
 
                 <div class="container">
                     <div class="row mt-5">
@@ -70,15 +71,7 @@
                                 <div class="card" style="width: 30rem;">
                                     <div class="card-body">
                                         <h3 class="card-title">{{info.course_name}}</h3>
-                                        <p class="card-text">Lorem ipsum dolor
-                                            sit amet,
-                                            consectetur
-                                            adipiscing elit, sed do eiusmod
-                                            tempor
-                                            incididunt ut labore et dolore magna
-                                            aliqua.
-                                            Ut enim ad minim veniam, quis
-                                            nostrud </p>
+                                        <p class="card-text"> {{info.course_info}} </p>
                                         <img src="./static/uploads/teacher.png" width="60" height="60" alt="">
                                         <span> {{info.teacher_fname + " " +
                                             info.teacher_lname}}</span>
@@ -93,33 +86,7 @@
                                         <div class="card-body">
                                             <h5 class="card-title">Description</h5>
                                             <p class="card-text">
-                                                Welcome to the Complete Web
-                                                Development
-                                                Bootcamp, the only course you
-                                                need
-                                                to learn to code and become a
-                                                full-stack
-                                                web
-                                                developer. With 150,000+ ratings
-                                                and a 4.8 average, my Web
-                                                Development
-                                                course is
-                                                one of the HIGHEST RATED
-                                                courses in the history of Udemy!
-                                                <br><br>
-                                                At 55+ hours, this Web
-                                                Development
-                                                course is
-                                                without a doubt the most
-                                                comprehensive web development
-                                                course
-                                                available
-                                                online. Even if you have zero
-                                                programming experience, this
-                                                course will
-                                                take
-                                                you from beginner
-                                                to mastery.
+                                                {{info.course_des}}
                                             </p>
                                         </div>
                                     </div>
@@ -221,25 +188,33 @@
                         <div class="col-md-5 col-sm-12">
                             <div class="card gray" style="width: 35rem;">
                                 <div class="text-center mt-3">
-                                    <iframe width="442" height="245" src="https://www.youtube.com/embed/vd1qdnCX5RU"
+                                    <!-- <iframe width="442" height="245" src="https://www.youtube.com/embed/vd1qdnCX5RU"
                                         title="YouTube video player" frameborder="0" allow="accelerometer;
                                         autoplay;
                                         clipboard-write;
                                         encrypted-media; gyroscope;
-                                        picture-in-picture" allowfullscreen></iframe>
+                                        picture-in-picture" allowfullscreen></iframe> -->
+                                        {{info.preview_video}}
+                                        <source :src="info.preview_video" type="video/mp4">
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
-                                        <h5 class="card-title"><b>$14</b></h5>
+                                        <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
                                     </div>
                                     <div class="row">
-                                        <div class="col-sm-6 d-grid gap-2">
-                                            <button class="btn btn-primary" type="button">Add to cart</button>
+                                        
+                                        <div class="col-sm-6  d-grid gap-2">
+                                            <a href="" class="button btn btn-primary" type="button">Add to cart</button>
+                                        </a>
                                         </div>
+                                    
+                                        
                                         <div class="col-sm-6 d-grid gap-2">
-                                            <button type="button" class="btn
+                                            <a href="/mycart" class=" button btn
                                                 btn-danger">Buy now</button>
+                                            </a>
                                         </div>
+                                    
                                     </div>
                                     <div class="row mt-4">
                                         <h6><b>This course includes:</b></h6>
@@ -282,7 +257,6 @@
             data: {
                 data: JSON.parse(`<%- data %>`),
             },
-
         })
     </script>
     <footer class="footer py-3 mt-5 bg-light">

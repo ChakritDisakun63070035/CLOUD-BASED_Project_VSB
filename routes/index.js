@@ -3,41 +3,49 @@ const pool = require("../config")
 const path = require("path")
 const bodyParser = require("body-parser")
 
+
+
 router = express.Router()
 
 router.get("/", async function (req, res, next) {
-    try {
-        const [rows, fields] = await pool.query(
-          'SELECT * FROM course'
-        );
-        return res.render("index", { courses: JSON.stringify(rows) });
-      } catch (err) {
-        return next(err)
-      }
+  try {
+    const [rows, fields] = await pool.query(
+      'SELECT * FROM course'
+    );
+    return res.render("index", { courses: JSON.stringify(rows) });
+  } catch (err) {
+    return next(err)
+  }
 });
 
 router.get("/allcourse", async function (req, res, next) {
   try {
-      const [rows, fields] = await pool.query(
-        'SELECT * FROM course'
-      );
-      return res.render("allcourse", { courses: JSON.stringify(rows) });
-    } catch (err) {
-      return next(err)
-    }
+    const [rows, fields] = await pool.query(
+      'SELECT * FROM course;'
+    );
+    return res.render("allcourse", { courses: JSON.stringify(rows) });
+  } catch (err) {
+    return next(err)
+  }
 });
 
-// exports.router = router;
-//   try {
-//     const [rows, fields] = await pool.query("SELECT * FROM course")
-//     return res.render("index", { courses: JSON.stringify(rows) })
-//   } catch (err) {
-//     return next(err)
-//   }
-// })
+router.get("/mycart", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query(
+      'SELECT * FROM order_item',
+      [req.params.id]
+      
+      
+    );
+    return res.render("user/cart", { data: JSON.stringify(rows) });
+  } catch (err) {
+    return next(err)
+  }
+});
+
 
 exports.router = router;
-  
+
 
 router.get("/sign-up", async function (req, res, next) {
   res.render("user/sign-up")
@@ -75,37 +83,30 @@ router.post("/sign-up", async function (req, res, next) {
   }
 })
 
-router.get("/course/:id",async function (req, res, next) {
-  // const promise1 = pool.query("SELECT * FROM course WHERE course_id=?", [
-  //   req.params.id,
-    
-    // console.log(req.body),
-    // res.render("preview")
-  // ]);
-  // const promise2 = pool.query("SELECT * FROM teacher join course using(teacher_id) WHERE course_id=?", [
-  //   req.params.id,
-  // ]);
+router.get("/course/:id", async function (req, res, next) {
+  try {
 
-  const [rows, fields] = await pool.query(
-    'SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?', 
-    [req.params.id]
-  );
-  return res.render("preview", { data: JSON.stringify(rows) });
-//   Promise.all([promise1, promise2])
-//     .then((results) => {
-//       const course = results[0];
-//       const teacher = results[1];
-//       //เอาตัวแปรมารับ
-//       // console.log(teacher)
-//       res.render("preview", {
-//         course: course[0][0],
-//         teacher: teacher[0],
-//         error: null,
-//       });
-//     })
-//     .catch((err) => {
-//       return next(err);
-//     });
+    const [rows, fields] = await pool.query(
+      'SELECT * FROM course JOIN teacher USING(teacher_id) JOIN(preview) USING(course_id) JOIN(preview_preview_video) USING(preview_id) WHERE course_id=?',
+      [req.params.id]
+    
+    );
+    
+    return res.render("preview", { data: JSON.stringify(rows) });
+  } catch (err) {
+    return next(err)
+  }
 });
 
+// router.get("/courseId/allcourse", async function (req, res, next) {
+//   try {
+//     const [rows, fields] = await pool.query(
+//       'SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?',
+//       [req.params.courseId]
+//     );
+//     return res.render("allcourse", { courses: JSON.stringify(rows) });
+//   } catch (err) {
+//     return next(err)
+//   }
+// });
 exports.router = router

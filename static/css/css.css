@@ -61,8 +61,8 @@ body {
 /* รูปหัวข้อหน้าpreview */
 .hero-image {
   /* background-image: url('sql.png'); */
-  background-image: url(../uploads/psycho.png);
-  height: 600px;
+  background-image: url(../uploads/sql.png);
+  height: 400px;
   background-size: 100% 100%;
   background-position: center;
   background-repeat: no-repeat;
