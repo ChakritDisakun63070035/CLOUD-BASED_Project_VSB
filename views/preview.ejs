@@ -12,7 +12,7 @@
         <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     </head>
     <header>
-        
+
     </header>
 
     <body>
@@ -20,11 +20,11 @@
             <div v-for="info in data">
                 <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
                     <div class="container-fluid">
-        
+
                         <a class="navbar-brand" href="/">
                             <img src="../uploads/logo.png" alt="" width="60" height="60" />
                         </a>
-        
+
                         <div class="d-flex">
                             <a class="navbar-brand" href="/mycourse">
                                 <i class="bi bi-book fs-4"></i>
@@ -49,7 +49,7 @@
                         </div>
                     </div>
                 </nav>
-                
+
                 <img :src=info.preview_img alt="Girl in a jacket" width="100%" height="450">
 
                 <div class="container">
@@ -138,7 +138,7 @@
                                                 <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname + ' ' +
                                                     info.teacher_lname}}</p>
                                                 <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}} </p>
-                                                    <br>
+                                                <br>
                                             </div>
                                         </div>
                                     </div>
@@ -163,27 +163,27 @@
                                         clipboard-write;
                                         encrypted-media; gyroscope;
                                         picture-in-picture" allowfullscreen></iframe> -->
-                                        <!-- {{info.preview_video}} -->
-                                        <!-- <source :src="info.preview_video" type="video/mp4"> -->
+                                    <!-- {{info.preview_video}} -->
+                                    <!-- <source :src="info.preview_video" type="video/mp4"> -->
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
                                         <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
                                     </div>
                                     <div class="row">
-                                        
+
                                         <div class="col-sm-6  d-grid gap-2">
                                             <a href="" class="button btn btn-primary" type="button">Add to cart</button>
-                                        </a>
+                                            </a>
                                         </div>
-                                    
-                                        
+
+
                                         <div class="col-sm-6 d-grid gap-2">
                                             <a href="/mycart" class=" button btn
                                                 btn-danger">Buy now</button>
                                             </a>
                                         </div>
-                                    
+
                                     </div>
                                     <div class="row mt-4">
                                         <h6><b>This course includes:</b></h6>
@@ -225,7 +225,9 @@
             el: "#app",
             data: {
                 data: JSON.parse(`<%- data %>`),
+                
             },
+            
         })
     </script>
     <footer class="footer py-3 mt-5 bg-light">

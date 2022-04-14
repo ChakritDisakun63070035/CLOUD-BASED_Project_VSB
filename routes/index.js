@@ -83,20 +83,6 @@ router.post("/sign-up", async function (req, res, next) {
   }
 })
 
-// router.get("/course/:id", async function (req, res, next) {
-//   try {
-
-//     const [rows, fields] = await pool.query(
-//       'SELECT * FROM course JOIN teacher USING(teacher_id) JOIN(preview) USING(course_id) JOIN(preview_preview_video) USING(preview_id) WHERE course_id=?',
-//       [req.params.id]
-    
-//     );
-    
-//     return res.render("preview", { data: JSON.stringify(rows) });
-//   } catch (err) {
-//     return next(err)
-//   }
-// });
 router.get("/sign-in", async function (req, res, next) {
   res.render("user/sign-in")
 })
@@ -137,9 +123,12 @@ router.post("/reset_password", async function (req, res, next) {
 })
 
 router.get("/course/:id", async function (req, res, next) {
-  const [rows, fields] = await pool.query("SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id) WHERE course_id=?", [req.params.id])
+  const [rows, fields] = await pool.query("SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?", [req.params.id])
+  
   console.log(rows)
+  
   return res.render("preview", { data: JSON.stringify(rows) })
+  
 })
 
 // router.get("/courseId/allcourse", async function (req, res, next) {
