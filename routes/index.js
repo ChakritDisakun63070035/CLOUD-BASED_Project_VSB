@@ -137,7 +137,7 @@ router.post("/reset_password", async function (req, res, next) {
 })
 
 router.get("/course/:id", async function (req, res, next) {
-  const [rows, fields] = await pool.query("SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?", [req.params.id])
+  const [rows, fields] = await pool.query("SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id) WHERE course_id=?", [req.params.id])
   console.log(rows)
   return res.render("preview", { data: JSON.stringify(rows) })
 })
