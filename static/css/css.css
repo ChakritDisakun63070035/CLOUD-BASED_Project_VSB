@@ -14,9 +14,9 @@ body {
 
 /* color ปุ่มGet start */
 .button_start {
-  background-color: #9ADDF2;
+  background-color: #9addf2;
   border: none;
-  border-radius:25px;
+  border-radius: 25px;
   box-shadow: 3px 3px #888888;
   color: black;
   padding: 15px 32px;
@@ -35,21 +35,21 @@ body {
   width: 100%;
 }
 
-.iconfooter{
-    font-size: 1.5rem;
+.iconfooter {
+  font-size: 1.5rem;
 }
 
-.button{
-    border-radius: 10px;
+.button {
+  border-radius: 10px;
 }
 /* input bg หน้าall course */
-.bg_course{
-  background-color:#D6F0F9;
+.bg_course {
+  background-color: #d6f0f9;
 }
 
 /* ทำให้รูปในcard ขอบมน */
-.card-round{
-  border-radius:10px;
+.card-round {
+  border-radius: 10px;
 }
 
 /* .form-inline {
@@ -70,22 +70,45 @@ body {
   position: relative;
 }
 
-
 /* ไม่เอาเส้นกรอบ */
-.border-trans{
+.border-trans {
   border-color: transparent;
 }
 
 /* พื้นหลังcard หน้า preview */
-.gray{
-  background-color:#f5f5f5;
+.gray {
+  background-color: #f5f5f5;
 }
 /* เอาเส้นใต้ออก */
-.no-line{
+.no-line {
   text-decoration: none;
-  
 }
-.iconcart{
+.iconcart {
   font-size: 1.3rem;
 }
 
+/* allcourse */
+.form-inline {
+  display: inline-block;
+  width: 50%;
+  vertical-align: middle;
+}
+
+a.myAnim:hover {
+  animation: myAnim 1s ease 0s 1 normal forwards;
+  box-shadow: 0 0 15px gray;
+}
+
+@keyframes myAnim {
+  0% {
+    transform: scale(1);
+  }
+
+  50% {
+    transform: scale(1.1);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}

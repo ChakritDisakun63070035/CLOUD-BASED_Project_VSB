@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>User Profile</title>
+    <link rel="icon" href="/uploads/logo.png" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/css.css" rel="stylesheet" />
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
+  <body>
+    <div class="" id="app">
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+          <div class="container-fluid">
+            <a class="navbar-brand" href="#index">
+              <img src="/uploads/logo.png" alt="" width="60" height="60" />
+            </a>
+
+            <div class="d-flex">
+              <a class="navbar-brand" href="#">
+                <i class="bi bi-book fs-4"></i>
+                My Course
+              </a>
+              <a class="navbar-brand" href="#">
+                <i class="bi bi-cart4 fs-4"></i>
+                My Cart
+              </a>
+              <li class="nav dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img src="/uploads/profile.png" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                  Jerry
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown" v-for="user in users">
+                  <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a></li>
+                  <li><a class="dropdown-item" :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                </ul>
+              </li>
+            </div>
+          </div>
+        </nav>
+      </header>
+      <div class="container" v-for="user in users">
+        <h2 class="mt-5 text">PROFILE</h2>
+        <div class="text-center mb-2"><img :src="user.image" alt="" width="25%" height="100%" /></div>
+
+        <!-- ปุ่ม modal -->
+        <div class="text-center mt-4">
+          <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#staticBackdrop"><i class="bi bi-pencil-square"></i> Edit</button>
+        </div>
+
+        <!-- แสดงข้อมูลผู้ใช้จากดาต้าเบส -->
+        <div class="card-body w-75 my-4 mx-auto">
+          <form class="row" v-for="user in users">
+            <div class="col-md-6 col-sm-12 mt-4">
+              <label class="form-label">Firstname</label>
+              <input type="input" class="form-control form-inline ms-3" :value="user.user_fname" readonly />
+            </div>
+            <div class="col-md-6 col-sm-12 mt-4">
+              <label class="form-label">Lastname</label>
+              <input type="input" class="form-control form-inline ms-3" :value="user.user_lname" readonly />
+            </div>
+            <div class="col-md-6 col-sm-12 mt-4">
+              <label class="form-label">Email</label>
+              <input type="email" class="form-control form-inline ms-5" :value="user.email" readonly />
+            </div>
+            <div class="col-md-6 col-sm-12 mt-4">
+              <label class="form-label">Password</label>
+              <input type="password" class="form-control form-inline ms-3" :value="user.password" readonly />
+            </div>
+            <div class="col-md-6 col-sm-12 mt-4">
+              <label class="form-label">Date of Birth</label>
+              <input type="text" class="form-control form-inline ms-2" :value="user.dateofbirth" readonly />
+            </div>
+            <div class="col-md-6 col-sm-12 mt-4">
+              <div>
+                <label class="form-label">Gender</label>
+                <input type="text" class="form-control form-inline ms-4" :value="user.gender" readonly />
+              </div>
+              <!-- <select class="form-select" aria-label="Default select example">
+                        <option selected>Open this select menu</option>
+                        <option disabled value="Male">Male</option>
+                        <option value="Female">Female</option>
+                        <option value="Other">Other</option>
+                    </select> -->
+            </div>
+          </form>
+        </div>
+        <br />
+        <!-- ปุ่ม log out -->
+        <div class="text-center mt-4" v-for="user in users">
+          <a class="btn btn-danger" aria-pressed="true" :href="'/allcourse/not-sign-in/' + user.user_id"><i class="bi bi-box-arrow-right"></i> Log Out</a>
+        </div>
+        <br /><br />
+
+        <!-- modal แก้ไขข้อมูลผู้ใช้-->
+        <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Profile</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body" v-for="user in users">
+                <form class="needs-validation" novalidate :action="'/profile/' + user.user_id" method="POST" enctype="multipart/form-data">
+                  <div class="file my-2">
+                    <label class="form-label" for="customFile">Profile Image</label>
+                    <input type="file" class="form-control" id="customFile" name="image" />
+                  </div>
+                  <div class="my-2">
+                    <label class="form-label">Firstname</label>
+                    <input pattern="[a-zA-Z]{3,}" type="text" class="form-control" name="fname" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your firstname at least 3 characters.</div>
+                  </div>
+                  <div class="my-2">
+                    <label class="form-label">Lastname</label>
+                    <input pattern="[a-zA-Z]{3,}" type="text" class="form-control" name="lname" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your lastname at least 3 characters.</div>
+                  </div>
+                  <div class="my-2">
+                    <label class="form-label">Email</label>
+                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" class="form-control" name="email" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your email</div>
+                  </div>
+                  <div class="my-2">
+                    <label class="form-label">Password</label>
+                    <input pattern="(?=.*\d)(?=.*[a-zA-z]).{8,}" type="password" class="form-control mb-2" name="password" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your password using a-z, A-Z, 0-9 at least 8 characters.</div>
+                  </div>
+                  <div class="my-2">
+                    <label class="form-label">Date of Birth</label>
+                    <input type="date" class="form-control" name="dob" value="" required />
+                    <div class="invalid-feedback mb-3">Please select your birth</div>
+                  </div>
+                  <div class="my-2">
+                    <div>
+                      <label class="form-label">Gender</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="gender" value="male" required />
+                      <label class="form-check-label">Male</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="gender" value="female" required />
+                      <label class="form-check-label">Female</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="gender" value="other" required />
+                      <label class="form-check-label">Other</label>
+                    </div>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="submit" class="btn btn-warning">Save</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          users: JSON.parse(`<%- users %>`),
+        },
+      })
+    </script>
+  </body>
+</html>
