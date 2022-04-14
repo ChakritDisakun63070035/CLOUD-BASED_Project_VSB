@@ -48,7 +48,7 @@ exports.router = router;
 
 
 router.get("/sign-up", async function (req, res, next) {
-  res.render("user/sign-up")
+  res.render("user/sign-up", { message: req.flash("message") })
 })
 
 router.post("/sign-up", async function (req, res, next) {
@@ -69,7 +69,7 @@ router.post("/sign-up", async function (req, res, next) {
       email,
       password,
       dob,
-      gender
+      gender,
     ])
 
     await conn.commit()
@@ -97,6 +97,49 @@ router.get("/course/:id", async function (req, res, next) {
     return next(err)
   }
 });
+router.get("/sign-in", async function (req, res, next) {
+  res.render("user/sign-in")
+})
+
+router.post("/sign-in", async function (req, res, next) {
+  const email = req.body.email
+  const password = req.body.password
+
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try {
+    const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=? AND password=?", [email, password])
+
+    await conn.commit()
+
+    if (rows.length > 0) {
+      res.redirect("/allcourse")
+    } else {
+      req.flash("message", "Please Sign-up First")
+      res.redirect("/sign-up")
+    }
+  } catch (err) {
+    await conn.rollback()
+    next(err)
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+})
+
+router.get("/reset_password", async function (req, res, next) {
+  res.render("user/reset_password")
+})
+
+router.post("/reset_password", async function (req, res, next) {
+  res.redirect("/")
+})
+
+router.get("/course/:id", async function (req, res, next) {
+  const [rows, fields] = await pool.query("SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?", [req.params.id])
+  return res.render("preview", { data: JSON.stringify(rows) })
+})
 
 // router.get("/courseId/allcourse", async function (req, res, next) {
 //   try {

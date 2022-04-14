@@ -9,49 +9,58 @@
     <link href="../css/css.css" rel="stylesheet" />
     <script src="../js/bootstrap.bundle.js"></script>
   </head>
-  
   <body>
     <div class="container" id="app">
+      <% if (message.length > 0) { %>
+        <div class="alert alert-danger">
+          <%= message %>
+        </div>
+      <% } %>
       <h1 class="text-center my-5">VSB</h1>
           <div class="card w-75 mx-auto my-5">
             <h3 class="card-header text-center py-3 bg-warning">Sign up</h3>
             <div class="card-body">
               <div class="row d-flex justify-content-center">
-                <form class="col-8" action="/sign-up" method="POST">
+                <form class="col-8 needs-validation" action="/sign-up" method="POST" novalidate>
                   <div class="my-2">
                     <label class="form-label">Firstname</label>
-                    <input type="input" class="form-control" name="fname" value="" />
+                    <input pattern="[a-zA-Z]{3,}" type="text" class="form-control" name="fname" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your firstname at least 3 characters.</div>
                   </div>
                   <div class="my-2">
                     <label class="form-label">Lastname</label>
-                    <input type="input" class="form-control"  name="lname" value="" />
+                    <input pattern="[a-zA-Z]{3,}"  type="text" class="form-control"  name="lname" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your lastname at least 3 characters.</div>
                   </div>
                   <div class="my-2">
                     <label class="form-label">Email</label>
-                    <input type="email" class="form-control" name="email" value="" />
+                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" class="form-control" name="email" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your email</div>
                   </div>
                   <div class="my-2">
                     <label class="form-label">Password</label>
-                    <input type="password" class="form-control mb-2" name="password" value="" />
+                    <input pattern="(?=.*\d)(?=.*[a-zA-z]).{8,}" type="password" class="form-control mb-2" name="password" value="" required />
+                    <div class="invalid-feedback mb-3">Please enter your password using a-z, A-Z, 0-9 at least 8 characters.</div>
                   </div>
                   <div class="my-2">
                     <label class="form-label">Date of Birth</label>
-                    <input type="date" class="form-control" name="dob" value="" />
+                    <input type="date" class="form-control" name="dob" value="" required />
+                    <div class="invalid-feedback mb-3">Please select your birth</div>
                   </div>
                   <div class="my-3">
                     <div>
                       <label class="form-label">Gender</label>
                     </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" value="male" />
+                    <input class="form-check-input" type="radio" name="gender" value="male" required />
                     <label class="form-check-label">Male</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" value="female" />
+                    <input class="form-check-input" type="radio" name="gender" value="female" required />
                     <label class="form-check-label">Female</label>
                   </div>
                   <div class="form-check form-check-inline">
-                    <input class="form-check-input" type="radio" name="gender" value="other" />
+                    <input class="form-check-input" type="radio" name="gender" value="other" required />
                     <label class="form-check-label">Other</label>
                   </div>
                   </div>
@@ -59,7 +68,7 @@
                     <button type="submit" class="button btn btn-primary">Sign up</button>
                   </div>
                   <div class="text-secondary text-center my-3">
-                    Already on VSB ? <a class="link-warning text-decoration-none" href="sign-in.html">Log in</a>
+                    Already on VSB ? <a class="link-warning text-decoration-none" href="/sign-in">Log in</a>
                   </div>
                 </form>
               </div>
@@ -68,4 +77,26 @@
         </div>
     </div>
   </body>
+  <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+(function () {
+  'use strict'
+
+  // Fetch all the forms we want to apply custom Bootstrap validation styles to
+  var forms = document.querySelectorAll('.needs-validation')
+
+  // Loop over them and prevent submission
+  Array.prototype.slice.call(forms)
+    .forEach(function (form) {
+      form.addEventListener('submit', function (event) {
+        if (!form.checkValidity()) {
+          event.preventDefault()
+          event.stopPropagation()
+        }
+
+        form.classList.add('was-validated')
+      }, false)
+    })
+})()
+  </script>
 </html>
