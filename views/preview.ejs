@@ -73,8 +73,7 @@
                                         <h3 class="card-title">{{info.course_name}}</h3>
                                         <p class="card-text"> {{info.course_info}} </p>
                                         <img src="./static/uploads/teacher.png" width="60" height="60" alt="">
-                                        <span> {{info.teacher_fname + " " +
-                                            info.teacher_lname}}</span>
+                                        <span> {{info.teacher_fname+ ' '+ info.teacher_lname}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -129,9 +128,9 @@
                             </div>
                             <div class="row">
                                 <h5><b>Instructors</b></h5>
-                                <p>{{info.teacher_fname + " " +
+                                <!-- <p>{{info.teacher_fname + ' ' +
                                     info.teacher_lname}}</p>
-                                <p>Developer and Lead Instructor</p>
+                                <p> {{info.position}} </p> -->
                             </div>
                             <div class="row">
                                 <div class="card mb-3" style="max-width:
@@ -145,16 +144,11 @@
                                         </div>
                                         <div class="col-md-8">
                                             <div class="card-body">
-                                                <p><i class="bi bi-star-fill"></i>
-                                                    4.7
-                                                    Instructor Rating</p>
-                                                <p><i class="bi bi-award-fill"></i>
-                                                    427,178 Reviews</p>
-                                                <p><i class="bi bi-people-fill"></i>
-                                                    500,500 Students</p>
-                                                <p><i class="bi
-                                                        bi-play-circle-fill"></i>
-                                                    9 Courses</p>
+                                                <br>
+                                                <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname + ' ' +
+                                                    info.teacher_lname}}</p>
+                                                <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}} </p>
+                                                    <br>
                                             </div>
                                         </div>
                                     </div>
@@ -163,23 +157,7 @@
                             <div class="row">
                                 <div class="card border-trans">
                                     <div class="card-body ps-0">
-
-                                        <p>I'm Angela, I'm a developer with a
-                                            passion
-                                            for teaching. I'm the lead
-                                            instructor at the
-                                            London App Brewery, London's leading
-                                            Programming Bootcamp. I've helped
-                                            hundreds
-                                            of thousands of students learn to
-                                            code and
-                                            change their lives by becoming a
-                                            developer.
-                                            I've been invited by companies such
-                                            as
-                                            Twitter, Facebook and Google to
-                                            teach their
-                                            employees.</p>
+                                        <p> {{info.teacher_des}} </p>
                                     </div>
                                 </div>
                             </div>

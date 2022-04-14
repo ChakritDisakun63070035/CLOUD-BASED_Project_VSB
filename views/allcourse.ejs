@@ -10,7 +10,6 @@
     <link href="../css/css.css" rel="stylesheet" />
     <script src="/js/bootstrap.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-
     <style>
         .form-inline {
             display: inline-block;
@@ -37,7 +36,6 @@
                 transform: scale(1);
             }
         }
-
     </style>
 </head>
 <header>
@@ -80,7 +78,8 @@
         <div class="row mt-4">
             <div class="col-md-6 col-sm-12">
                 <img src="./uploads/search.png" alt="Girl in a jacket" width="50px" height="50px">
-                <input type="text" class="form-control form-inline bg_course" placeholder="Search" >
+                <input type="text" class="form-control form-inline
+                        bg_course" placeholder="Search">
             </div>
 
             <div class="col-md-6 col-sm-12 text-md-end mt-sm-3 mt-md-0">
@@ -90,10 +89,29 @@
                     Filters
                 </a>
 
-                <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-                    <li><a class="dropdown-item" href="#">Action</a></li>
-                    <li><a class="dropdown-item" href="#">Another action</a></li>
-                    <li><a class="dropdown-item" href="#">Something else here</a></li>
+                <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuLink">
+                    <li>
+                        <input class="form-check-input" type="radio" value="alpha" v-model="sorted">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Sort by Alphabet
+                        </label>
+                    </li>
+                    <li>
+                        <input class="form-check-input" type="radio" value="sortID" v-model="sorted">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Sort by ID
+                        </label>
+                    </li>
+                    <li>
+                        <input class="form-check-input" type="radio" value="price" v-model="sorted">
+                        <label class="form-check-label" for="flexRadioDefault1">
+                            Sort by Price
+                        </label>
+                    </li>
+
+                    <!-- <li><a class="dropdown-item" href="#">Another action</a></li>
+                    <li><a class="dropdown-item" href="#">Something else
+                            here</a></li> -->
                 </ul>
             </div>
 
@@ -104,15 +122,17 @@
         </div>
         <div class="row px-4">
             <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-                <a href="/course/4" class="card myAnim bg-light"
-                    style="width: 20rem; text-decoration: none; color:black;">
-                    <img src="uploads/ielts.png"
-                        class="card-img-top" alt="...">
+                <a href="/course/4" class="card myAnim bg-light" style="width: 20rem; text-decoration: none;
+                        color:black;">
+                    <img src="uploads/ielts.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><b>IELTS Full Course</b></h5>
-                        <p class="card-text text-center"> IELTS Full Course in 10 hours - 2022', 'Concepts are explained in a simple, digestable and...</p>
+                        <h5 class="card-title text-center"><b>IELTS Full
+                                Course</b></h5>
+                        <p class="card-text text-center"> IELTS Full Course
+                            in 10 hours - 2022', 'Concepts are explained in
+                            a simple, digestable and...</p>
                         <div class="row">
-                            <div class="col-6 ">
+                            <div class="col-6">
                                 Courses price
                             </div>
                             <div class="col">
@@ -127,15 +147,17 @@
             </div>
 
             <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-                <a href="/course/15" class="card myAnim bg-light"
-                    style="width: 20rem; text-decoration: none; color:black;">
-                    <img src="uploads/cyber-secure.png"
-                        class="card-img-top" alt="...">
+                <a href="/course/15" class="card myAnim bg-light" style="width: 20rem; text-decoration: none;
+                        color:black;">
+                    <img src="uploads/cyber-secure.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><b>Cyber Security learning</b></h5>
-                        <p class="card-text text-center"> Cyber Security Full Course  will help you understand and learn the fundamentals of Cyber Security. </p>
+                        <h5 class="card-title text-center"><b>Cyber Security
+                                learning</b></h5>
+                        <p class="card-text text-center"> Cyber Security
+                            Full Course will help you understand and learn
+                            the fundamentals of Cyber Security. </p>
                         <div class="row">
-                            <div class="col-6 ">
+                            <div class="col-6">
                                 Courses price
                             </div>
                             <div class="col">
@@ -150,15 +172,17 @@
             </div>
 
             <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-                <a href="/course/14" class="card myAnim bg-light"
-                    style="width: 20rem; text-decoration: none; color:black;">
-                    <img src="uploads/design-thinking.png"
-                        class="card-img-top" alt="...">
+                <a href="/course/14" class="card myAnim bg-light" style="width: 20rem; text-decoration: none;
+                        color:black;">
+                    <img src="uploads/design-thinking.png" class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><b>Design thinking</b></h5>
-                        <p class="card-text text-center">In this design thinking tutorial, we will be looking at what is design thinking, why design </p>
+                        <h5 class="card-title text-center"><b>Design
+                                thinking</b></h5>
+                        <p class="card-text text-center">In this design
+                            thinking tutorial, we will be looking at what is
+                            design thinking, why design </p>
                         <div class="row">
-                            <div class="col-6 ">
+                            <div class="col-6">
                                 Courses price
                             </div>
                             <div class="col">
@@ -177,16 +201,19 @@
             <h5>All Course</h5>
         </div>
         <div class="row px-4">
-            <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-                <a :href="'/course/' + course.course_id" class="card myAnim bg-light"
-                    style="width: 20rem; text-decoration: none; color:black;">
-                    <img :src=course.image
-                        class="card-img-top" alt="...">
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
+                    computedCourses">
+                <a :href="'/course/' + course.course_id" class="card myAnim
+                        bg-light" style="width: 20rem; text-decoration: none;
+                        color:black;">
+                    <img :src=course.image class="card-img-top" alt="...">
                     <div class="card-body">
-                        <h5 class="card-title text-center"><b> {{ course.course_name }} </b></h5>
-                        <p class="card-text text-center"> {{ course.course_info }} </p>
+                        <h5 class="card-title text-center"><b> {{
+                                course.course_name }} </b></h5>
+                        <p class="card-text text-center"> {{
+                            course.course_info }} </p>
                         <div class="row">
-                            <div class="col-6 ">
+                            <div class="col-6">
                                 Courses price
                             </div>
                             <div class="col">
@@ -209,21 +236,57 @@
             el: "#app",
             data: {
                 courses: JSON.parse(`<%- courses %>`),
+                sorted: '',
             },
-            computed:{
-        computedCourses (){
-          let results = this.courses
-          return results.map((b) => { 
-            if(b.course_info.length > 90){
-              b.course_info = b.course_info.substring(0, 90) + '...'
-            }
-            return b
-          })
-        }
-      },
+            computed: {
+                computedCourses() {
+                    let results = this.courses
+                    return results.map((b) => {
+                        if (b.course_info.length > 90) {
+                            b.course_info = b.course_info.substring(0, 90) + '...'
+                        }
+                        return b
+                    })
+                },
+                filteredTasks() {
+                    function compareAlpha(a, b) {
+                        if (a.course_name < b.course_name) {
+                        return -1
+                        } else if (a.course_name > b.course_name) {
+                        return 1
+                        } else {
+                        return 0
+                        }
+                    }
+                    function compareID(a, b) {
+                        if (a.course_id < b.course_id) {
+                        return -1
+                        } else if (a.course_id > b.course_id) {
+                        return 1
+                        } else {
+                        return 0
+                        }
+                    }
+                    function comparePrice(a, b) {
+                        if (a.course_price < b.course_price) {
+                        return -1
+                        } else if (a.course_price > b.course_price) {
+                        return 1
+                        } else {
+                        return 0
+                        }
+                    }
+                    if(this.sorted == "alpha"){
+                        this.courses.sort(compareAlpha)
+                    }else if(this.sorted == "sortID"){
+                        this.courses.sort(compareID)
+                    }else if(this.sorted == "price"){
+                        this.courses.sort(comparePrice)
+                    }
+                }
+            },
         })
     </script>
-
 </body>
 <footer class="footer py-3 mt-5 bg-light">
     <div class="container">
