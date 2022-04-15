@@ -1,69 +1,72 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign in</title>
-    <link rel="icon" href="../uploads/logo.png" />
-    <link href="../css/bootstrap.css" rel="stylesheet" />
-    <link href="../css/css.css" rel="stylesheet" />
-    <script src="../js/bootstrap.bundle.js"></script>
-  </head>
-  <body>
-    <div class="container">
-      <h1 class="text-center my-5">VSB</h1>
-          <div class="card w-75 mx-auto">
-            <h3 class="card-header text-center py-3 bg-warning">Sign in</h3>
-            <div class="card-body">
-              <div class="row">
-                <div class="col-5 justify-content-center">
-                  <img src="../uploads/logobig.png" width="100%" />
-                </div>
-                <form action="/sign-in" method="POST" class="col-7 needs-validation" novalidate>
-                  <div class="my-2">
-                    <label class="form-label">Email</label>
-                    <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" class="form-control" name="email" value="" required />
-                    <div class="invalid-feedback mb-3">Please enter your email</div>
-                  </div>
-                  <div class="my-2">
-                    <label class="form-label">Password</label>
-                    <input pattern="(?=.*\d)(?=.*[a-zA-z]).{8,}" type="password" class="form-control mb-2" name="password" value="" required />
-                    <div class="invalid-feedback mb-3">Please enter your password using a-z, A-Z, 0-9 at least 8 characters.</div>
-                    <a class="form-link text-secondary text-decoration-none" href="/reset_password">Forgot your password ?</a>
-                  </div>
-                  <div class="d-grid my-4">
-                    <button type="submit" class="button btn btn-primary">Log in</button>
-                  </div>
-                  <div class="text-secondary text-center my-3">
-                    Don’t have an account ? <a class="link-warning text-decoration-none" href="/sign-up">Sign up</a>
-                  </div>
-                </form>
-              </div>
-            </div>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sign in</title>
+  <link rel="icon" href="/uploads/logo.png" />
+  <link href="/css/bootstrap.css" rel="stylesheet" />
+  <link href="/css/css.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.js"></script>
+</head>
+
+<body>
+  <div class="container">
+    <h1 class="text-center my-5">VSB</h1>
+    <div class="card w-75 mx-auto">
+      <h3 class="card-header text-center py-3 bg-warning">Sign in</h3>
+      <div class="card-body">
+        <div class="row">
+          <div class="col-5 justify-content-center">
+            <img src="/uploads/logobig.png" width="100%" />
           </div>
+          <form action="/sign-in" method="POST" class="col-7 needs-validation" novalidate>
+            <div class="my-2">
+              <label class="form-label">Email</label>
+              <input pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" type="email" class="form-control" name="email" value="" required />
+              <div class="invalid-feedback mb-3">Please enter your email</div>
+            </div>
+            <div class="my-2">
+              <label class="form-label">Password</label>
+              <input pattern="(?=.*\d)(?=.*[a-zA-z]).{8,}" type="password" class="form-control mb-2" name="password" value="" required />
+              <div class="invalid-feedback mb-3">Please enter your password using a-z, A-Z, 0-9 at least 8 characters.</div>
+              <a class="form-link text-secondary text-decoration-none" href="/reset_password">Forgot your password ?</a>
+            </div>
+            <div class="d-grid my-4">
+              <button type="submit" class="button btn btn-primary">Log in</button>
+            </div>
+            <div class="text-secondary text-center my-3">
+              Don’t have an account ? <a class="link-warning text-decoration-none" href="/sign-up">Sign up</a>
+            </div>
+          </form>
         </div>
+      </div>
     </div>
-  </body>
-  <script>
-    // Example starter JavaScript for disabling form submissions if there are invalid fields
-(function () {
-  'use strict'
+  </div>
+  </div>
+</body>
+<script>
+  // Example starter JavaScript for disabling form submissions if there are invalid fields
+  (function() {
+    'use strict'
 
-  // Fetch all the forms we want to apply custom Bootstrap validation styles to
-  var forms = document.querySelectorAll('.needs-validation')
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
 
-  // Loop over them and prevent submission
-  Array.prototype.slice.call(forms)
-    .forEach(function (form) {
-      form.addEventListener('submit', function (event) {
-        if (!form.checkValidity()) {
-          event.preventDefault()
-          event.stopPropagation()
-        }
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
 
-        form.classList.add('was-validated')
-      }, false)
-    })
-})()
-  </script>
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
+
 </html>

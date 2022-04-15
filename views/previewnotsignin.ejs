@@ -1,0 +1,305 @@
+<div>
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VSB</title>
+    <link rel="icon" href="/uploads/logo.png" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/css.css" rel="stylesheet" />
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <div v-for="info in data">
+        <header>
+          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="/">
+                <img src="/uploads/logo.png" alt="" width="60" height="60" />
+              </a>
+              <div class="d-flex">
+                <a class="nav-link active text-dark fs-6" aria-current="page" href="/sign-up">Sign up</a>
+                <a class="nav-link text-dark fs-6" href="/sign-in">Login</a>
+              </div>
+            </div>
+          </nav>
+        </header>
+
+        <img :src=info.preview_img alt="404 not found" width="100%" height="450">
+
+        <div class="container">
+          <div class="row mt-5">
+
+            <div class="col-md-7 col-sm-12">
+              <div class="row">
+
+                <div class="card" style="width: 30rem;">
+                  <div class="card-body">
+                    <h3 class="card-title">{{info.course_name}}</h3>
+                    <p class="card-text"> {{info.course_info}} </p>
+                    <img :src=info.teacher_image width="60" height="60" alt="">
+                    <span> {{info.teacher_fname+ ' '+ info.teacher_lname}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-sm-12 ps-0">
+                  <div class="card border-trans" style="width:
+                                        35rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Description</h5>
+                      <p class="card-text">
+                        {{info.course_des}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 ps-0">
+                  <div class="card border-trans" style="width:
+                                        35rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">What you'll
+                        learn</h5>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <p><i class="bi
+                                                            bi-check-lg"></i> 25
+                            hors on-demand video</p>
+                          <p><i class="bi
+                                                            bi-check-lg"></i> 25
+                            hors on-demand video</p>
+                          <p><i class="bi
+                                                            bi-check-lg"></i> 25
+                            hors on-demand video</p>
+                        </div>
+                        <div class="col-sm-6">
+                          <p><i class="bi
+                                                            bi-check-lg"></i> 25
+                            hors on-demand video</p>
+                          <p><i class="bi
+                                                            bi-check-lg"></i> 25
+                            hors on-demand video</p>
+                          <p><i class="bi
+                                                            bi-check-lg"></i> 25
+                            hors on-demand video</p>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h5><b>Instructors</b></h5>
+                <!-- <p>{{info.teacher_fname + ' ' +
+                                    info.teacher_lname}}</p>
+                                <p> {{info.position}} </p> -->
+              </div>
+              <div class="row">
+                <div class="card mb-3" style="max-width:
+                                    540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <div class="text-center mt-4">
+                        <img :src=info.teacher_image class="img-fluid rounded-circle
+                                                    " alt="..." width="130" height="130">
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <br>
+                        <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname + ' ' +
+                                                    info.teacher_lname}}</p>
+                        <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}} </p>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="card border-trans">
+                  <div class="card-body ps-0">
+                    <p> {{info.teacher_des}} </p>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+            <div class="col-md-5 col-sm-12">
+              <div class="card gray" style="width: 35rem;">
+                <div class="text-center mt-3">
+                  <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;
+                                        autoplay;
+                                        clipboard-write;
+                                        encrypted-media; gyroscope;
+                                        picture-in-picture" allowfullscreen></iframe>
+                  <!-- {{info.preview_video}} -->
+                  <!-- <iframe width="442" height="245" src="https://www.youtube.com/embed/vd1qdnCX5RU"
+                                        title="YouTube video player" frameborder="0" allow="accelerometer;
+                                        autoplay;
+                                        clipboard-write;
+                                        encrypted-media; gyroscope;
+                                        picture-in-picture" allowfullscreen></iframe> -->
+                  <!-- {{info.preview_video}} -->
+                  <!-- <source :src="info.preview_video" type="video/mp4"> -->
+                </div>
+                <div class="card-body">
+                  <div class="row">
+                    <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
+                  </div>
+                  <div class="row">
+
+                    <div class="col-sm-6  d-grid gap-2">
+                        <button type="button" class="button btn btn-primary" data-bs-toggle="modal" data-bs-target="#addtocart">
+                            ADD TO CART
+                          </button>
+                          <div class="modal fade" id="addtocart" tabindex="-1" aria-hidden="true">
+                            <div class="modal-dialog">
+                              <div class="modal-content bg-light">
+                                <div class="modal-header">
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body mx-auto">
+                                    <i class="bi bi-exclamation-triangle iconfooter me-2 text-danger"></i><b class="text-danger">Please sign-in before add to cart.</b>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                  <a href="/sign-in"><button type="button" class="btn btn-warning">Sign-in</button>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                    </div>
+                    <div class="col-sm-6 d-grid gap-2">
+                      <button type="button" class="button btn btn-danger" data-bs-toggle="modal" data-bs-target="#buynow">
+                        BUY NOW
+                      </button>
+                      <div class="modal fade" id="buynow" tabindex="-1" aria-hidden="true">
+                        <div class="modal-dialog">
+                          <div class="modal-content bg-light">
+                            <div class="modal-header">
+                              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body mx-auto">
+                                <i class="bi bi-exclamation-triangle iconfooter me-2 text-danger"></i><b class="text-danger">Please sign-in before buy course.</b>
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <a href="/sign-in"><button type="button" class="btn btn-warning">Sign-in</button>
+                              </a>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="row mt-4">
+                    <h6><b>This course includes:</b></h6>
+                    <p><i class="bi bi-play-btn"></i> 25
+                      hors
+                      on-demand video</p>
+                    <p><i class="bi bi-file-earmark"></i> 80
+                      articles</p>
+                    <p><i class="bi bi-download"></i> 26
+                      downloadable resources</p>
+                    <p><i class="bi bi-code-slash"></i> 8
+                      coding
+                      exercises</p>
+                    <p><i class="bi bi-infinity"></i> Full
+                      lifetime
+                      access</p>
+                    <p><i class="bi bi-phone"></i> Access on
+                      mobile
+                      and TV</p>
+                    <p><i class="bi bi-trophy"></i>
+                      Certificate of
+                      completion</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        data: JSON.parse(`<%- data %>`),
+
+      },
+
+    })
+  </script>
+  <footer class="footer py-3 mt-5 bg-light">
+    <div class="container">
+      <div class="row">
+        <div class="col-6">
+          <h5>Browse popular topics</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">ABC</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Math</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Eng</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5>Popular courses and articles</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">ABC</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Math</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Eng</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-6">
+          <h5>VSB</h5>
+          <ul class="list-unstyled text-small">
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">About</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+            </li>
+            <li>
+              <a class="link-secondary text-decoration-none" href="#">Team</a>
+            </li>
+          </ul>
+        </div>
+        <div class="col-12 border-top my-4"></div>
+        <div class="col-9 mt-2">
+          <small class="text-muted">© 2022 VSB. All rights
+            reserved</small>
+        </div>
+        <div class="col-3 icon">
+          <i class="bi bi-facebook text-primary mx-2"></i>
+          <i class="bi bi-twitter text-info mx-2"></i>
+          <i class="bi bi-github mx-2"></i>
+          <i class="bi bi-linkedin text-primary mx-2"></i>
+          <i class="bi bi-youtube text-danger mx-2"></i>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  </html>

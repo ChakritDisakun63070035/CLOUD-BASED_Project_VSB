@@ -12,7 +12,7 @@ const storage = multer.diskStorage({
     callback(null, "./static")
   },
   filename: function (req, file, callback) {
-    const ext = file.mimetype.split('/')[1]
+    const ext = file.mimetype.split("/")[1]
     callback(null, `/uploads-${file.fieldname}-${Date.now()}.${ext}`)
   },
 })
@@ -133,12 +133,11 @@ router.post("/sign-in", async function (req, res, next) {
     const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=? AND password=?", [email, password])
     const [rows1, fields1] = await conn.query("UPDATE `user` SET status_user=? WHERE email=?", ["on", email])
     await conn.commit()
-    let user_id = rows[0].user_id
-
     if (rows.length > 0) {
+      let user_id = rows[0].user_id
       res.redirect("/allcourse/" + user_id)
     } else {
-      req.flash("message", "Please Sign-up First")
+      req.flash("message", "Please Sign-up First.")
       res.redirect("/sign-up")
     }
   } catch (err) {
@@ -177,7 +176,6 @@ router.get("/profile/:id", async function (req, res, next) {
 })
 
 router.post("/profile/:id", upload.single("image"), async function (req, res, next) {
-
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -210,7 +208,6 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
 
     let user_id = req.params.id
     res.redirect("/profile/" + user_id)
-
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -220,13 +217,48 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
   }
 })
 
+// preview page
 router.get("/course/:id", async function (req, res, next) {
-  const [rows, fields] = await pool.query("SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?", [req.params.id])
-  
-  console.log(rows)
-  
-  return res.render("preview", { data: JSON.stringify(rows) })
-  
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+    const [rows, fields] = await conn.query(
+      "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?",
+      [req.params.id]
+    )
+
+    console.log(rows)
+
+    return res.render("preview", { data: JSON.stringify(rows) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+})
+
+// preview not-sign-in
+router.get("/allcourse/course/:id", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+    const [rows, fields] = await conn.query(
+      "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?",
+      [req.params.id]
+    )
+
+    console.log(rows)
+
+    return res.render("previewnotsignin", { data: JSON.stringify(rows) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
 })
 
 
