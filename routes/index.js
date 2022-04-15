@@ -9,10 +9,11 @@ router = express.Router()
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, "./static/uploads")
+    callback(null, "./static")
   },
   filename: function (req, file, callback) {
-    callback(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname))
+    const ext = file.mimetype.split('/')[1]
+    callback(null, `/uploads-${file.fieldname}-${Date.now()}.${ext}`)
   },
 })
 const upload = multer({ storage: storage })
@@ -161,7 +162,8 @@ router.get("/profile/:id", async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
-    const [rows, fields] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+    // const [rows, fields] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+    const [rows, fields] = await conn.query("SELECT *, dateofbirth, DATE_FORMAT(dateofbirth, GET_FORMAT(DATE, 'ISO')) AS date FROM `user` WHERE user_id=?", [req.params.id])
     res.render("user/user_profile", {
       users: JSON.stringify(rows),
     })
@@ -193,7 +195,7 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
     return next(error)
   }
   if (file) {
-    await conn.query("UPDATE user SET image=? WHERE user_id=?", [file.path.substring(6), req.params.id])
+    await conn.query("UPDATE user SET image=? WHERE user_id=?", [file.path.substring(7), req.params.id])
   }
   try {
     const [rows, fields] = await conn.query("UPDATE `user` SET user_fname=?, user_lname=?, email=?, password=?, dateofbirth=?, gender=? WHERE user_id=?", [
@@ -208,6 +210,7 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
 
     let user_id = req.params.id
     res.redirect("/profile/" + user_id)
+
   } catch (err) {
     console.log(err)
     await conn.rollback()

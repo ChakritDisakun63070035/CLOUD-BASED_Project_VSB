@@ -16,7 +16,7 @@
       <header>
         <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
           <div class="container-fluid">
-            <a class="navbar-brand" href="#index">
+            <a class="navbar-brand" href="/">
               <img src="/uploads/logo.png" alt="" width="60" height="60" />
             </a>
 
@@ -25,7 +25,7 @@
                 <i class="bi bi-book fs-4"></i>
                 My Course
               </a>
-              <a class="navbar-brand" href="#">
+              <a class="navbar-brand" href="/mycart">
                 <i class="bi bi-cart4 fs-4"></i>
                 My Cart
               </a>
@@ -45,7 +45,7 @@
       </header>
       <div class="container" v-for="user in users">
         <h2 class="mt-5 text">PROFILE</h2>
-        <div class="text-center mb-2"><img :src="user.image" alt="" width="25%" height="100%" /></div>
+        <div class="text-center mb-2"><img :src="'/' + user.image" alt="" width="25%" height="100%" /></div>
 
         <!-- ปุ่ม modal -->
         <div class="text-center mt-4">
@@ -73,7 +73,7 @@
             </div>
             <div class="col-md-6 col-sm-12 mt-4">
               <label class="form-label">Date of Birth</label>
-              <input type="text" class="form-control form-inline ms-2" :value="user.dateofbirth" readonly />
+              <input type="text" class="form-control form-inline ms-2" :value="user.date" readonly />
             </div>
             <div class="col-md-6 col-sm-12 mt-4">
               <div>
