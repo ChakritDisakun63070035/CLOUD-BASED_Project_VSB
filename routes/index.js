@@ -223,9 +223,10 @@ router.get("/course/:id", async function (req, res, next) {
   await conn.beginTransaction()
   try {
     const [rows, fields] = await conn.query(
-      "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?",
+      "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id) WHERE course_id=?",
       [req.params.id]
     )
+    
 
     console.log(rows)
 
@@ -260,6 +261,7 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
     await conn.release()
   }
 })
+
 
 
 
