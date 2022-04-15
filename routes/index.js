@@ -218,7 +218,8 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
 })
 
 // preview page
-router.get("/course/:id", async function (req, res, next) {
+
+router.get("/course/:id/:userid", async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -226,11 +227,9 @@ router.get("/course/:id", async function (req, res, next) {
       "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id) WHERE course_id=?",
       [req.params.id]
     )
-    
+    const [rows1, fields1] = await conn.query("SELECT * FROM user WHERE user_id=?", [req.params.userid])
 
-    console.log(rows)
-
-    return res.render("preview", { data: JSON.stringify(rows) })
+    return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -249,8 +248,6 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
       "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?",
       [req.params.id]
     )
-
-    console.log(rows)
 
     return res.render("previewnotsignin", { data: JSON.stringify(rows) })
   } catch (err) {
