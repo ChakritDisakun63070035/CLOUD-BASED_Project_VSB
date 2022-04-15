@@ -136,6 +136,7 @@ router.post("/sign-in", async function (req, res, next) {
     if (rows.length > 0) {
       let user_id = rows[0].user_id
       res.redirect("/allcourse/" + user_id)
+      res.redirect("/mycourse/" + user_id)
     } else {
       req.flash("message", "Please Sign-up First.")
       res.redirect("/sign-up")
@@ -227,7 +228,7 @@ router.get("/course/:id/:userid", async function (req, res, next) {
       "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id) WHERE course_id=?",
       [req.params.id]
     )
-    const [rows1, fields1] = await conn.query("SELECT * FROM user WHERE user_id=?", [req.params.userid])
+    const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
 
     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
   } catch (err) {
@@ -259,7 +260,21 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
   }
 })
 
-
+router.get("/allcourse/:id/mycourse", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+    const [rows, fields] = await conn.query("SELECT * FROM course")
+    const [rows1, fields1] = await conn.query("SELECT * FROM order_item join course using(course_id) join web2.order using(order_id) join user using(user_id) join course_image using(course_id) WHERE user_id=?", [req.params.id])
+    return res.render("own-course", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+})
 
 
 // router.get("/courseId/allcourse", async function (req, res, next) {

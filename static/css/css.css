@@ -83,6 +83,9 @@ body {
 .no-line {
   text-decoration: none;
 }
+.line{
+  text-decoration:solid;
+}
 .iconcart {
   font-size: 1.3rem;
 }
