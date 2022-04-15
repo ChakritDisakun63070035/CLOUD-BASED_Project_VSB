@@ -229,6 +229,8 @@ router.get("/course/:id", async function (req, res, next) {
   
 })
 
+
+
 // router.get("/courseId/allcourse", async function (req, res, next) {
 //   try {
 //     const [rows, fields] = await pool.query(
