@@ -97,11 +97,10 @@ router.get("/course/:course_id/create/cart/:user_id/:price", async function (req
       let order_status = order[0].order_status
       let order_id = order[0].order_id
       if (order_status !== "complete") {
-        const [additem, fields3] = await conn.query("INSERT INTO order_item (item_price, course_id, order_id) VALUES(?, ?, ?)", [
-          req.params.price,
-          req.params.course_id,
-          order_id,
-        ])
+        const [additem, fields3] = await conn.query("INSERT INTO order_item (item_price, course_id, order_id) VALUES(?, ?, ?)", [req.params.price, req.params.course_id, order_id])
+        const [itemprice, fields4] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [order_id])
+        let total = itemprice[0].total
+        const [orderprice, fields5] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total, order_id])
       }
     } else {
       const [createcart, fields2] = await conn.query("INSERT INTO `order` (order_date, user_id, admin_id) VALUES(CURDATE(), ?, ?)", [req.params.user_id, admin])
@@ -110,6 +109,9 @@ router.get("/course/:course_id/create/cart/:user_id/:price", async function (req
         req.params.course_id,
         createcart.insertId,
       ])
+      const [itemprice, fields4] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [createcart.insertId])
+      let total = itemprice[0].total
+      const [orderprice, fields5] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total, createcart.insertId])
     }
     await conn.commit()
     res.redirect("/course/" + req.params.course_id + "/" + req.params.user_id)
@@ -123,20 +125,30 @@ router.get("/course/:course_id/create/cart/:user_id/:price", async function (req
 })
 
 // del items
-router.get("/mycart/:id/:item_no", async function (req, res, next) {
+router.get("/mycart/:id/:item_no/:order_id", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
   try {
-    const [rows1, fields1] = await pool.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
+    const [rows1, fields1] = await conn.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
+    const [itemprice, fields4] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [req.params.order_id])
+    let total = itemprice[0].total
+    const [orderprice, fields5] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total, req.params.order_id])
+    await conn.commit()
     res.redirect("/mycart/" + req.params.id)
   } catch (err) {
-    return next(err)
+    await conn.rollback()
+    next(err)
+  } finally {
+    console.log("finally")
+    await conn.release()
   }
 })
 
 // payment
-router.get("/mycart/:id/:item_no", async function (req, res, next) {
+router.get("/payment/", async function (req, res, next) {
   try {
-    const [rows1, fields1] = await pool.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
-    res.redirect("/mycart/" + req.params.id)
+    // const [rows1, fields1] = await pool.query("")
+    res.render("user/payment")
   } catch (err) {
     return next(err)
   }
@@ -329,7 +341,10 @@ router.get("/allcourse/:id/mycourse", async function (req, res, next) {
   await conn.beginTransaction()
   try {
     const [rows, fields] = await conn.query("SELECT * FROM user WHERE user_id=? ", [req.params.id])
-    const [rows1, fields1] = await conn.query("SELECT * FROM order_item join course using(course_id) join `order` using(order_id) join user using(user_id) join course_image using(course_id) WHERE user_id=?", [req.params.id])
+    const [rows1, fields1] = await conn.query(
+      "SELECT * FROM order_item join course using(course_id) join `order` using(order_id) join user using(user_id) join course_image using(course_id) WHERE user_id=?",
+      [req.params.id]
+    )
     return res.render("own-course", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
   } catch (err) {
     console.log(err)
@@ -339,7 +354,6 @@ router.get("/allcourse/:id/mycourse", async function (req, res, next) {
     await conn.release()
   }
 })
-
 
 // info-course
 router.get("/course/:id/:userid/learn", async function (req, res, next) {
