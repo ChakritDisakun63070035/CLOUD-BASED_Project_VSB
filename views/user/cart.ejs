@@ -16,28 +16,27 @@
   <div class="" id="app">
     <header>
       <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-        <div class="container-fluid">
-          <a class="navbar-brand" href="/">
+        <div class="container-fluid" v-for="user in users">
+          <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
             <img src="/uploads/logo.png" alt="" width="60" height="60" />
           </a>
-
           <div class="d-flex">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" :href="'/allcourse/' + user.user_id + '/mycourse'">
               <i class="bi bi-book fs-4"></i>
               My Course
             </a>
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" :href="'/mycart/' + user.user_id">
               <i class="bi bi-cart4 fs-4"></i>
               My Cart
             </a>
             <li class="nav dropdown">
-              <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="/uploads/profile.png" alt="" width="32" height="32" class="d-inline-block align-text-top" />
-                Jerry
+              <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                {{user.user_fname}}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" href="#">Profile</a></li>
-                <li><a class="dropdown-item" href="#">Logout</a></li>
+                <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a></li>
+                <li><a class="dropdown-item" :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
               </ul>
             </li>
           </div>
@@ -48,7 +47,7 @@
       <h1 class="my-5 text-center">My Cart</h1>
       <div class="row">
         <div class="col-12 my-3">
-          <small class="text-secondary">0 Course in Cart</small>
+          <small class="text-secondary">{{idCounter}} Course in Cart</small>
         </div>
         <div class="col-6">
           <div class="row border-bottom my-3">
@@ -56,35 +55,23 @@
               <h6>PRODUCT</h6>
             </div>
             <div class="col-5 text-end">
-              <h6>PRICE</h6>
+              <h6>PRICES</h6>
             </div>
           </div>
-          <div class="row my-4">
+          <div class="row my-4" v-for="item in items">
             <div class="col-5">
-              <img src="/static/uploads/course.png" width="100%" />
-            </div>
-            <div class="col-5">
-              <p>Complete JAVA Programming</p>
-            </div>
-            <div class="col-1 text-end">
-              <p>$15</p>
-            </div>
-            <div class="col-1 text-end">
-              <i class="iconcart bi bi-trash text-danger"></i>
-            </div>
-          </div>
-          <div class="row my-4">
-            <div class="col-5">
-              <img src="/static/uploads/course.png" width="100%" />
+              <img :src="'/' + item.image" width="100%" />
             </div>
             <div class="col-5">
-              <p>Complete JAVA Programming</p>
+              <p>{{item.course_name}}</p>
             </div>
             <div class="col-1 text-end">
-              <p>$15</p>
+              <p>{{item.course_price}}฿</p>
             </div>
-            <div class="col-1 text-end">
-              <i class="iconcart bi bi-trash text-danger"></i>
+            <div class="col-1 text-end" v-for="user in users">
+              <a :href="'/mycart/' + user.user_id + '/' + item.item_no">
+                <i class="iconcart bi bi-trash text-danger"></i>
+              </a>
             </div>
           </div>
         </div>
@@ -92,37 +79,26 @@
           <div class="card w-75 mx-auto bg-light">
             <h5 class="card-header bg-warning">Summary</h5>
             <div class="card-body">
-              <div class="row my-2">
+              <div class="row my-2" v-for="item in items">
                 <div class="col-5">
-                  <img src="/static/uploads/course.png" width="100%" />
+                  <img :src="'/' + item.image" width="100%" />
                 </div>
                 <div class="col-5">
-                  <p>Complete JAVA Programming</p>
+                  <p>{{item.course_name}}</p>
                 </div>
                 <div class="col-2">
-                  <p>$15</p>
-                </div>
-              </div>
-              <div class="row my-2">
-                <div class="col-5">
-                  <img src="/static/uploads/course.png" width="100%" />
-                </div>
-                <div class="col-5">
-                  <p>Complete JAVA Programming</p>
-                </div>
-                <div class="col-2">
-                  <p>$15</p>
+                  <p>{{item.course_price}}฿</p>
                 </div>
               </div>
               <div class="row my-3">
                 <div class="col-11 border-top mx-auto"></div>
               </div>
-              <div class="row">
+              <div class="row" v-for="cart in carts">
                 <div class="col-8">Total cost</div>
-                <div class="col-4 text-end">$30</div>
+                <div class="col-4 text-end">{{cart.price_total}}฿</div>
               </div>
               <div class="row">
-                <button class="btn btn-warning col-11 mx-auto mt-3">Checkout Items</button>
+                  <a href="" class="btn btn-warning col-11 mx-auto mt-3">Checkout Items</a>
               </div>
             </div>
           </div>
@@ -131,6 +107,20 @@
     </div>
   </div>
 </body>
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      items: JSON.parse(`<%- items %>`),
+      users: JSON.parse(`<%- users %>`),
+      carts: JSON.parse(`<%- carts %>`),
+      idCounter: 0,
+    },
+    created() {
+      this.idCounter = this.items.length
+    }
+  })
+</script>
 <footer class="footer py-3 mt-5 bg-light">
   <div class="container">
     <div class="row">
