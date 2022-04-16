@@ -27,7 +27,8 @@
               </a>
 
               <div class="d-flex">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
+                  '/mycourse'">
                   <i class="bi bi-book fs-4"></i>
                   My Course
                 </a>
@@ -36,13 +37,19 @@
                   My Cart
                 </a>
                 <li class="nav dropdown">
-                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                  <a class="nav-link dropdown-toggle text-dark" href="#"
+                    id="navbarScrollingDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="'/' + user.image" alt="" width="32" height="32"
+                      class="d-inline-block align-text-top" />
                     {{user.user_fname}}
                   </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                    <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a></li>
-                    <li><a class="dropdown-item" :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                  <ul class="dropdown-menu"
+                    aria-labelledby="navbarScrollingDropdown">
+                    <li><a class="dropdown-item" :href="'/profile/' +
+                        user.user_id + '/'">Profile</a></li>
+                    <li><a class="dropdown-item"
+                        :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
                   </ul>
                 </li>
               </div>
@@ -50,7 +57,8 @@
           </nav>
         </header>
 
-        <img :src=info.preview_img alt="Girl in a jacket" width="100%" height="450">
+        <img :src=info.preview_img alt="Girl in a jacket" width="100%"
+          height="450">
 
         <div class="container">
           <div class="row mt-5">
@@ -71,7 +79,7 @@
 
                 <div class="col-sm-12 ps-0">
                   <div class="card border-trans" style="width:
-                                        28rem;">
+                    28rem;">
                     <div class="card-body">
                       <h5 class="card-title">Description</h5>
                       <p class="card-text">
@@ -84,31 +92,31 @@
               <div class="row">
                 <div class="col-sm-12 ps-0">
                   <div class="card border-trans" style="width:
-                                        35rem;">
+                    35rem;">
                     <div class="card-body">
                       <h5 class="card-title">What you'll
                         learn</h5>
                       <div class="row">
                         <div class="col-sm-6">
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
+                              bi-check-lg"></i> 25
                             hors on-demand video</p>
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
+                              bi-check-lg"></i> 25
                             hors on-demand video</p>
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
+                              bi-check-lg"></i> 25
                             hors on-demand video</p>
                         </div>
                         <div class="col-sm-6">
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
+                              bi-check-lg"></i> 25
                             hors on-demand video</p>
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
+                              bi-check-lg"></i> 25
                             hors on-demand video</p>
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
+                              bi-check-lg"></i> 25
                             hors on-demand video</p>
                         </div>
                       </div>
@@ -118,26 +126,25 @@
               </div>
               <div class="row">
                 <h5><b>Instructors</b></h5>
-                <!-- <p>{{info.teacher_fname + ' ' +
-                                    info.teacher_lname}}</p>
-                                <p> {{info.position}} </p> -->
               </div>
               <div class="row">
                 <div class="card mb-3" style="max-width:
-                                    540px;">
+                  540px;">
                   <div class="row g-0">
                     <div class="col-md-4">
                       <div class="text-center mt-4">
-                        <img :src=info.teacher_image class="img-fluid rounded-circle
-                                                    " alt="..." width="130" height="130">
+                        <img :src=info.teacher_image class="img-fluid
+                          rounded-circle"alt="..." width="130" height="130">
                       </div>
                     </div>
                     <div class="col-md-8">
                       <div class="card-body">
                         <br>
-                        <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname + ' ' +
-                                                    info.teacher_lname}}</p>
-                        <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}} </p>
+                        <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname
+                          + ' ' +
+                          info.teacher_lname}}</p>
+                        <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}}
+                        </p>
                         <br>
                       </div>
                     </div>
@@ -162,6 +169,7 @@
                                             clipboard-write;
                                             encrypted-media; gyroscope;
                                             picture-in-picture" allowfullscreen></iframe>
+                                            
                   </div>
                 </div>
                 <div class="card-body">
@@ -169,11 +177,12 @@
                     <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
                   </div>
                   <div class="row" v-for="user in users">
-                    <div class="col-sm-6  d-grid gap-2">
-                      <a :href="'create/cart/' + user.user_id" class="button btn btn-primary" type="button">Add to cart</a>
+                    <div class="col-sm-6 d-grid gap-2">
+                      <a :href="'create/cart/' + user.user_id" class="button btn
+                        btn-primary" type="button">Add to cart</a>
                     </div>
                     <div class="col-sm-6 d-grid gap-2">
-                      <a href="/mycart" class=" button btn btn-danger">Buy now</a>
+                      <a href="/mycart" class="button btn btn-danger">Buy now</a>
                     </div>
                   </div>
                   <div class="row mt-4">
@@ -281,4 +290,4 @@
     </div>
   </footer>
 
-  </html>
+</html>

@@ -314,6 +314,27 @@ router.get("/allcourse/:id/mycourse", async function (req, res, next) {
 })
 
 
+// info-course
+router.get("/course/:id/:userid/learn", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+    const [rows, fields] = await conn.query(
+      "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id) WHERE course_id=?",
+      [req.params.id]
+    )
+    const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
+
+    return res.render("info-course", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+})
+
 // router.get("/courseId/allcourse", async function (req, res, next) {
 //   try {
 //     const [rows, fields] = await pool.query(

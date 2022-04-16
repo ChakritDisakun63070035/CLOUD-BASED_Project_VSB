@@ -121,7 +121,7 @@
                 </div>
                 <div class="row px-4">
                     <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-                        <a :href="'/course/' + course.course_id" class="card myAnim bg-light"
+                        <a :href="'/course/' + course.course_id + '/' + course.user_id + '/learn'" class="card myAnim bg-light"
                             style="width: 20rem; text-decoration: none; color:black;">
                             <img :src="'/' + course.image" class="card-img-top" alt="...">
                             <div class="card-body">
