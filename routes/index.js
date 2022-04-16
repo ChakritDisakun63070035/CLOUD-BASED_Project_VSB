@@ -301,9 +301,9 @@ router.get("/allcourse/:id/mycourse", async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
-    // const [rows, fields] = await conn.query("SELECT * FROM course")
-    const [rows1, fields1] = await conn.query("SELECT * FROM order_item join course using(course_id) join web2.order using(order_id) join user using(user_id) join course_image using(course_id) WHERE user_id=?", [req.params.id])
-    return res.render("own-course", {  users: JSON.stringify(rows1) })
+    const [rows, fields] = await conn.query("SELECT * FROM user WHERE user_id=? ", [req.params.id])
+    const [rows1, fields1] = await conn.query("SELECT * FROM order_item join course using(course_id) join `order` using(order_id) join user using(user_id) join course_image using(course_id) WHERE user_id=?", [req.params.id])
+    return res.render("own-course", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
