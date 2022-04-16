@@ -76,38 +76,41 @@ router.get("/allcourse/not-sign-in/:id", async function (req, res, next) {
 // my cart
 router.get("/mycart/:id", async function (req, res, next) {
   try {
-    const [rows, fields] = await pool.query("SELECT * FROM order_item", [req.params.id])
-    return res.render("user/cart", { data: JSON.stringify(rows) })
+    const [rows1, fields1] = await pool.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    let order_id = rows1[0].order_id
+    const [rows2, fields2] = await pool.query("SELECT * FROM `order_item` JOIN `course` USING(course_id) WHERE order_id=?", [order_id])
+    const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+    return res.render("user/cart", { items: JSON.stringify(rows2), users: JSON.stringify(rows3), carts: JSON.stringify(rows1) })
   } catch (err) {
     return next(err)
   }
 })
 
-router.get("/add/cart/:user_id/:price/:course_id/:order_id", async function (req, res, next) {
-  const conn = await pool.getConnection()
-  await conn.beginTransaction()
-  "/add/card/" + user.user_id + "/" + info.course_price + "/" + info.course_id
-  try {
-    const [rows, fields] = await conn.query("INSERT INTO order_item ()")
-
-    await conn.commit()
-    res.redirect("/")
-  } catch (err) {
-    await conn.rollback()
-    next(err)
-  } finally {
-    console.log("finally")
-    await conn.release()
-  }
-})
-
 // create cart
-router.get("/course/:course_id/create/cart/:user_id", async function (req, res, next) {
+router.get("/course/:course_id/create/cart/:user_id/:price", async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   const admin = Math.floor(Math.random() * (7 - 1)) + 1
   try {
-    const [rows, fields] = await conn.query("INSERT INTO `order` (order_date, user_id, admin_id) VALUES(CURDATE(), ?, ?)", [req.params.user_id, admin])
+    const [order, fields1] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.user_id])
+    if (order.length > 0) {
+      let order_status = order[0].order_status
+      let order_id = order[0].order_id
+      if (order_status !== "complete") {
+        const [additem, fields3] = await conn.query("INSERT INTO order_item (item_price, course_id, order_id) VALUES(?, ?, ?)", [
+          req.params.price,
+          req.params.course_id,
+          order_id,
+        ])
+      }
+    } else {
+      const [createcart, fields2] = await conn.query("INSERT INTO `order` (order_date, user_id, admin_id) VALUES(CURDATE(), ?, ?)", [req.params.user_id, admin])
+      const [additem, fields3] = await conn.query("INSERT INTO order_item (item_price, course_id, order_id) VALUES(?, ?, ?)", [
+        req.params.price,
+        req.params.course_id,
+        createcart.insertId,
+      ])
+    }
     await conn.commit()
     res.redirect("/course/" + req.params.course_id + "/" + req.params.user_id)
   } catch (err) {
@@ -117,6 +120,30 @@ router.get("/course/:course_id/create/cart/:user_id", async function (req, res, 
     console.log("finally")
     await conn.release()
   }
+})
+
+// del items
+router.get("/mycart/:id/:item_no", async function (req, res, next) {
+  try {
+    const [rows1, fields1] = await pool.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
+    res.redirect("/mycart/" + req.params.id)
+  } catch (err) {
+    return next(err)
+  }
+})
+
+// payment
+router.get("/mycart/:id/:item_no", async function (req, res, next) {
+  try {
+    const [rows1, fields1] = await pool.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
+    res.redirect("/mycart/" + req.params.id)
+  } catch (err) {
+    return next(err)
+  }
+})
+
+router.get("/sign-up", async function (req, res, next) {
+  res.render("user/sign-up", { message: req.flash("message") })
 })
 
 router.get("/sign-up", async function (req, res, next) {
@@ -173,7 +200,7 @@ router.post("/sign-in", async function (req, res, next) {
     if (rows.length > 0) {
       let user_id = rows[0].user_id
       res.redirect("/allcourse/" + user_id)
-      res.redirect("/mycourse/" + user_id)
+      // res.redirect("/mycourse/" + user_id)
     } else {
       req.flash("message", "Please Sign-up First.")
       res.redirect("/sign-up")
