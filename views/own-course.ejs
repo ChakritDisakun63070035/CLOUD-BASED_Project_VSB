@@ -58,10 +58,10 @@
                                 <i class="bi bi-book fs-4 line"></i>
                                 My Course
                             </a>
-                            <a class="navbar-brand" href="/mycart">
+                            <a class="navbar-brand" :href="'/mycart/' + user.user_id">
                                 <i class="bi bi-cart4 fs-4"></i>
                                 My Cart
-                            </a>
+                              </a>
                             <li class="nav dropdown">
                                 <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown"
                                     role="button" data-bs-toggle="dropdown" aria-expanded="false">
