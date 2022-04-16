@@ -1,50 +1,53 @@
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Cart</title>
-    <link rel="icon" href="/uploads/logo.png" />
-    <link href="/css/bootstrap.css" rel="stylesheet" />
-    <link href="/css/css.css" rel="stylesheet" />
-    <script src="/js/bootstrap.bundle.js"></script>
-  </head>
-  <header>
-    <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="#index">
-          <img src="/static/uploads/logo.png" alt="" width="60" height="60" />
-        </a>
 
-        <div class="d-flex">
-          <a class="navbar-brand" href="#">
-            <i class="bi bi-book fs-4"></i>
-            My Course
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Payment</title>
+  <link rel="icon" href="/uploads/logo.png" />
+  <link href="/css/bootstrap.css" rel="stylesheet" />
+  <link href="/css/css.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="" id="app">
+    <header>
+      <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+        <div class="container-fluid" v-for="user in users">
+          <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+            <img src="/uploads/logo.png" alt="" width="60" height="60" />
           </a>
-          <a class="navbar-brand" href="#">
-            <i class="bi bi-cart4 fs-4"></i>
-            My Cart
-          </a>
-          <li class="nav dropdown">
-            <a class="nav-link dropdown-toggle" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-              <img src="/static/uploads/profile.png" alt="" width="32" height="32" class="d-inline-block align-text-top" />
-              Jerry
+          <div class="d-flex">
+            <a class="navbar-brand" :href="'/allcourse/' + user.user_id + '/mycourse'">
+              <i class="bi bi-book fs-4"></i>
+              My Course
             </a>
-            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-              <li><a class="dropdown-item" href="#">Profile</a></li>
-              <li><a class="dropdown-item" href="#">Logout</a></li>
-            </ul>
-          </li>
+            <a class="navbar-brand text-decoration-underline" :href="'/mycart/' + user.user_id">
+              <i class="bi bi-cart4 fs-4"></i>
+              My Cart
+            </a>
+            <li class="nav dropdown">
+              <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                {{user.user_fname}}
+              </a>
+              <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a></li>
+                <li><a class="dropdown-item" :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+              </ul>
+            </li>
+          </div>
         </div>
-      </div>
-    </nav>
-  </header>
-  <body>
+      </nav>
+    </header>
     <div class="container">
       <h1 class="mt-5">CHECKOUT</h1>
-      <div class="row">
+      <div class="row" v-for="cart in carts">
         <div class="col-7"></div>
-        <h3 class="col-5 ps-4 text-center text-warning">Total: 2500 ฿</h3>
+        <h3 class="col-5 ps-4 text-center text-warning">Total: {{cart.price_total}}฿</h3>
       </div>
       <div class="card w-75 mx-auto">
         <div class="card-header">
@@ -62,13 +65,13 @@
             <div class="tab-pane fade show active" id="bank" role="tabpanel">
               <div class="row my-5 mx-5 px-5">
                 <div class="col-6 px-5">
-                  <img src="/static/uploads/kma.png" width="80vw" />
+                  <img src="/uploads/kma.png" width="80vw" />
                   <div class="my-2">Krungsri Bank (KMA)</div>
                   <div class="my-2">account number: 123-4-56789-0</div>
                   <div class="my-2">account name: VSB Account</div>
                 </div>
                 <div class="col-6 px-5">
-                  <img src="/static/uploads/bbl.jpg" width="80vw" />
+                  <img src="/uploads/bbl.jpg" width="80vw" />
                   <div class="my-2">Bangkok Bank (BBL)</div>
                   <div>account number: 123-4-56789-0</div>
                   <div class="my-2">account name: VSB Account</div>
@@ -76,13 +79,13 @@
               </div>
               <div class="row my-5 mx-5 px-5">
                 <div class="col-6 px-5">
-                  <img src="/static/uploads/kbank.png" width="80vw" />
+                  <img src="/uploads/kbank.png" width="80vw" />
                   <div class="my-2">Kasikorn Bank (KBANK)</div>
                   <div>account number: 123-4-56789-0</div>
                   <div class="my-2">account name: VSB Account</div>
                 </div>
                 <div class="col-6 px-5">
-                  <img src="/static/uploads/ktb.png" width="80vw" />
+                  <img src="/uploads/ktb.png" width="80vw" />
                   <div class="my-2">Krungthai Bank (KTB)</div>
                   <div>account number: 123-4-56789-0</div>
                   <div class="my-2">account name: VSB Account</div>
@@ -90,13 +93,13 @@
               </div>
               <div class="row my-5 mx-5 px-5">
                 <div class="col-6 px-5">
-                  <img src="/static/uploads/scb.png" width="80vw" />
+                  <img src="/uploads/scb.png" width="80vw" />
                   <div class="my-2">Siam Commercial Bank (SCB)</div>
                   <div>account number: 123-4-56789-0</div>
                   <div class="my-2">account name: VSB Account</div>
                 </div>
                 <div class="col-6 px-5">
-                  <img src="/static/uploads/ttb.png" width="80vw" />
+                  <img src="/uploads/ttb.png" width="80vw" />
                   <div class="my-2">TMB Thanachart Bank (TTB)</div>
                   <div>account number: 123-4-56789-0</div>
                   <div class="my-2">account name: VSB Account</div>
@@ -111,17 +114,29 @@
                         <h5 class="modal-title">Add Payment Slip</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
-                      <div class="modal-body">
-                        <form action="" method="POST" enctype="multipart/form-data">
+                      <div class="modal-body" v-for="cart in carts">
+                        <form :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
+                          <div class="my-2">
+                            <label class="form-label">Account Payment</label>
+                            <select class="form-select" name="account">
+                              <option selected disabled>Select Bank Account</option>
+                              <option value="KMA">KMA</option>
+                              <option value="BBL">BBL</option>
+                              <option value="KBANK">KBANK</option>
+                              <option value="KTB">KTB</option>
+                              <option value="SCB">SCB</option>
+                              <option value="TTB">TTB</option>
+                            </select>
+                          </div>
                           <div class="file my-2">
                             <label class="form-label" for="customFile">Payment Slip</label>
-                            <input type="file" class="form-control" id="customFile" name="payment_slip" />
+                            <input type="file" class="form-control" id="customFile" name="slip" />
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-warning">Save changes</button>
                           </div>
                         </form>
-                      </div>
-                      <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-warning">Save changes</button>
                       </div>
                     </div>
                   </div>
@@ -142,17 +157,23 @@
                           <h5 class="modal-title">Add Payment Slip</h5>
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
-                        <div class="modal-body">
-                          <form action="" method="POST" enctype="multipart/form-data">
+                        <div class="modal-body" v-for="cart in carts">
+                          <form :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
+                            <div class="my-2">
+                              <label class="form-label">Account Payment</label>
+                            <select class="form-select" name="account">
+                              <option selected value="qrcode">QR Code Payment</option>
+                            </select>
+                            </div>
                             <div class="file my-2">
                               <label class="form-label" for="customFile">Payment Slip</label>
-                              <input type="file" class="form-control" id="customFile" name="payment_slip" />
+                              <input type="file" class="form-control" id="customFile" name="slip" />
+                            </div>
+                            <div class="modal-footer">
+                              <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                              <button type="submit" class="btn btn-warning">Save changes</button>
                             </div>
                           </form>
-                        </div>
-                        <div class="modal-footer">
-                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                          <button type="button" class="btn btn-warning">Save changes</button>
                         </div>
                       </div>
                     </div>
@@ -164,64 +185,74 @@
         </div>
       </div>
     </div>
-  </body>
-  <footer class="footer py-3 mt-5 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <h5>Browse popular topics</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>Popular courses and articles</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>VSB</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">About</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Team</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 border-top my-4"></div>
-        <div class="col-9 mt-2">
-          <small class="text-muted">© 2022 VSB. All rights reserved</small>
-        </div>
-        <div class="col-3 iconfooter">
-          <i class="bi bi-facebook text-primary mx-2"></i>
-          <i class="bi bi-twitter text-info mx-2"></i>
-          <i class="bi bi-github mx-2"></i>
-          <i class="bi bi-linkedin text-primary mx-2"></i>
-          <i class="bi bi-youtube text-danger mx-2"></i>
-        </div>
+</body>
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      users: JSON.parse(`<%- users %>`),
+      carts: JSON.parse(`<%- carts %>`),
+    },
+  })
+</script>
+<footer class="footer py-3 mt-5 bg-light">
+  <div class="container">
+    <div class="row">
+      <div class="col-6">
+        <h5>Browse popular topics</h5>
+        <ul class="list-unstyled text-small">
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">ABC</a>
+          </li>
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">Math</a>
+          </li>
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">Eng</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <h5>Popular courses and articles</h5>
+        <ul class="list-unstyled text-small">
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">ABC</a>
+          </li>
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">Math</a>
+          </li>
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">Eng</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-6">
+        <h5>VSB</h5>
+        <ul class="list-unstyled text-small">
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">About</a>
+          </li>
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+          </li>
+          <li>
+            <a class="link-secondary text-decoration-none" href="#">Team</a>
+          </li>
+        </ul>
+      </div>
+      <div class="col-12 border-top my-4"></div>
+      <div class="col-9 mt-2">
+        <small class="text-muted">© 2022 VSB. All rights reserved</small>
+      </div>
+      <div class="col-3 iconfooter">
+        <i class="bi bi-facebook text-primary mx-2"></i>
+        <i class="bi bi-twitter text-info mx-2"></i>
+        <i class="bi bi-github mx-2"></i>
+        <i class="bi bi-linkedin text-primary mx-2"></i>
+        <i class="bi bi-youtube text-danger mx-2"></i>
       </div>
     </div>
-  </footer>
+  </div>
+</footer>
+
 </html>
