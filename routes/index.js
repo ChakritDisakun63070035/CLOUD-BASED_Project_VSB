@@ -7,6 +7,8 @@ const multer = require("multer")
 
 router = express.Router()
 
+
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, "./static")
