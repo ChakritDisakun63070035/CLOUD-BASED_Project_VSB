@@ -97,8 +97,8 @@
                 <div class="col-8">Total cost</div>
                 <div class="col-4 text-end">{{cart.price_total}}฿</div>
               </div>
-              <div class="row">
-                  <a href="" class="btn btn-warning col-11 mx-auto mt-3">Checkout Items</a>
+              <div class="row" v-for="cart in carts">
+                  <a :href="'/payment/'+ cart.user_id + '/' + cart.order_id" class="btn btn-warning col-11 mx-auto mt-3">Checkout Items</a>
               </div>
             </div>
           </div>
