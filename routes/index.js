@@ -86,7 +86,11 @@ router.get("/mycart/:id/", async function (req, res, next) {
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
       return res.render("user/cart", { items: JSON.stringify(rows2), users: JSON.stringify(rows3), carts: JSON.stringify(rows1) })
     } else{
-      res.send("nothing in your cart.")
+      const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+      // res.render("user/cart", {  users: JSON.stringify(rows3)})
+      // res.send("nothing in your cart.")
+      res.render("user/cart-no", { carts: JSON.stringify(rows1), users: JSON.stringify(rows3)})
+
     }
   } catch (err) {
     return next(err)

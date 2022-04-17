@@ -99,25 +99,17 @@
                       <div class="row">
                         <div class="col-sm-6">
                           <p><i class="bi
-                              bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn1}}</p>
                           <p><i class="bi
-                              bi-check-lg"></i> 25
-                            hors on-demand video</p>
-                          <p><i class="bi
-                              bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn2}}</p>
+                          
                         </div>
                         <div class="col-sm-6">
                           <p><i class="bi
-                              bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn3}}</p>
                           <p><i class="bi
-                              bi-check-lg"></i> 25
-                            hors on-demand video</p>
-                          <p><i class="bi
-                              bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn4}}</p>
+                          
                         </div>
                       </div>
                     </div>
@@ -177,7 +169,7 @@
                   <div class="row">
                     <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
                   </div>
-                  <div class="row" v-for="user in users">
+                  <div class="row my-2 mb-3" v-for="user in users">
                     <div class="col-sm-6  d-grid gap-2">
                       <a :href="'create/cart/' + user.user_id + '/' + info.course_price" class="button btn btn-primary" type="button">Add to cart</a>
                     </div>
@@ -185,28 +177,7 @@
                       <a href="/mycart" class="button btn btn-danger">Buy now</a>
                     </div>
                   </div>
-                  <div class="row mt-4">
-                    <h6><b>This course includes:</b></h6>
-                    <p><i class="bi bi-play-btn"></i> 25
-                      hors
-                      on-demand video</p>
-                    <p><i class="bi bi-file-earmark"></i> 80
-                      articles</p>
-                    <p><i class="bi bi-download"></i> 26
-                      downloadable resources</p>
-                    <p><i class="bi bi-code-slash"></i> 8
-                      coding
-                      exercises</p>
-                    <p><i class="bi bi-infinity"></i> Full
-                      lifetime
-                      access</p>
-                    <p><i class="bi bi-phone"></i> Access on
-                      mobile
-                      and TV</p>
-                    <p><i class="bi bi-trophy"></i>
-                      Certificate of
-                      completion</p>
-                  </div>
+                  
 
                 </div>
 
