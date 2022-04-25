@@ -13,7 +13,6 @@
     
     <!-- CDN AXIOS -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    <script> import axios from 'axios'; </script>
   </head>
 
   <body>
@@ -214,7 +213,7 @@
                 </div>
               </div>
               <!-- LIKE BUTTON -->
-              <div class="my-3"> <button @click="addLikeCourse(info.course_id)"><i class="bi bi-hand-thumbs-up-fill text-primary fs-1"></i> </button> {{info.like}} people like this course </div>
+              <div class="my-3"> <a @click="addLikeCourse(info.course_id)"><i class="bi bi-hand-thumbs-up-fill text-primary fs-1"></i> </a> {{info.like}} people like this course </div>
             </div>
           </div>
 
@@ -245,12 +244,10 @@
       axios
         .put(`http://localhost:3000/allcourse/course/${courseID}`)
         .then((response) => {
-          let selectedCourse = this.course.filter(
-            (e) => e.id === courseID
-          )[0];
-          console.log(selectedCourse);
-          selectedCourse.like = response.data.like;
-          console.log(selectedCourse);
+          console.log("ADD LIKE SUCCES");
+          let info = this.data[0]
+          info.like = response.data.like
+          
         })
         .catch((error) => (this.error = error.message));
     }
