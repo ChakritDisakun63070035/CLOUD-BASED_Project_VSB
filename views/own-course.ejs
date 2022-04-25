@@ -48,7 +48,7 @@
         <div v-for="info in data">
             <header>
                 <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-                    <div class="container-fluid" v-for="user in users.slice(0,1)">
+                    <div class="container-fluid" v-for="user in data.slice(0,1)">
                         <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
                             <img src="/uploads/logo.png" alt="" width="60" height="60" />
                         </a>
@@ -119,8 +119,12 @@
                 <div class="row mt-5">
                     <h5>My Course</h5>
                 </div>
-                <div class="row px-4">
-                    <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
+                <div class="nocourse" v-if="computedCourses==0"> 
+                    <h1> no course</h1>
+             </div>
+                <div class="row px-4" >
+                
+                    <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses" >
                         <a :href="'/course/' + course.course_id + '/' + course.user_id + '/learn'" class="card myAnim bg-light"
                             style="width: 20rem; text-decoration: none; color:black;">
                             <img :src="'/' + course.image" class="card-img-top" alt="...">
@@ -152,7 +156,7 @@
             data: {
                 data: JSON.parse(`<%- data %>`),
                 users: JSON.parse(`<%- users %>`),
-                sorted:''
+                sorted:" "
             },
             // computed: {
                 computed: {
@@ -194,20 +198,18 @@
                             }
                         }
                         if (this.sorted == "alpha") {
-                            return this.courses.sort(compareAlpha)
+                            return this.users.sort(compareAlpha)
                         } else if (this.sorted == "sortID") {
-                            return this.courses.sort(compareID)
+                            return this.users.sort(compareID)
                         } else if (this.sorted == "price") {
-                            return this.courses.sort(comparePrice)
+                            return this.users.sort(comparePrice)
                         }
                     },
                 },
             // },
         })
     </script>
-
-</body>
-<footer class="footer py-3 mt-5 bg-light">
+<footer class="footer py-3  bg-light " >
     <div class="container">
         <div class="row">
             <div class="col-6">
@@ -266,5 +268,7 @@
         </div>
     </div>
 </footer>
+</body>
+
 
 </html>

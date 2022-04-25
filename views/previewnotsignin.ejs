@@ -74,25 +74,17 @@
                       <div class="row">
                         <div class="col-sm-6">
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn1}}</p>
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
-                            hors on-demand video</p>
-                          <p><i class="bi
-                                                            bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn2}}</p>
+                          
                         </div>
                         <div class="col-sm-6">
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn3}}</p>
                           <p><i class="bi
-                                                            bi-check-lg"></i> 25
-                            hors on-demand video</p>
-                          <p><i class="bi
-                                                            bi-check-lg"></i> 25
-                            hors on-demand video</p>
+                              bi-check-lg"></i> {{info.learn4}}</p>
+                          
                         </div>
                       </div>
                     </div>
@@ -143,16 +135,8 @@
                                         autoplay;
                                         clipboard-write;
                                         encrypted-media; gyroscope;
-                                        picture-in-picture" allowfullscreen></iframe>
-                  <!-- {{info.preview_video}} -->
-                  <!-- <iframe width="442" height="245" src="https://www.youtube.com/embed/vd1qdnCX5RU"
-                                        title="YouTube video player" frameborder="0" allow="accelerometer;
-                                        autoplay;
-                                        clipboard-write;
-                                        encrypted-media; gyroscope;
-                                        picture-in-picture" allowfullscreen></iframe> -->
-                  <!-- {{info.preview_video}} -->
-                  <!-- <source :src="info.preview_video" type="video/mp4"> -->
+                                        picture-in-picture" 
+                                        allowfullscreen></iframe>
                 </div>
                 <div class="card-body">
                   <div class="row">
@@ -249,6 +233,7 @@
     </div>
   </body>
   <script>
+    
     var app = new Vue({
       el: "#app",
       data: {
