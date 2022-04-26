@@ -12,36 +12,78 @@
   </head>
   <body>
     <div class="" id="app">
-      <header>
-        <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-          <div class="container-fluid" v-for="user in users">
-            <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-              <img src="/uploads/logo.png" alt="" width="60" height="60" />
-            </a>
-
-            <div class="d-flex">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id + '/mycourse'">
-                <i class="bi bi-book fs-4"></i>
-                My Course
-              </a>
-              <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                <i class="bi bi-cart4 fs-4"></i>
-                My Cart
-              </a>
-              <li class="nav dropdown">
-                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                  <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
-                  {{user.user_fname}}
+      <div v-for="user in users">
+        <header>
+          <div v-if="user.role === 'student'" class="d-inline">
+            <nav class="navbar navbar-expand-lg navbar-light"id="backgroud_nav">
+              <div class="container-fluid ">
+                <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                  <img src="/uploads/logo.png" alt="" width="60" height="60" />
                 </a>
-                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                  <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a></li>
-                  <li><a class="dropdown-item" :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
-                </ul>
-              </li>
-            </div>
+                <div class="d-flex">                  
+                  <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
+                    '/mycourse'">
+                    <i class="bi bi-book fs-4"></i>
+                    My Course
+                  </a>
+                  <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                    <i class="bi bi-cart4 fs-4"></i>
+                    My Cart
+                  </a>
+                  <li class="nav dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#"
+                      id="navbarScrollingDropdown" role="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <img :src="'/' + user.image" alt="" width="32" height="32"
+                        class="d-inline-block align-text-top" />
+                      {{user.user_fname}}
+                    </a>
+                    <ul class="dropdown-menu"
+                      aria-labelledby="navbarScrollingDropdown">
+                      <li><a class="dropdown-item" :href="'/profile/' +
+                          user.user_id + '/'">Profile</a></li>
+                      <li><a class="dropdown-item"
+                          :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                    </ul>
+                  </li>
+                </div>
+              </div>
+            </nav>
+            
           </div>
-        </nav>
-      </header>
+          <div v-else-if="user.role === 'teacher'"  class="d-inline">
+            <nav class="navbar navbar-expand-lg navbar-light"id="backgroud_nav">
+              <div class="container-fluid">
+                <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                  <img src="/uploads/logo.png" alt="" width="60" height="60" />
+                </a>
+                <div class="d-flex">
+                  <a class="navbar-brand" :href="'/teacher/' + user.user_id">
+                    <i class="bi bi-book fs-4"></i>
+                    My Course
+                  </a>
+                  <li class="nav dropdown">
+                    <a class="nav-link dropdown-toggle text-dark" href="#"
+                      id="navbarScrollingDropdown" role="button"
+                      data-bs-toggle="dropdown" aria-expanded="false">
+                      <img :src="'/' + user.image" alt="" width="32" height="32"
+                        class="d-inline-block align-text-top" />
+                      {{user.user_fname}}
+                    </a>
+                    <ul class="dropdown-menu"
+                      aria-labelledby="navbarScrollingDropdown">
+                      <li><a class="dropdown-item" :href="'/profile/' +
+                          user.user_id + '/'">Profile</a></li>
+                      <li><a class="dropdown-item"
+                          :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                    </ul>
+                  </li>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </header>
+      </div>
       <div class="container">
         <div class="row mt-4">
           <div class="col-md-6 col-sm-12">

@@ -19,43 +19,85 @@
   <body>
     <div id="app">
       <div v-for="info in data">
-        <header>
-          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-            <div class="container-fluid" v-for="user in users">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                <img src="/uploads/logo.png" alt="" width="60" height="60" />
-              </a>
-
-              <div class="d-flex">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
-                  '/mycourse'">
-                  <i class="bi bi-book fs-4"></i>
-                  My Course
-                </a>
-                <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                  <i class="bi bi-cart4 fs-4"></i>
-                  My Cart
-                </a>
-                <li class="nav dropdown">
-                  <a class="nav-link dropdown-toggle text-dark" href="#"
-                    id="navbarScrollingDropdown" role="button"
-                    data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="'/' + user.image" alt="" width="32" height="32"
-                      class="d-inline-block align-text-top" />
-                    {{user.user_fname}}
+        <div v-for="user in users">
+          <header>
+            <div v-if="user.role === 'student'" class="d-inline">
+              <nav class="navbar navbar-expand-lg navbar-light"
+                id="backgroud_nav">
+                <div class="container-fluid">
+                  <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                    <img src="/uploads/logo.png" alt="" width="60" height="60"
+                      />
                   </a>
-                  <ul class="dropdown-menu"
-                    aria-labelledby="navbarScrollingDropdown">
-                    <li><a class="dropdown-item" :href="'/profile/' +
-                        user.user_id + '/'">Profile</a></li>
-                    <li><a class="dropdown-item"
-                        :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
-                  </ul>
-                </li>
-              </div>
+                  <div class="d-flex">
+                    <a class="navbar-brand" :href="'/allcourse/' + user.user_id
+                      +
+                      '/mycourse'">
+                      <i class="bi bi-book fs-4"></i>
+                      My Course
+                    </a>
+                    <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                      <i class="bi bi-cart4 fs-4"></i>
+                      My Cart
+                    </a>
+                    <li class="nav dropdown">
+                      <a class="nav-link dropdown-toggle text-dark" href="#"
+                        id="navbarScrollingDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img :src="'/' + user.image" alt="" width="32"
+                          height="32"
+                          class="d-inline-block align-text-top" />
+                        {{user.user_fname}}
+                      </a>
+                      <ul class="dropdown-menu"
+                        aria-labelledby="navbarScrollingDropdown">
+                        <li><a class="dropdown-item" :href="'/profile/' +
+                            user.user_id + '/'">Profile</a></li>
+                        <li><a class="dropdown-item"
+                            :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                      </ul>
+                    </li>
+                  </div>
+                </div>
+              </nav>
+
             </div>
-          </nav>
-        </header>
+            <div v-else-if="user.role === 'teacher'" class="d-inline">
+              <nav class="navbar navbar-expand-lg navbar-light"
+                id="backgroud_nav">
+                <div class="container-fluid">
+                  <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                    <img src="/uploads/logo.png" alt="" width="60" height="60"
+                      />
+                  </a>
+                  <div class="d-flex">
+                    <a class="navbar-brand" :href="'/teacher/' + user.user_id">
+                      <i class="bi bi-book fs-4"></i>
+                      My Course
+                    </a>
+                    <li class="nav dropdown">
+                      <a class="nav-link dropdown-toggle text-dark" href="#"
+                        id="navbarScrollingDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img :src="'/' + user.image" alt="" width="32"
+                          height="32"
+                          class="d-inline-block align-text-top" />
+                        {{user.user_fname}}
+                      </a>
+                      <ul class="dropdown-menu"
+                        aria-labelledby="navbarScrollingDropdown">
+                        <li><a class="dropdown-item" :href="'/profile/' +
+                            user.user_id + '/'">Profile</a></li>
+                        <li><a class="dropdown-item"
+                            :href="'/allcourse/not-sign-in/' + user.user_id">Logout</a></li>
+                      </ul>
+                    </li>
+                  </div>
+                </div>
+              </nav>
+            </div>
+          </header>
+        </div>
 
         <img :src=info.preview_img alt="Girl in a jacket" width="100%"
           height="450">
@@ -102,14 +144,14 @@
                               bi-check-lg"></i> {{info.learn1}}</p>
                           <p><i class="bi
                               bi-check-lg"></i> {{info.learn2}}</p>
-                          
+
                         </div>
                         <div class="col-sm-6">
                           <p><i class="bi
                               bi-check-lg"></i> {{info.learn3}}</p>
                           <p><i class="bi
                               bi-check-lg"></i> {{info.learn4}}</p>
-                          
+
                         </div>
                       </div>
                     </div>
@@ -126,7 +168,7 @@
                     <div class="col-md-4">
                       <div class="text-center mt-4">
                         <img :src=info.teacher_image class="img-fluid
-                          rounded-circle"alt="..." width="130" height="130">
+                          rounded-circle" alt="..." width="130" height="130">
                       </div>
                     </div>
                     <div class="col-md-8">
@@ -152,39 +194,62 @@
               </div>
 
             </div>
-            <div class="col-md-5 col-sm-12">
-              <div class="card gray" style="width: 35rem;">
-                <div class="text-center mt-3">
+            <div class="col-md-5 col-sm-12" v-for="user in users">
+              <div v-if="user.role === 'student'" class="d-inline">
+                <div class="card gray" style="width: 35rem;">
                   <div class="text-center mt-3">
-                    <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;
-                                            autoplay;
-                                            clipboard-write;
-                                            encrypted-media; gyroscope;
-                                            picture-in-picture" allowfullscreen></iframe>
-                                            
-                                            
+                    <div class="text-center mt-3">
+                      <iframe width="442" height="245" :src="info.preview_video"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media; gyroscope;
+                        picture-in-picture" allowfullscreen></iframe>
+
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                    <div class="row">
+                      <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
+                    </div>
+                    <div class="row my-2 mb-3" >
+                      <div class="col-sm-6 d-grid gap-2">
+                        <a :href="'create/cart/' + user.user_id + '/' +
+                          info.course_price" class="button btn btn-primary"
+                          type="button">Add to cart</a>
+                      </div>
+                      <div class="col-sm-6 d-grid gap-2">
+                        <a href="/mycart" class="button btn btn-danger">Buy now</a>
+                      </div>
+                    </div>
                   </div>
                 </div>
-                <div class="card-body">
-                  <div class="row">
-                    <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
-                  </div>
-                  <div class="row my-2 mb-3" v-for="user in users">
-                    <div class="col-sm-6  d-grid gap-2">
-                      <a :href="'create/cart/' + user.user_id + '/' + info.course_price" class="button btn btn-primary" type="button">Add to cart</a>
-                    </div>
-                    <div class="col-sm-6 d-grid gap-2">
-                      <a href="/mycart" class="button btn btn-danger">Buy now</a>
-                    </div>
-                  </div>
-                  
 
+              </div>
+              <div v-if="user.role === 'teacher'" class="d-inline">
+                <div class="card gray" style="width: 35rem;">
+                  <div class="text-center mt-3">
+                    <div class="text-center mt-3">
+                      <iframe width="442" height="245" :src="info.preview_video"
+                        title="YouTube video player" frameborder="0"
+                        allow="accelerometer;
+                        autoplay;
+                        clipboard-write;
+                        encrypted-media; gyroscope;
+                        picture-in-picture" allowfullscreen></iframe>
+
+                    </div>
+                  </div>
+
+                  <div class="card-body">
+                   
+                  </div>
                 </div>
 
               </div>
             </div>
-
-
           </div>
         </div>
 

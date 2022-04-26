@@ -262,19 +262,36 @@ router.get("/sign-in", async function (req, res, next) {
 router.post("/sign-in", async function (req, res, next) {
   const email = req.body.email
   const password = req.body.password
+  const role = req.body.role
 
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
   try {
-    const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=? AND password=?", [email, password])
+    //user
+    const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=? AND password=? AND role=?", [email, password,role])
     const [rows1, fields1] = await conn.query("UPDATE `user` SET status_user=? WHERE email=?", ["on", email])
+    
+    //admin
+    const [rows2, fields2] = await conn.query("SELECT * FROM admin WHERE email=? AND admin_pass=?", [email, password])
+
     await conn.commit()
     if (rows.length > 0) {
       let user_id = rows[0].user_id
+      
+      if(role === 'student'){
       res.redirect("/allcourse/" + user_id)
+      }
+      else if(role === 'teacher'){
+        res.redirect("/teacher/" + user_id )
+        }
       // res.redirect("/mycourse/" + user_id)
-    } else {
+    } else if(rows2.length > 0){
+      let admin_id = rows2[0].admin_id
+      res.redirect("/admin/" + admin_id)
+    }
+    
+    else {
       req.flash("message", "Please Sign-up First.")
       res.redirect("/sign-up")
     }
@@ -426,8 +443,9 @@ router.get("/course/:id/:userid/learn", async function (req, res, next) {
       [req.params.id]
     )
     const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
+    const [rows2, fields2] = await conn.query("SELECT * FROM my_video join course using(course_id)  WHERE course_id=?; ", [req.params.id]) //path video
 
-    return res.render("info-course", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("info-course", { data: JSON.stringify(rows), users: JSON.stringify(rows1), video: JSON.stringify(rows2)})
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -437,15 +455,49 @@ router.get("/course/:id/:userid/learn", async function (req, res, next) {
   }
 })
 
-// router.get("/courseId/allcourse", async function (req, res, next) {
-//   try {
-//     const [rows, fields] = await pool.query(
-//       'SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?',
-//       [req.params.courseId]
-//     );
-//     return res.render("allcourse", { courses: JSON.stringify(rows) });
-//   } catch (err) {
-//     return next(err)
-//   }
-// });
+//teacher-after-login
+router.get("/teacher/:id", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  
+  try {
+    
+    const [rows, fields] = await conn.query("SELECT * FROM teacher t join user u ON(t.teacher_fname = u.user_fname) join course using (teacher_id) where user_id= ?", [req.params.id])
+    const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    return res.render("teacher", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+})
+
+
+//admin-after-login
+router.get("/admin/:id", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  
+  try {
+    
+    const [rows, fields] = await conn.query("SELECT * FROM payment")
+    const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    return res.render("admin", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+})
+
+
+
+
+
 exports.router = router
