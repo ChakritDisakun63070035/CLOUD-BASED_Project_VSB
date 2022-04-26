@@ -366,8 +366,10 @@ router.get("/course/:id/:userid", async function (req, res, next) {
       [req.params.id]
     )
     const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
+    
+    const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
-    return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -386,8 +388,9 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
       "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?",
       [req.params.id]
     )
+    const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
-    return res.render("previewnotsignin", { data: JSON.stringify(rows) })
+    return res.render("previewnotsignin", { data: JSON.stringify(rows), comment: JSON.stringify(rows2),})
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -496,6 +499,54 @@ router.put("/course/:id/:userid", async function (req, res, next) {
   } finally {
     console.log("finally");
     conn.release();
+  }
+});
+
+// Create new comment
+router.post('/course/:id/:userid', async function (req, res, next) {
+  const comment = req.body.comment
+  const conn = await pool.getConnection()
+  // Begin transaction
+  await conn.beginTransaction();
+  try {
+      const [rows1, fields1] = await conn.query(
+          'INSERT INTO `comments` (`comment_course_id`, `comment`, `comment_date`, `comment_by_id`) VALUES ( ?, ?, CURRENT_TIMESTAMP, ?)',
+          [req.params.id, comment, req.params.userid]
+      )
+      const [rows2, fields2] = await conn.query(
+          'SELECT * FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?',
+          [rows1.insertId]
+      )
+      await conn.commit()
+      return res.json(rows2[0])
+  } catch (err) {
+      await conn.rollback();
+      return res.status(500).json(err)
+  } finally {
+      console.log('finally')
+      conn.release();
+  }
+});
+
+// Delete comment
+router.delete('/course/:id/:userid/:commentID', async function (req, res, next) {
+  const conn = await pool.getConnection();
+  // Begin transaction
+  await conn.beginTransaction();
+  try {
+      const [
+          rows,
+          fields,
+      ] = await conn.query("DELETE FROM `comments` WHERE `id` = ?", [req.params.commentID,
+      ]);
+      await conn.commit();
+      res.json();
+  } catch (err) {
+      console.log(err)
+      await conn.rollback();
+      return res.status(500).json(err);
+  } finally {
+      conn.release();
   }
 });
 
