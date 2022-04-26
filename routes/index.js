@@ -5,20 +5,19 @@ const bodyParser = require("body-parser")
 const multer = require("multer")
 const bcrypt = require("bcrypt")
 const { generateToken } = require("../utils/token")
-const axios = require("axios")
 router = express.Router()
 
-async function requiredLogin (req, res, next){
-  if (!req.session.user){
+async function requiredLogin(req, res, next) {
+  if (!req.session.user) {
     console.log(req.session.user)
-    res.redirect('/sign-in')
-  } else{
+    res.redirect("/sign-in")
+  } else {
     next()
   }
 }
 
 // set middleware
-router.use(async function(req, res, next){
+router.use(async function (req, res, next) {
   res.locals.user = req.session.user
   next()
 })
@@ -37,7 +36,7 @@ const upload = multer({ storage: storage })
 router.get("/", async function (req, res, next) {
   try {
     const [rows, fields] = await pool.query("SELECT * FROM course")
-    return res.render("index", { courses: JSON.stringify(rows)})
+    return res.render("index", { courses: JSON.stringify(rows) })
   } catch (err) {
     return next(err)
   }
@@ -50,7 +49,7 @@ router.get("/allcourse/:id", requiredLogin, async function (req, res, next) {
     const [rows, fields] = await conn.query("SELECT * FROM `course`")
     const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
     // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("allcourse", { courses: JSON.stringify(rows), users: JSON.stringify(rows1)})
+    return res.render("allcourse", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -244,11 +243,11 @@ router.post("/sign-up", async function (req, res, next) {
   }
 })
 
-router.get("/sign-in", async function (req, res, next){
+router.get("/sign-in", async function (req, res, next) {
   res.render("user/sign-in", { message: req.flash("message") })
 })
 
-router.post("/sign-in",  async function (req, res, next) {
+router.post("/sign-in", async function (req, res, next) {
   const email = req.body.email
   const password = req.body.password
 
@@ -278,11 +277,10 @@ router.post("/sign-in",  async function (req, res, next) {
     }
 
     const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE email=?", ["on", email])
-    
+
     req.session.user = true
     console.log(req.session.user)
     res.redirect("/allcourse/" + user.user_id)
-
   } catch (err) {
     await conn.rollback()
     next(err)
@@ -291,12 +289,12 @@ router.post("/sign-in",  async function (req, res, next) {
   }
 })
 
-router.get('/sign-out/:id', requiredLogin, async function(req, res, next){
+router.get("/sign-out/:id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
     const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE user.user_id=?", ["off", req.params.id])
-    req.session.user = null;
+    req.session.user = null
     res.redirect("/")
   } catch (err) {
     console.log(err)
@@ -452,75 +450,46 @@ router.get("/course/:id/:userid/learn", async function (req, res, next) {
 
 // ADD LIKE
 router.put("/allcourse/course/:id", async function (req, res, next) {
-  const conn = await pool.getConnection();
+  const conn = await pool.getConnection()
   // Begin transaction
-  await conn.beginTransaction();
+  await conn.beginTransaction()
 
   try {
-    let [
-      rows,
-      fields,
-    ] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [
-      req.params.id,
-    ]);
-    let like = rows[0].like + 1;
+    let [rows, fields] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [req.params.id])
+    let like = rows[0].like + 1
 
-    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [
-      like,
-      req.params.id,
-    ]);
+    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [like, req.params.id])
 
-    await conn.commit();
-    res.json({ like: like });
+    await conn.commit()
+    res.json({ like: like })
   } catch (err) {
-    await conn.rollback();
-    return res.status(500).json(err);
+    await conn.rollback()
+    return res.status(500).json(err)
   } finally {
-    console.log("finally");
-    conn.release();
+    conn.release()
   }
-});
+})
 
 // ADD LIKE 2
 router.put("/course/:id/:userid", async function (req, res, next) {
-  const conn = await pool.getConnection();
+  const conn = await pool.getConnection()
   // Begin transaction
-  await conn.beginTransaction();
+  await conn.beginTransaction()
 
   try {
-    let [
-      rows,
-      fields,
-    ] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [
-      req.params.id,
-    ]);
-    let like = rows[0].like + 1;
+    let [rows, fields] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [req.params.id])
+    let like = rows[0].like + 1
 
-    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [
-      like,
-      req.params.id,
-    ]);
+    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [like, req.params.id])
 
-    await conn.commit();
-    res.json({ like: like });
+    await conn.commit()
+    res.json({ like: like })
   } catch (err) {
-    await conn.rollback();
-    return res.status(500).json(err);
+    await conn.rollback()
+    return res.status(500).json(err)
   } finally {
-    console.log("finally");
-    conn.release();
+    conn.release()
   }
-});
+})
 
-// router.get("/courseId/allcourse", async function (req, res, next) {
-//   try {
-//     const [rows, fields] = await pool.query(
-//       'SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?',
-//       [req.params.courseId]
-//     );
-//     return res.render("allcourse", { courses: JSON.stringify(rows) });
-//   } catch (err) {
-//     return next(err)
-//   }
-// });
 exports.router = router
