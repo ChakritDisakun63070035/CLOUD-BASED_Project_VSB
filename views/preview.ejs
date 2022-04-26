@@ -22,12 +22,10 @@
         <div v-for="user in users">
           <header>
             <div v-if="user.role === 'student'" class="d-inline">
-              <nav class="navbar navbar-expand-lg navbar-light"
-                id="backgroud_nav">
+              <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
                 <div class="container-fluid">
                   <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                    <img src="/uploads/logo.png" alt="" width="60" height="60"
-                      />
+                    <img src="/uploads/logo.png" alt="" width="60" height="60" />
                   </a>
                   <div class="d-flex">
                     <a class="navbar-brand" :href="'/allcourse/' + user.user_id
@@ -41,20 +39,16 @@
                       My Cart
                     </a>
                     <li class="nav dropdown">
-                      <a class="nav-link dropdown-toggle text-dark" href="#"
-                        id="navbarScrollingDropdown" role="button"
+                      <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img :src="'/' + user.image" alt="" width="32"
-                          height="32"
+                        <img :src="'/' + user.image" alt="" width="32" height="32"
                           class="d-inline-block align-text-top" />
                         {{user.user_fname}}
                       </a>
-                      <ul class="dropdown-menu"
-                        aria-labelledby="navbarScrollingDropdown">
+                      <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                         <li><a class="dropdown-item" :href="'/profile/' +
                             user.user_id + '/'">Profile</a></li>
-                        <li><a class="dropdown-item"
-                            :href="'/sign-out/' + user.user_id">Logout</a></li>
+                        <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
                       </ul>
                     </li>
                   </div>
@@ -63,12 +57,10 @@
 
             </div>
             <div v-else-if="user.role === 'teacher'" class="d-inline">
-              <nav class="navbar navbar-expand-lg navbar-light"
-                id="backgroud_nav">
+              <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
                 <div class="container-fluid">
                   <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                    <img src="/uploads/logo.png" alt="" width="60" height="60"
-                      />
+                    <img src="/uploads/logo.png" alt="" width="60" height="60" />
                   </a>
                   <div class="d-flex">
                     <a class="navbar-brand" :href="'/teacher/' + user.user_id">
@@ -76,20 +68,16 @@
                       My Course
                     </a>
                     <li class="nav dropdown">
-                      <a class="nav-link dropdown-toggle text-dark" href="#"
-                        id="navbarScrollingDropdown" role="button"
+                      <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
-                        <img :src="'/' + user.image" alt="" width="32"
-                          height="32"
+                        <img :src="'/' + user.image" alt="" width="32" height="32"
                           class="d-inline-block align-text-top" />
                         {{user.user_fname}}
                       </a>
-                      <ul class="dropdown-menu"
-                        aria-labelledby="navbarScrollingDropdown">
+                      <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                         <li><a class="dropdown-item" :href="'/profile/' +
                             user.user_id + '/'">Profile</a></li>
-                        <li><a class="dropdown-item"
-                            :href="'/sign-out/' + user.user_id">Logout</a></li>
+                        <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
                       </ul>
                     </li>
                   </div>
@@ -99,8 +87,7 @@
           </header>
         </div>
 
-        <img :src="'/' + info.preview_img" alt="Girl in a jacket" width="100%"
-          height="450">
+        <img :src=info.preview_img alt="Girl in a jacket" width="100%" height="450">
 
         <div class="container">
           <div class="row mt-5">
@@ -112,7 +99,7 @@
                   <div class="card-body">
                     <h3 class="card-title">{{info.course_name}}</h3>
                     <p class="card-text"> {{info.course_info}} </p>
-                    <img :src="'/' + info.teacher_image" width="60" height="60" alt="">
+                    <img :src=info.teacher_image width="60" height="60" alt="">
                     <span> {{info.teacher_fname+ ' '+ info.teacher_lname}}</span>
                   </div>
                 </div>
@@ -167,7 +154,7 @@
                   <div class="row g-0">
                     <div class="col-md-4">
                       <div class="text-center mt-4">
-                        <img :src="'/' + info.teacher_image" class="img-fluid
+                        <img :src=info.teacher_image class="img-fluid
                           rounded-circle" alt="..." width="130" height="130">
                       </div>
                     </div>
@@ -199,9 +186,8 @@
                 <div class="card gray" style="width: 35rem;">
                   <div class="text-center mt-3">
                     <div class="text-center mt-3">
-                      <iframe width="442" height="245" :src="info.preview_video"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer;
+                      <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player"
+                        frameborder="0" allow="accelerometer;
                         autoplay;
                         clipboard-write;
                         encrypted-media; gyroscope;
@@ -214,11 +200,10 @@
                     <div class="row">
                       <h5 class="card-title"><b> {{info.course_price+'฿'}} </b></h5>
                     </div>
-                    <div class="row my-2 mb-3" >
+                    <div class="row my-2 mb-3">
                       <div class="col-sm-6 d-grid gap-2">
                         <a :href="'create/cart/' + user.user_id + '/' +
-                          info.course_price" class="button btn btn-primary"
-                          type="button">Add to cart</a>
+                          info.course_price" class="button btn btn-primary" type="button">Add to cart</a>
                       </div>
                       <div class="col-sm-6 d-grid gap-2">
                         <a href="/mycart" class="button btn btn-danger">Buy now</a>
@@ -226,59 +211,133 @@
                     </div>
                   </div>
                 </div>
+
+                <!-- ADD LIKE -->
+                <div class="my-3 text-center py-3" style="background-color: pink; border-radius: 20px;">
+                  <div style="font-size: 100px;">
+                    <a @click="addLikeCourse(data[0].course_id, users[0].user_id)"><i
+                        class="bi bi-suit-heart-fill text-danger"></i> </a>
+                  </div>
+                  <div class="fs-3">{{info.like}} Liked</div>
+                </div>
+
               </div>
               <div v-if="user.role === 'teacher'" class="d-inline">
                 <div class="card gray" style="width: 35rem;">
                   <div class="text-center mt-3">
                     <div class="text-center mt-3">
-                      <iframe width="442" height="245" :src="info.preview_video"
-                        title="YouTube video player" frameborder="0"
-                        allow="accelerometer;
+                      <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player"
+                        frameborder="0" allow="accelerometer;
                         autoplay;
                         clipboard-write;
                         encrypted-media; gyroscope;
                         picture-in-picture" allowfullscreen></iframe>
 
-              <!-- ADD LIKE -->
-              <div class="my-3 text-center py-3" style="background-color: pink; border-radius: 20px;">
-                <div style="font-size: 100px;">
-                <a @click="addLikeCourse(info.course_id, users[0].user_id)"><i class="bi bi-suit-heart-fill text-danger" ></i> </a></div>
-                <div class="fs-3">{{info.like}} Liked</div> 
+                    </div>
+                  </div>
+                </div>
               </div>
 
-            </div>
-          </div>
 
+              </div>
+          </div>
           <!-- show comment -->
           <div>
-            <div style="border-bottom: 5px solid gray"><h3>COMMENTS</h3></div>
+            <div style="border-bottom: 5px solid gray">
+              <h3>COMMENTS</h3>
+            </div>
             <div class="mt-3 row bg-light" style="border-radius: 10px;" v-for="(info, index) in comment">
 
-              <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="'/' + info.image" style="width:100px; height:100px; object-fit:cover;"/> </div>
-              <div class="col-9 col-sm-9 col-md-10 mt-2"> <h5>{{info.user_fname}}</h5> <p>{{info.comment}}</p>
-                <div class="text-end fs-3 mb-2" v-if="info.user_id === users[0].user_id"> <a @click ="deleteComment(info.comment_course_id, users[0].user_id, info.id, index)"> <i class="bi bi-trash-fill"></i> </a> </div>
+              <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="'/' + info.image"
+                  style="width:100px; height:100px; object-fit:cover;" /> </div>
+              <div class="col-9 col-sm-9 col-md-10 mt-2">
+                <h5>{{info.user_fname}}</h5>
+                <p>{{info.comment}}</p>
+                <div class="text-end fs-3 mb-2" v-if="info.user_id === users[0].user_id"> <a
+                    @click="deleteComment(info.comment_course_id, users[0].user_id, info.id, index)"> <i
+                      class="bi bi-trash-fill"></i> </a> </div>
               </div>
+            </div>
+            <!-- add comment -->
+            <div class="text-center" v-if="comment_bnt === 1"> <button @click="comment_bnt = 0"
+              class="btn btn-light mt-4">ADD COMMENTS</button></div>
 
+          <div class="text-center" v-if="comment_bnt === 0">
+            <div class="mt-3 row bg-light" style="border-radius: 10px;">
+              <span class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="'/' + users[0].image"
+                  style="width:100px; height:100px; object-fit:cover;" /> </span>
+              <span class="col-9 col-sm-9 col-md-10 text-start mt-2">
+                <h5>{{users[0].user_fname}}</h5>
+                <input v-model="commTxt" type="text" class="form-control">
+              </span>
+            </div>
+            <button @click="addComment(data[0].course_id, users[0].user_id)"
+              class="btn btn-success mt-4 submit">SUBMIT</button> <button class="btn btn-danger mt-4"
+              @click="comment_bnt = 1">CANCLE</button>
+          </div>
+          </div>
+        </div>
+        <footer class="footer py-3 mt-5 bg-light">
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <h5>Browse popular topics</h5>
+                <ul class="list-unstyled text-small">
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">ABC</a>
+                  </li>
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">Math</a>
+                  </li>
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">Eng</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <h5>Popular courses and articles</h5>
+                <ul class="list-unstyled text-small">
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">ABC</a>
+                  </li>
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">Math</a>
+                  </li>
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">Eng</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-6">
+                <h5>VSB</h5>
+                <ul class="list-unstyled text-small">
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">About</a>
+                  </li>
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+                  </li>
+                  <li>
+                    <a class="link-secondary text-decoration-none" href="#">Team</a>
+                  </li>
+                </ul>
+              </div>
+              <div class="col-12 border-top my-4"></div>
+              <div class="col-9 mt-2">
+                <small class="text-muted">© 2022 VSB. All rights
+                  reserved</small>
+              </div>
+              <div class="col-3 icon">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+                <i class="bi bi-twitter text-info mx-2"></i>
+                <i class="bi bi-github mx-2"></i>
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+                <i class="bi bi-youtube text-danger mx-2"></i>
+              </div>
             </div>
           </div>
+        </footer>
 
-          <!-- add comment -->
-        <div class="text-center" v-if="comment_bnt === 1"> <button @click="comment_bnt = 0" class="btn btn-light mt-4">ADD COMMENTS</button></div>
-
-        <div class="text-center" v-if="comment_bnt === 0">
-          <div class="mt-3 row bg-light" style="border-radius: 10px;">
-            <span class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="'/' + users[0].image" style="width:100px; height:100px; object-fit:cover;"/> </span>
-            <span class="col-9 col-sm-9 col-md-10 text-start mt-2"> <h5>{{users[0].user_fname}}</h5>
-              <input v-model="commTxt" type="text" class="form-control">
-            </span>
-          </div>
-          <button @click="addComment(info.course_id, users[0].user_id)" class="btn btn-success mt-4 submit">SUBMIT</button> <button class="btn btn-danger mt-4" @click="comment_bnt = 1">CANCLE</button>
-        </div>
-          
-        </div>
-
-      </div>
-    </div>
   </body>
   <script>
     var app = new Vue({
@@ -292,112 +351,53 @@
       },
       methods: {
         addLikeCourse(courseID, userID) {
-      axios
-        .put(`http://localhost:3000/course/${courseID}/${userID}`)
-        .then((response) => {
-          console.log("ADD LIKE SUCCES");
-          let info = this.data[0]
-          info.like = response.data.like
-          
-        })
-        .catch((error) => (this.error = error.message));
-    },
-    addComment(courseID, userID) {
-      if(this.commTxt == ""){
-        window.alert("Please fill comment")
-        }
-        else{
           axios
-        .post(`http://localhost:3000/course/${courseID}/${userID}`, {
-          comment: this.commTxt,
-        })
-        .then((response) => {
-          this.commTxt = ''
-          this.comment.push(response.data);
-        })
-        .catch((error) => {
-          console.log("ok");
-          this.error = error.response.data.message;
-        });
-        }
-    },
-    deleteComment(courseID, userID, commentID, index) {
-      const result = confirm(`Are you sure you want to delete this comment`);
-      if (result) {
-        console.log(this.comment[index].id)
-        axios
-          .delete(`http://localhost:3000/course/${courseID}/${userID}/${commentID}`)
-          .then((response) => {
-            console.log(response);
-            this.comment.splice(index, 1);
-          })
-          .catch((error) => {
-            this.error = error.message;
-          });
-      }
-    },
+            .put(`http://localhost:3000/course/${courseID}/${userID}`)
+            .then((response) => {
+              console.log("ADD LIKE SUCCES");
+              let info = this.data[0]
+              info.like = response.data.like
+
+            })
+            .catch((error) => (this.error = error.message));
+        },
+        addComment(courseID, userID) {
+          if (this.commTxt == "") {
+            window.alert("Please fill comment")
+          }
+          else {
+            axios
+              .post(`http://localhost:3000/course/${courseID}/${userID}`, {
+                comment: this.commTxt,
+              })
+              .then((response) => {
+                this.commTxt = ''
+                this.comment.push(response.data);
+              })
+              .catch((error) => {
+                console.log("ok");
+                this.error = error.response.data.message;
+              });
+          }
+        },
+        deleteComment(courseID, userID, commentID, index) {
+          const result = confirm(`Are you sure you want to delete this comment`);
+          if (result) {
+            console.log(this.comment[index].id)
+            axios
+              .delete(`http://localhost:3000/course/${courseID}/${userID}/${commentID}`)
+              .then((response) => {
+                console.log(response);
+                this.comment.splice(index, 1);
+              })
+              .catch((error) => {
+                this.error = error.message;
+              });
+          }
+        },
       }
     })
   </script>
-  <footer class="footer py-3 mt-5 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <h5>Browse popular topics</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>Popular courses and articles</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>VSB</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">About</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Team</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 border-top my-4"></div>
-        <div class="col-9 mt-2">
-          <small class="text-muted">© 2022 VSB. All rights
-            reserved</small>
-        </div>
-        <div class="col-3 icon">
-          <i class="bi bi-facebook text-primary mx-2"></i>
-          <i class="bi bi-twitter text-info mx-2"></i>
-          <i class="bi bi-github mx-2"></i>
-          <i class="bi bi-linkedin text-primary mx-2"></i>
-          <i class="bi bi-youtube text-danger mx-2"></i>
-        </div>
-      </div>
-    </div>
-  </footer>
 
-</html>
+
+  </html>

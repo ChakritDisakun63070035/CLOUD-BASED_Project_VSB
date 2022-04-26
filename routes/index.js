@@ -592,6 +592,37 @@ router.post('/course/:id/:userid', async function (req, res, next) {
   }
 });
 
+// ADD LIKE 2
+router.put("/course/:id/:userid", async function (req, res, next) {
+  const conn = await pool.getConnection();
+  // Begin transaction
+  await conn.beginTransaction();
+
+  try {
+    let [
+      rows,
+      fields,
+    ] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [
+      req.params.id,
+    ]);
+    let like = rows[0].like + 1;
+
+    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [
+      like,
+      req.params.id,
+    ]);
+
+    await conn.commit();
+    res.json({ like: like });
+  } catch (err) {
+    await conn.rollback();
+    return res.status(500).json(err);
+  } finally {
+    console.log("finally");
+    conn.release();
+  }
+});
+
 // Delete comment
 router.delete('/course/:id/:userid/:commentID', async function (req, res, next) {
   const conn = await pool.getConnection();
