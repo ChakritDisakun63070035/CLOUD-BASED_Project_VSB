@@ -2,12 +2,25 @@ const express = require("express")
 const pool = require("../config")
 const path = require("path")
 const bodyParser = require("body-parser")
-const { redirect } = require("express/lib/response")
 const multer = require("multer")
-
+const bcrypt = require("bcrypt")
+const { generateToken } = require("../utils/token")
 router = express.Router()
 
+async function requiredLogin(req, res, next) {
+  if (!req.session.user) {
+    console.log(req.session.user)
+    res.redirect("/sign-in")
+  } else {
+    next()
+  }
+}
 
+// set middleware
+router.use(async function (req, res, next) {
+  res.locals.user = req.session.user
+  next()
+})
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -29,7 +42,7 @@ router.get("/", async function (req, res, next) {
   }
 })
 
-router.get("/allcourse/:id", async function (req, res, next) {
+router.get("/allcourse/:id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -41,7 +54,6 @@ router.get("/allcourse/:id", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
@@ -56,28 +68,12 @@ router.get("/allcourse/", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
-    await conn.release()
-  }
-})
-
-router.get("/allcourse/not-sign-in/:id", async function (req, res, next) {
-  const conn = await pool.getConnection()
-  await conn.beginTransaction()
-  try {
-    const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE user.user_id=?", ["off", req.params.id])
-    res.redirect("/allcourse/")
-  } catch (err) {
-    console.log(err)
-    await conn.rollback()
-  } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 
 // my cart
-router.get("/mycart/:id/", async function (req, res, next) {
+router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
   try {
     const [rows1, fields1] = await pool.query("SELECT * FROM `order` WHERE user_id=? AND order_status=?", [req.params.id, "pending"])
     if (rows1.length > 0) {
@@ -85,12 +81,11 @@ router.get("/mycart/:id/", async function (req, res, next) {
       const [rows2, fields2] = await pool.query("SELECT * FROM `order_item` JOIN `course` USING(course_id) WHERE order_id=?", [order_id])
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
       return res.render("user/cart", { items: JSON.stringify(rows2), users: JSON.stringify(rows3), carts: JSON.stringify(rows1) })
-    } else{
+    } else {
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
       // res.render("user/cart", {  users: JSON.stringify(rows3)})
       // res.send("nothing in your cart.")
-      res.render("user/cart-no", { carts: JSON.stringify(rows1), users: JSON.stringify(rows3)})
-
+      res.render("user/cart-no", { carts: JSON.stringify(rows1), users: JSON.stringify(rows3) })
     }
   } catch (err) {
     return next(err)
@@ -131,13 +126,12 @@ router.get("/course/:course_id/create/cart/:user_id/:price", async function (req
     await conn.rollback()
     next(err)
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 
 // del items
-router.get("/mycart/:id/:item_no/:order_id", async function (req, res, next) {
+router.get("/mycart/:id/:item_no/:order_id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -151,13 +145,12 @@ router.get("/mycart/:id/:item_no/:order_id", async function (req, res, next) {
     await conn.rollback()
     next(err)
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 
 // payment
-router.get("/payment/:id/:order_id", async function (req, res, next) {
+router.get("/payment/:id/:order_id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -169,7 +162,6 @@ router.get("/payment/:id/:order_id", async function (req, res, next) {
     await conn.rollback()
     next(err)
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
@@ -210,53 +202,49 @@ router.post("/payment/:id/:order_id", upload.single("slip"), async function (req
     await conn.rollback()
     next(err)
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 
 router.get("/sign-up", async function (req, res, next) {
-  res.render("user/sign-up", { message: req.flash("message") })
-})
-
-router.get("/sign-up", async function (req, res, next) {
-  res.render("user/sign-up", { message: req.flash("message") })
+  res.render("user/sign-up")
 })
 
 router.post("/sign-up", async function (req, res, next) {
   const fname = req.body.fname
   const lname = req.body.lname
   const email = req.body.email
-  const password = req.body.password
+  const password = await bcrypt.hash(req.body.password, 5)
   const dob = req.body.dob
   const gender = req.body.gender
+  const role = req.body.role
 
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
   try {
-    const [rows, fields] = await conn.query("INSERT INTO user (user_fname, user_lname, email, password, dateofbirth, gender) VALUES(?, ?, ?, ?, ?, ?)", [
+    const [rows, fields] = await conn.query("INSERT INTO `user` (user_fname, user_lname, email, password, dateofbirth, gender, role) VALUES(?, ?, ?, ?, ?, ?, ?)", [
       fname,
       lname,
       email,
       password,
       dob,
       gender,
+      role,
     ])
 
     await conn.commit()
-    res.redirect("/")
+    res.redirect("/sign-in")
   } catch (err) {
     await conn.rollback()
     next(err)
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 
 router.get("/sign-in", async function (req, res, next) {
-  res.render("user/sign-in")
+  res.render("user/sign-in", { message: req.flash("message") })
 })
 
 router.post("/sign-in", async function (req, res, next) {
@@ -268,38 +256,51 @@ router.post("/sign-in", async function (req, res, next) {
   await conn.beginTransaction()
 
   try {
-    //user
-    const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=? AND password=? AND role=?", [email, password,role])
-    const [rows1, fields1] = await conn.query("UPDATE `user` SET status_user=? WHERE email=?", ["on", email])
-    
-    //admin
-    const [rows2, fields2] = await conn.query("SELECT * FROM admin WHERE email=? AND admin_pass=?", [email, password])
+    const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=?", [email])
+    const user = rows[0]
 
-    await conn.commit()
-    if (rows.length > 0) {
-      let user_id = rows[0].user_id
-      
-      if(role === 'student'){
-      res.redirect("/allcourse/" + user_id)
-      }
-      else if(role === 'teacher'){
-        res.redirect("/teacher/" + user_id )
-        }
-      // res.redirect("/mycourse/" + user_id)
-    } else if(rows2.length > 0){
-      let admin_id = rows2[0].admin_id
-      res.redirect("/admin/" + admin_id)
+    if (!user) {
+      req.flash("message", "Incorrect Username")
+      res.render("user/sign-in", { message: req.flash("message") })
     }
-    
-    else {
-      req.flash("message", "Please Sign-up First.")
-      res.redirect("/sign-up")
+
+    if (!(await bcrypt.compare(password, user.password))) {
+      req.flash("message", "Incorrect Password")
+      res.redirect("/sign-in")
     }
+
+    const [rows1, fields1] = await conn.query("SELECT * FROM tokens WHERE user_id=?", [user.user_id])
+    let token = rows1[0]?.token
+    if (!token) {
+      // Generate and save token into database
+      token = generateToken()
+      await conn.query("INSERT INTO tokens(user_id, token) VALUES (?, ?)", [user.user_id, token])
+    }
+
+    const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE email=?", ["on", email])
+
+    req.session.user = true
+    console.log(req.session.user)
+    res.redirect("/allcourse/" + user.user_id)
   } catch (err) {
     await conn.rollback()
     next(err)
   } finally {
-    console.log("finally")
+    await conn.release()
+  }
+})
+
+router.get("/sign-out/:id", requiredLogin, async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+    const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE user.user_id=?", ["off", req.params.id])
+    req.session.user = null
+    res.redirect("/")
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
     await conn.release()
   }
 })
@@ -312,7 +313,7 @@ router.post("/reset_password", async function (req, res, next) {
   res.redirect("/")
 })
 
-router.get("/profile/:id", async function (req, res, next) {
+router.get("/profile/:id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -325,19 +326,18 @@ router.get("/profile/:id", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 
-router.post("/profile/:id", upload.single("image"), async function (req, res, next) {
+router.post("/profile/:id", requiredLogin, upload.single("image"), async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
   const fname = req.body.fname
   const lname = req.body.lname
   const email = req.body.email
-  const password = req.body.password
+  const password = await bcrypt.hash(req.body.password, 5)
   const dob = req.body.dob
   const gender = req.body.gender
 
@@ -367,7 +367,6 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
@@ -389,7 +388,6 @@ router.get("/course/:id/:userid", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
@@ -409,12 +407,11 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
 // my course
-router.get("/allcourse/:id/mycourse", async function (req, res, next) {
+router.get("/allcourse/:id/mycourse", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -428,7 +425,6 @@ router.get("/allcourse/:id/mycourse", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
@@ -470,7 +466,6 @@ router.get("/teacher/:id", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })

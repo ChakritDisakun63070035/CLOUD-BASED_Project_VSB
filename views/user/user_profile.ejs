@@ -143,9 +143,7 @@
         <br />
         <!-- ปุ่ม log out -->
         <div class="text-center mt-4" v-for="user in users">
-          <a class="btn btn-danger" aria-pressed="true"
-            :href="'/allcourse/not-sign-in/' + user.user_id"><i class="bi
-              bi-box-arrow-right"></i> Log Out</a>
+          <a class="btn btn-danger" aria-pressed="true" :href="'/sign-out/' + user.user_id"><i class="bi bi-box-arrow-right"></i> Log Out</a>
         </div>
         <br /><br />
 

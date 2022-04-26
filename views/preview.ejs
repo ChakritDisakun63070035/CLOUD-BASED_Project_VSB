@@ -11,6 +11,9 @@
     <script src="/js/bootstrap.bundle.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
     <script src="https://unpkg.com/vue@2.2.6/dist/vue.js"></script>
+
+    <!-- CDN AXIOS -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   </head>
   <header>
 
@@ -226,7 +229,6 @@
                     </div>
                   </div>
                 </div>
-
               </div>
               <div v-if="user.role === 'teacher'" class="d-inline">
                 <div class="card gray" style="width: 35rem;">
@@ -263,6 +265,19 @@
         data: JSON.parse(`<%- data %>`),
         users: JSON.parse(`<%- users %>`)
       },
+      methods: {
+        addLikeCourse(courseID, userID) {
+      axios
+        .put(`http://localhost:3000/course/${courseID}/${userID}`)
+        .then((response) => {
+          console.log("ADD LIKE SUCCES");
+          let info = this.data[0]
+          info.like = response.data.like
+          
+        })
+        .catch((error) => (this.error = error.message));
+    }
+      }
     })
   </script>
   <footer class="footer py-3 mt-5 bg-light">
