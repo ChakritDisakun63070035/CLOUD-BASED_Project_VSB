@@ -38,15 +38,12 @@
     <div class="row">
       <div class="col">
         <p>
-          Get that "ready for anything" feeling with more than 5,000 courses,
-          <br />Professional Certificates, and degrees from world-class universities <br />and companies.
+          Get that "ready for anything" feeling with more than 15 courses,
+          <br />Professional Certificates, and degrees from world-class
+          universities <br />and companies.
         </p>
       </div>
       <div class="col">
-        <!-- <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit,
-                        sed do eiusmod tempor incididunt ut labore et dolore 
-                       magna aliqua. Ut enim ad minim veniam, quis nostrud 
-                       exercitation ullamco laboris nisi ut aliquip ex ea </p> -->
       </div>
     </div>
     <div class="row mb-5">
@@ -58,10 +55,11 @@
       <div class="col-12 mb-3"><b>Explore Course</b></div>
     </div>
     <div class="row d-flex justify-content-center gap-2">
-      <div class="card sm-3 mx-3 p-0" style="max-width: 380px" v-for="course in courses.slice(0,6)">
+      <div class="card sm-3 mx-3 p-0" style="max-width: 380px" v-for="course
+          in courses.slice(0,6)">
         <div class="row g-0">
           <div class="col-md-6">
-            <img :src="course.image " class="img-fluid" alt="404-not found" />
+            <img :src="course.image" class="img-fluid" alt="404-not found" />
           </div>
           <div class="col-md-6">
             <div class="card-body">
@@ -76,6 +74,48 @@
     </div>
   </div>
   <script>
+    document.addEventListener('DOMContentLoaded', function (event) {
+      // array with texts to type in typewriter
+      var dataText = ["Learn without limits", "Light tomorrow with today", "Every moment is a fresh beginning!"];
+
+      // type one text in the typwriter
+      // keeps calling itself until the text is finished
+      function typeWriter(text, i, fnCallback) {
+        // chekc if text isn't finished yet
+        if (i < (text.length)) {
+          // add next character to h1
+          document.querySelector("h3").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+
+          // wait for a while and call this function again for next character
+          setTimeout(function () {
+            typeWriter(text, i + 1, fnCallback)
+          }, 100);
+        }
+        // text finished, call callback if there is a callback function
+        else if (typeof fnCallback == 'function') {
+          // call callback after timeout
+          setTimeout(fnCallback, 900);
+        }
+      }
+      // start a typewriter animation for a text in the dataText array
+      function StartTextAnimation(i) {
+        if (typeof dataText[i] == 'undefined') {
+          setTimeout(function () {
+            StartTextAnimation(0);
+          }, 20000);
+        }
+        // check if dataText[i] exists
+        if (i < dataText[i].length) {
+          // text exists! start typewriter animation
+          typeWriter(dataText[i], 0, function () {
+            // after callback (and whole text has been animated), start next text
+            StartTextAnimation(i + 1);
+          });
+        }
+      }
+      // start the text animation
+      StartTextAnimation(0);
+    });
     var app = new Vue({
       el: "#app",
       data: {

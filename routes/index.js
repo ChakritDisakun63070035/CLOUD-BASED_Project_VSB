@@ -261,8 +261,16 @@ router.post("/sign-in", async function (req, res, next) {
 
   try {
     const [rows, fields] = await conn.query("SELECT * FROM user WHERE email=?", [email])
+    //admin
+    const [rows3, fields3] = await conn.query("SELECT * FROM admin WHERE email=? AND admin_pass=?", [email, password])
 
     const user = rows[0]
+    const admin = rows3[0]
+    if(rows3.length > 0){
+      // let admin_id = rows2[0].admin_id
+      res.redirect("/admin/" + admin.admin_id)
+    }
+    
 
     if (!user) {
       req.flash("message", "Incorrect Username")
@@ -274,7 +282,9 @@ router.post("/sign-in", async function (req, res, next) {
       return res.redirect("/sign-in")
     }
 
+    
     const [rows1, fields1] = await conn.query("SELECT * FROM tokens WHERE user_id=?", [user.user_id])
+    
     let token = rows1[0]?.token
     if (!token) {
       // Generate and save token into database
@@ -553,10 +563,12 @@ router.get("/admin/:id", async function (req, res, next) {
   await conn.beginTransaction()
 
   try {
-    const [rows, fields] = await conn.query("SELECT * FROM payment")
+
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id)")
     const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
     // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("admin", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("admin", { courses: JSON.stringify(rows), users: JSON.stringify(rows1), admin: JSON.stringify(rows2) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -589,37 +601,6 @@ router.post('/course/:id/:userid', async function (req, res, next) {
   } finally {
       console.log('finally')
       conn.release();
-  }
-});
-
-// ADD LIKE 2
-router.put("/course/:id/:userid", async function (req, res, next) {
-  const conn = await pool.getConnection();
-  // Begin transaction
-  await conn.beginTransaction();
-
-  try {
-    let [
-      rows,
-      fields,
-    ] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [
-      req.params.id,
-    ]);
-    let like = rows[0].like + 1;
-
-    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [
-      like,
-      req.params.id,
-    ]);
-
-    await conn.commit();
-    res.json({ like: like });
-  } catch (err) {
-    await conn.rollback();
-    return res.status(500).json(err);
-  } finally {
-    console.log("finally");
-    conn.release();
   }
 });
 
