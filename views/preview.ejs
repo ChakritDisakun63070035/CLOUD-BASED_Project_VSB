@@ -99,7 +99,7 @@
           </header>
         </div>
 
-        <img :src=info.preview_img alt="Girl in a jacket" width="100%"
+        <img :src="'/' + info.preview_img" alt="Girl in a jacket" width="100%"
           height="450">
 
         <div class="container">
@@ -112,7 +112,7 @@
                   <div class="card-body">
                     <h3 class="card-title">{{info.course_name}}</h3>
                     <p class="card-text"> {{info.course_info}} </p>
-                    <img :src=info.teacher_image width="60" height="60" alt="">
+                    <img :src="'/' + info.teacher_image" width="60" height="60" alt="">
                     <span> {{info.teacher_fname+ ' '+ info.teacher_lname}}</span>
                   </div>
                 </div>
@@ -167,7 +167,7 @@
                   <div class="row g-0">
                     <div class="col-md-4">
                       <div class="text-center mt-4">
-                        <img :src=info.teacher_image class="img-fluid
+                        <img :src="'/' + info.teacher_image" class="img-fluid
                           rounded-circle" alt="..." width="130" height="130">
                       </div>
                     </div>
