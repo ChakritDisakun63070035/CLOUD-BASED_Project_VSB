@@ -266,12 +266,12 @@ router.post("/sign-in", async function (req, res, next) {
 
     if (!user) {
       req.flash("message", "Incorrect Username")
-      res.render("user/sign-in", { message: req.flash("message") })
+      return res.render("user/sign-in", { message: req.flash("message") })
     }
 
     if (!(await bcrypt.compare(password, user.password))) {
       req.flash("message", "Incorrect Password")
-      res.redirect("/sign-in")
+      return res.redirect("/sign-in")
     }
 
     const [rows1, fields1] = await conn.query("SELECT * FROM tokens WHERE user_id=?", [user.user_id])
@@ -287,11 +287,11 @@ router.post("/sign-in", async function (req, res, next) {
     if (user.role === "student") {
       req.session.user = true
       console.log(req.session.user)
-      res.redirect("/allcourse/" + user.user_id)
+      return res.redirect("/allcourse/" + user.user_id)
     } else if (user.role === "teacher") {
       req.session.user = true
       console.log(req.session.user)
-      res.redirect("/teacher/" + user.user_id)
+      return res.redirect("/teacher/" + user.user_id)
     }
   } catch (err) {
     await conn.rollback()
