@@ -5,6 +5,7 @@ const bodyParser = require("body-parser")
 const multer = require("multer")
 const bcrypt = require("bcrypt")
 const { generateToken } = require("../utils/token")
+const axios = require("axios")
 router = express.Router()
 
 async function requiredLogin (req, res, next){
