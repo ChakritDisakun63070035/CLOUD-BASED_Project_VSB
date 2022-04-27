@@ -27,7 +27,7 @@
             </a>
             <li class="nav dropdown">
               <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
                 {{user.user_fname}}
               </a>
               <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
@@ -68,7 +68,7 @@
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Information</label>
-                  <textarea type="text" class="form-control" name="course_info" value="" required></textarea>
+                  <input type="text" class="form-control" name="course_info" value="" required></input>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Time</label>
@@ -120,7 +120,7 @@
         <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
           <div class="card myAnim bg-light" style="width: 20rem">
             <a :href="'/course/' + course.course_id + '/' + user.user_id" style="text-decoration: none; color:black">
-              <img :src="'/' + course.image" class="card-img-top" alt="..." />
+              <img :src="course.image" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center text-dark">
                   <b>
