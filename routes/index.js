@@ -24,11 +24,11 @@ router.use(async function (req, res, next) {
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
-    callback(null, "./static")
+    callback(null, "./static/uploads")
   },
   filename: function (req, file, callback) {
     const ext = file.mimetype.split("/")[1]
-    callback(null, `/uploads-${file.fieldname}-${Date.now()}.${ext}`)
+    callback(null, `${file.fieldname}-${Date.now()}.${ext}`)
   },
 })
 const upload = multer({ storage: storage })
@@ -173,6 +173,7 @@ router.post("/payment/:id/:order_id", upload.single("slip"), async function (req
   const account = req.body.account
 
   const file = req.file
+  const img = file.path.replace("static\\uploads\\", "/uploads/")
   if (!file) {
     const error = new Error("Please upload a file")
     error.httpStatusCode = 400
@@ -181,7 +182,7 @@ router.post("/payment/:id/:order_id", upload.single("slip"), async function (req
 
   try {
     const [rows1, fields1] = await conn.query("INSERT INTO `payment` (payment_slip, payment_account, order_id) VALUES(?, ?, ?)", [
-      file.path.substring(7),
+      img,
       account,
       req.params.order_id,
     ])
@@ -266,11 +267,10 @@ router.post("/sign-in", async function (req, res, next) {
 
     const user = rows[0]
     const admin = rows3[0]
-    if(rows3.length > 0){
+    if (rows3.length > 0) {
       // let admin_id = rows2[0].admin_id
       res.redirect("/admin/" + admin.admin_id)
     }
-    
 
     if (!user) {
       req.flash("message", "Incorrect Username")
@@ -282,9 +282,8 @@ router.post("/sign-in", async function (req, res, next) {
       return res.redirect("/sign-in")
     }
 
-    
     const [rows1, fields1] = await conn.query("SELECT * FROM tokens WHERE user_id=?", [user.user_id])
-    
+
     let token = rows1[0]?.token
     if (!token) {
       // Generate and save token into database
@@ -351,7 +350,7 @@ router.get("/profile/:id", requiredLogin, async function (req, res, next) {
   }
 })
 
-router.post("/profile/:id", requiredLogin, upload.single("image"), async function (req, res, next) {
+router.post("/profile/:id", upload.single("image"), async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -363,13 +362,16 @@ router.post("/profile/:id", requiredLogin, upload.single("image"), async functio
   const gender = req.body.gender
 
   const file = req.file
+  const img = file.path.replace("static\\uploads\\", "/uploads/")
+  console.log(file)
+  console.log(file.path)
   if (!file) {
     const error = new Error("Please upload a file")
     error.httpStatusCode = 400
     return next(error)
   }
   if (file) {
-    await conn.query("UPDATE user SET image=? WHERE user_id=?", [file.path.substring(7), req.params.id])
+    await conn.query("UPDATE user SET image=? WHERE user_id=?", [img, req.params.id])
   }
   try {
     const [rows, fields] = await conn.query("UPDATE `user` SET user_fname=?, user_lname=?, email=?, password=?, dateofbirth=?, gender=? WHERE user_id=?", [
@@ -381,6 +383,20 @@ router.post("/profile/:id", requiredLogin, upload.single("image"), async functio
       gender,
       req.params.id,
     ])
+
+    const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+    let role = rows1[0].role
+
+    if (role == "teacher") {
+      const [rows3, fields3] = await conn.query("SELECT * FROM `user` JOIN `teacher` ON(user.user_fname = teacher.teacher_fname) WHERE user_id=?", [req.params.id])
+      let teacher_id = rows3[0].teacher_id
+      const [rows2, fields2] = await conn.query("UPDATE `teacher` SET teacher_fname=?, teacher_lname=?, teacher_image=? WHERE teacher_id=?", [
+        fname,
+        lname,
+        img,
+        teacher_id,
+      ])
+    }
 
     let user_id = req.params.id
     res.redirect("/profile/" + user_id)
@@ -403,7 +419,7 @@ router.get("/course/:id/:userid", async function (req, res, next) {
       [req.params.id]
     )
     const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
-    
+
     const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2) })
@@ -426,7 +442,7 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
     )
     const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
-    return res.render("previewnotsignin", { data: JSON.stringify(rows), comment: JSON.stringify(rows2),})
+    return res.render("previewnotsignin", { data: JSON.stringify(rows), comment: JSON.stringify(rows2) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -470,7 +486,6 @@ router.get("/course/:id/:userid/learn", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
 })
@@ -517,6 +532,8 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
 
   const file_course = req.files.course_image[0]
   const file_preview = req.files.preview_image[0]
+  const img_course = file_course.path.replace("static\\uploads\\", "/uploads/")
+  const img_preview = file_preview.path.replace("static\\uploads\\", "/uploads/")
 
   try {
     const [rows3, fields3] = await conn.query("SELECT * FROM `user` JOIN `teacher` ON(user.user_fname = teacher.teacher_fname) WHERE user_id=?", [req.params.id])
@@ -529,7 +546,7 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
       course_price,
       teacher_id,
       course_des,
-      file_course.path.substring(7),
+      img_course,
     ])
 
     let course_id = rows.insertId
@@ -537,7 +554,7 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
     const [rows1, fields1] = await conn.query("INSERT INTO `preview` (preview_info, course_id, preview_img, learn1, learn2, learn3, learn4) VALUES(?, ?, ?, ?, ?, ?, ?)", [
       course_info,
       course_id,
-      file_preview.path.substring(7),
+      img_preview,
       preview_learn1,
       preview_learn2,
       preview_learn3,
@@ -573,10 +590,9 @@ router.get("/admin/:id", async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
-    console.log("finally")
     await conn.release()
   }
-});
+})
 
 //admin-checkpayment
 router.get("/admin/:id/checkpayment", async function (req, res, next) {
@@ -750,52 +766,68 @@ router.post("/admin/profile/:id",  upload.single("image"), async function (req, 
   }
 })
 // Create new comment
-router.post('/course/:id/:userid', async function (req, res, next) {
+router.post("/course/:id/:userid", async function (req, res, next) {
   const comment = req.body.comment
   const conn = await pool.getConnection()
   // Begin transaction
-  await conn.beginTransaction();
+  await conn.beginTransaction()
   try {
-      const [rows1, fields1] = await conn.query(
-          'INSERT INTO `comments` (`comment_course_id`, `comment`, `comment_date`, `comment_by_id`) VALUES ( ?, ?, CURRENT_TIMESTAMP, ?)',
-          [req.params.id, comment, req.params.userid]
-      )
-      const [rows2, fields2] = await conn.query(
-          'SELECT * FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?',
-          [rows1.insertId]
-      )
-      await conn.commit()
-      return res.json(rows2[0])
+    const [rows1, fields1] = await conn.query("INSERT INTO `comments` (`comment_course_id`, `comment`, `comment_date`, `comment_by_id`) VALUES ( ?, ?, CURRENT_TIMESTAMP, ?)", [
+      req.params.id,
+      comment,
+      req.params.userid,
+    ])
+    const [rows2, fields2] = await conn.query("SELECT * FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?", [rows1.insertId])
+    await conn.commit()
+    return res.json(rows2[0])
   } catch (err) {
-      await conn.rollback();
-      return res.status(500).json(err)
+    await conn.rollback()
+    return res.status(500).json(err)
   } finally {
-      console.log('finally')
-      conn.release();
+    console.log("finally")
+    conn.release()
   }
-});
+})
+
+// ADD LIKE 2
+router.put("/course/:id/:userid", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  // Begin transaction
+  await conn.beginTransaction()
+
+  try {
+    let [rows, fields] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [req.params.id])
+    let like = rows[0].like + 1
+
+    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [like, req.params.id])
+
+    await conn.commit()
+    res.json({ like: like })
+  } catch (err) {
+    await conn.rollback()
+    return res.status(500).json(err)
+  } finally {
+    conn.release()
+  }
+})
 
 // Delete comment
-router.delete('/course/:id/:userid/:commentID', async function (req, res, next) {
-  const conn = await pool.getConnection();
+router.delete("/course/:id/:userid/:commentID", async function (req, res, next) {
+  const conn = await pool.getConnection()
   // Begin transaction
-  await conn.beginTransaction();
+  await conn.beginTransaction()
   try {
-      const [
-          rows,
-          fields,
-      ] = await conn.query("DELETE FROM `comments` WHERE `id` = ?", [req.params.commentID,
-      ]);
-      await conn.commit();
-      res.json();
+    const [rows, fields] = await conn.query("DELETE FROM `comments` WHERE `id` = ?", [req.params.commentID])
+    await conn.commit()
+    res.json()
   } catch (err) {
-      console.log(err)
-      await conn.rollback();
-      return res.status(500).json(err);
+    console.log(err)
+    await conn.rollback()
+    return res.status(500).json(err)
   } finally {
-      conn.release();
+    conn.release()
   }
-});
+})
 
 
 // ADD LIKE 2
