@@ -564,11 +564,11 @@ router.get("/admin/:id", async function (req, res, next) {
 
   try {
 
-    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id)")
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id) where admin_id=? and status_payment =?",[req.params.id, 0])
     const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
     const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
     // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("admin", { courses: JSON.stringify(rows), users: JSON.stringify(rows1), admin: JSON.stringify(rows2) })
+    return res.render("admin_check", { data: JSON.stringify(rows), users: JSON.stringify(rows1), admin: JSON.stringify(rows2) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -578,6 +578,177 @@ router.get("/admin/:id", async function (req, res, next) {
   }
 });
 
+//admin-checkpayment
+router.get("/admin/:id/checkpayment", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try {
+
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id) where admin_id=? and status_payment =? and order_status=?",[req.params.id, 0, 'pending'])
+    const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    return res.render("admin_check", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally ee")
+    await conn.release()
+  }
+});
+
+//admin slip
+router.get("/admin/:id/:payment_id/slip", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  const slip = req.body.slip
+  try {
+
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id) join user using(user_id) where admin_id=? and status_payment =? and payment_id = ?",[req.params.id, 0, req.params.payment_id])
+    const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    return res.render("admin_slip", { data: JSON.stringify(rows), users: JSON.stringify(rows1), admin: JSON.stringify(rows2) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("ok")
+    
+    await conn.release()
+  }
+});
+
+//admin slip
+router.post("/admin/:id/:payment_id/slip",  async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  const slip = req.body.slip
+  // console.log(slip)
+  try {
+    // if(slip){
+      // const [rows1, fields1] = await conn.query("INSERT INTO `payment` (status_payment) VALUES(?)", ['1'])
+    const [rows, fields] = await conn.query("UPDATE payment  SET status_payment=?  where payment_id = ?", [slip, req.params.payment_id])
+    // const [rows, fields] = await conn.query("UPDATE `order`  SET order_status=?  where payment_id = ?", [slip,req.params.payment_id])
+    console.log(rows)
+    // }
+    let admin_id = req.params.id
+    let payment_id = req.params.payment_id
+    res.redirect("/admin/" + admin_id +"/checkpayment")
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("slip")
+    await conn.release()
+  }
+})
+
+//admin-confirm to check
+router.get("/admin/:id/confirm", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try {
+
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join user using(user_id) join admin using (admin_id) where admin_id=? and status_payment =? and order_status=?",[req.params.id, 1, 'complete'])
+    const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    return res.render("admin_confirm", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally ee")
+    await conn.release()
+  }
+});
+
+
+//admin-team
+router.get("/admin/:id/myteam", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try {
+
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id) where admin_id=? and status_payment =?",[req.params.id, 0])
+    const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
+    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
+    return res.render("admin", { data: JSON.stringify(rows), users: JSON.stringify(rows1), admin: JSON.stringify(rows2) })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("finally")
+    await conn.release()
+  }
+});
+
+
+//admin profile
+router.get("/admin/profile/:id", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  try {
+    // const [rows, fields] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
+    const [rows, fields] = await conn.query("SELECT *, birth, DATE_FORMAT(birth, GET_FORMAT(DATE, 'ISO')) AS date FROM `admin` WHERE admin_id=?", [req.params.id])
+    res.render("admin_profile", {
+      users: JSON.stringify(rows),
+    })
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    await conn.release()
+  }
+})
+
+router.post("/admin/profile/:id",  upload.single("image"), async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  const fname = req.body.fname
+  const lname = req.body.lname
+  const email = req.body.email
+  const password = req.body.password
+  const birth = req.body.birth
+  const gender = req.body.gender
+
+  const file = req.file
+  if (!file) {
+    const error = new Error("Please upload a file")
+    error.httpStatusCode = 400
+    return next(error)
+  }
+  if (file) {
+    await conn.query("UPDATE admin SET admin_img=? WHERE admin_id=?", [file.path.substring(7), req.params.id])
+  }
+  try {
+    const [rows, fields] = await conn.query("UPDATE `admin` SET admin_fname=?, admin_lname=?, email=?, admin_pass=?, birth=?, admin_gender=? WHERE admin_id=?", [
+      fname,
+      lname,
+      email,
+      password,
+      birth,
+      gender,
+      req.params.id,
+    ])
+
+    let admin_id = req.params.id
+    res.redirect("/admin/profile"+'/' + admin_id)
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    await conn.release()
+  }
+})
 // Create new comment
 router.post('/course/:id/:userid', async function (req, res, next) {
   const comment = req.body.comment
@@ -625,6 +796,39 @@ router.delete('/course/:id/:userid/:commentID', async function (req, res, next) 
       conn.release();
   }
 });
+
+
+// ADD LIKE 2
+router.put("/course/:id/:userid", async function (req, res, next) {
+  const conn = await pool.getConnection();
+  // Begin transaction
+  await conn.beginTransaction();
+
+  try {
+    let [
+      rows,
+      fields,
+    ] = await conn.query("SELECT `like` FROM `course` WHERE `course_id` = ?", [
+      req.params.id,
+    ]);
+    let like = rows[0].like + 1;
+
+    await conn.query("UPDATE `course` SET `like` = ? WHERE `course_id` = ?", [
+      like,
+      req.params.id,
+    ]);
+
+    await conn.commit();
+    res.json({ like: like });
+  } catch (err) {
+    await conn.rollback();
+    return res.status(500).json(err);
+  } finally {
+    console.log("finally");
+    conn.release();
+  }
+});
+
 
 // router.get("/courseId/allcourse", async function (req, res, next) {
 //   try {

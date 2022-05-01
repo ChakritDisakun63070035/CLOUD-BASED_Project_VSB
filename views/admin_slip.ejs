@@ -1,0 +1,203 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CheckSlip</title>
+    <link rel="icon" href="/uploads/logo.png" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/css.css" rel="stylesheet" />
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+    <div class="" id="app">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+
+                <div class="container-fluid" v-for="user in users">
+
+                    <a class="navbar-brand" :href="'/admin/' + user.admin_id + '/checkpayment'">
+                        <img src="/uploads/logo.png" alt="" width="60" height="60" />
+                    </a>
+
+                    <div class="d-flex">
+                        <!-- <a class="navbar-brand
+                                text-decoration-underline" href="">
+                                <i class="bi bi-book fs-4"></i>
+                                My Course
+                            </a> -->
+
+                        <li class="nav dropdown">
+                            <a class="nav-link dropdown-toggle
+                                    text-dark" href="#" id="navbarScrollingDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img :src="'/' + user.admin_img" alt="" width="32" height="32" class="d-inline-block
+                                        align-text-top" />
+                                {{user.admin_fname}}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><a class="dropdown-item" :href="'/admin/profile/' +
+                                    user.admin_id + '/'">Profile</a></li>
+                                <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                            </ul>
+                        </li>
+                    </div>
+
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <h1 class="mt-5 mb-5">CHECK</h1>
+            <div v-for="info in data">
+                <div class="row">
+                    <div class="col-12 d-flex justify-content-center">
+                        <div class="card mb-3" style="width: 1080px;">
+                            <div class="row g-0">
+                                <div class="col-md-5 d-flex justify-content-center">
+                                    <img :src="'/' + info.payment_slip" class="card-img-top  p-2  " style="width: 50%; height: auto;" alt="no slip" />
+                                </div>
+                                <div class="col-md-7">
+                                    <div class="card-body mb-5">
+                                        <div class="row mt-5">
+
+                                            <p>
+                                                Order ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                                &emsp;&emsp;&emsp;&emsp;{{info.order_id}}
+                                            </p>
+
+
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                                User
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;:
+                                                &emsp;&emsp;&emsp;&emsp;{{info.user_fname
+                                                + ' ' +info.user_lname}}
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                                User ID
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;:
+                                                &emsp;&emsp;&emsp;&emsp;{{info.user_id}}
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                                Total Price
+                                                &nbsp;&nbsp;&nbsp;&nbsp;:
+                                                &emsp;&emsp;&emsp;&emsp;{{info.price_total}}
+                                            </p>
+                                        </div>
+                                        <div class="row">
+                                            <p>
+                                                Status
+                                                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
+                                                &emsp;&emsp;&emsp;&emsp;{{info.status_payment}}
+                                            </p>
+                                        </div>
+                                        <form method="POST" 
+                                        :action="'/admin/' + info.admin_id +'/'+info.payment_id+'/slip'">
+                                        <div class="form-check form-check-inline"  >
+                                            <input class="form-check-input" type="radio" name="slip" value=1
+                                                />
+                                            <label class="form-check-label">Check</label>
+                                        </div>
+                                        <button type="submit" class="btn btn-outline-success">Confirm Check</button>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="card-footer">
+                                <div class="d-grid gap-2 d-md-flex justify-content-md-end" v-for="user in data">
+                                    <!-- <button type="submit" class="btn btn-outline-success">Confirm Check</button> -->
+                                    <!-- <a :href="'/admin/' + user.admin_id +'/'+user.payment_id+'/slip'"
+                                        class=" button btn btn-outline-success">Confirm Check</a> -->
+                                </div>
+                            </div>
+
+                            <!-- <button type="button" class="btn btn-outline-success">Success</button> -->
+                        </div>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+</body>
+<footer class="footer py-3 mt-5 bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-6">
+                <h5>Browse popular topics</h5>
+                <ul class="list-unstyled text-small">
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">ABC</a>
+                    </li>
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">Math</a>
+                    </li>
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">Eng</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <h5>Popular courses and articles</h5>
+                <ul class="list-unstyled text-small">
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">ABC</a>
+                    </li>
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">Math</a>
+                    </li>
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">Eng</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-6">
+                <h5>VSB</h5>
+                <ul class="list-unstyled text-small">
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">About</a>
+                    </li>
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+                    </li>
+                    <li>
+                        <a class="link-secondary text-decoration-none" href="#">Team</a>
+                    </li>
+                </ul>
+            </div>
+            <div class="col-12 border-top my-4"></div>
+            <div class="col-9 mt-2">
+                <small class="text-muted">© 2022 VSB. All rights
+                    reserved</small>
+            </div>
+            <div class="col-3 iconfooter">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+                <i class="bi bi-twitter text-info mx-2"></i>
+                <i class="bi bi-github mx-2"></i>
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+                <i class="bi bi-youtube text-danger mx-2"></i>
+            </div>
+        </div>
+    </div>
+</footer>
+<script>
+    var app = new Vue({
+        el: "#app",
+        data: {
+            data: JSON.parse(`<%- data %>`),
+            users: JSON.parse(`<%- users %>`),
+            admins: JSON.parse(`<%- admin %>`),
+        }
+    })
+</script>
+
+
+</html>

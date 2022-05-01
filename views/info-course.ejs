@@ -53,7 +53,7 @@
           </nav>
         </header>
         <div v-for="info in data">
-          <img :src=info.preview_img alt="Girl in a jacket" width="100%" height="450">
+          <img :src="'/'+info.preview_img" alt="Girl in a jacket" width="100%" height="450">
 
           <div class="container">
             <div class="row mt-5">
