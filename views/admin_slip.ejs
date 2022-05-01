@@ -34,7 +34,7 @@
                             <a class="nav-link dropdown-toggle
                                     text-dark" href="#" id="navbarScrollingDropdown" role="button"
                                 data-bs-toggle="dropdown" aria-expanded="false">
-                                <img :src="'/' + user.admin_img" alt="" width="32" height="32" class="d-inline-block
+                                <img :src="user.admin_img" alt="" width="32" height="32" class="d-inline-block
                                         align-text-top" />
                                 {{user.admin_fname}}
                             </a>
@@ -57,7 +57,7 @@
                         <div class="card mb-3" style="width: 1080px;">
                             <div class="row g-0">
                                 <div class="col-md-5 d-flex justify-content-center">
-                                    <img :src="'/' + info.payment_slip" class="card-img-top  p-2  " style="width: 50%; height: auto;" alt="no slip" />
+                                    <img :src="info.payment_slip" class="card-img-top  p-2  " style="width: 50%; height: auto;" alt="no slip" />
                                 </div>
                                 <div class="col-md-7">
                                     <div class="card-body mb-5">
