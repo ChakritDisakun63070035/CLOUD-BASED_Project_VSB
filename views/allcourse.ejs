@@ -183,11 +183,71 @@
               </div>
             </a>
           </div>
+          <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
+            <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
+          </div>
         </div>
-
       </div>
-
     </div>
+    <footer class="footer py-3  bg-light " id="footer">
+      <div class="container">
+        <div class="row">
+          <div class="col-6">
+            <h5>Browse popular topics</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">ABC</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Math</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Eng</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6">
+            <h5>Popular courses and articles</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">ABC</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Math</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Eng</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6">
+            <h5>VSB</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">About</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Team</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 border-top my-4"></div>
+          <div class="col-9 mt-2">
+            <small class="text-muted">© 2022 VSB. All rights reserved</small>
+          </div>
+          <div class="col-3 iconfooter">
+            <i class="bi bi-facebook text-primary mx-2"></i>
+            <i class="bi bi-twitter text-info mx-2"></i>
+            <i class="bi bi-github mx-2"></i>
+            <i class="bi bi-linkedin text-primary mx-2"></i>
+            <i class="bi bi-youtube text-danger mx-2"></i>
+          </div>
+        </div>
+      </div>
+    </footer>
     <script>
       var app = new Vue({
         el: "#app",
@@ -257,65 +317,6 @@
         },
       })
     </script>
-    <footer class="footer py-3  bg-light " id="footer">
-      <div class="container">
-        <div class="row">
-          <div class="col-6">
-            <h5>Browse popular topics</h5>
-            <ul class="list-unstyled text-small">
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">ABC</a>
-              </li>
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">Math</a>
-              </li>
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">Eng</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-6">
-            <h5>Popular courses and articles</h5>
-            <ul class="list-unstyled text-small">
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">ABC</a>
-              </li>
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">Math</a>
-              </li>
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">Eng</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-6">
-            <h5>VSB</h5>
-            <ul class="list-unstyled text-small">
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">About</a>
-              </li>
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-              </li>
-              <li>
-                <a class="link-secondary text-decoration-none" href="#">Team</a>
-              </li>
-            </ul>
-          </div>
-          <div class="col-12 border-top my-4"></div>
-          <div class="col-9 mt-2">
-            <small class="text-muted">© 2022 VSB. All rights reserved</small>
-          </div>
-          <div class="col-3 iconfooter">
-            <i class="bi bi-facebook text-primary mx-2"></i>
-            <i class="bi bi-twitter text-info mx-2"></i>
-            <i class="bi bi-github mx-2"></i>
-            <i class="bi bi-linkedin text-primary mx-2"></i>
-            <i class="bi bi-youtube text-danger mx-2"></i>
-          </div>
-        </div>
-      </div>
-    </footer>
 </body>
 
 </html>

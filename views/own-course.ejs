@@ -99,9 +99,9 @@
                 <div class="row mt-5">
                     <h5>My Course</h5>
                 </div>
-                <div class="nocourse" v-if="computedCourses==0">
-                    <h1> no course</h1>
-             </div>
+                <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
+                    <h1 class="position-absolute top-50 start-50 translate-middle">NO COURSE</h1>
+                  </div>
                 <div class="row px-4" >
                 
                     <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses" >
