@@ -134,6 +134,17 @@ a.myAnim:hover {
   width: 100%;
   margin-bottom: 10em;
 }
+.nocourse3{
+  height: 40%;
+  width: 100%;
+  margin-top: 2.5em;
+  margin-bottom: 2.5em;
+}
+.cropimg{
+  width: 300px;
+  height:500px;
+  object-fit:cover;
+}
 /* .modalcolor{
   background-color: rgb(250, 250, 250);
 } */
