@@ -1,175 +1,175 @@
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VSB</title>
-    <link rel="icon" href="/uploads/logo.png" />
-    <link href="/css/bootstrap.css" rel="stylesheet" />
-    <link href="/css/css.css" rel="stylesheet" />
-    <script src="/js/bootstrap.bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-  </head>
-  <body>
-    <div class="" id="app">
-      <div v-for="user in users">
-        <header>
-          <div v-if="user.role === 'student'" class="d-inline">
-            <nav class="navbar navbar-expand-lg navbar-light"id="backgroud_nav">
-              <div class="container-fluid ">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                  <img src="/uploads/logo.png" alt="" width="60" height="60" />
-                </a>
-                <div class="d-flex">                  
-                  <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
+
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VSB</title>
+  <link rel="icon" href="/uploads/logo.png" />
+  <link href="/css/bootstrap.css" rel="stylesheet" />
+  <link href="/css/css.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+
+<body>
+  <div class="" id="app">
+    <div v-for="user in users">
+      <header>
+        <div v-if="user.role === 'student'" class="d-inline">
+          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+            <div class="container-fluid ">
+              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                <img src="/uploads/logo.png" alt="" width="60" height="60" />
+              </a>
+              <div class="d-flex">
+                <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
                     '/mycourse'">
-                    <i class="bi bi-book fs-4"></i>
-                    My Course
-                  </a>
-                  <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                    <i class="bi bi-cart4 fs-4"></i>
-                    My Cart
-                  </a>
-                  <li class="nav dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#"
-                      id="navbarScrollingDropdown" role="button"
-                      data-bs-toggle="dropdown" aria-expanded="false">
-                      <img :src="user.image" alt="" width="32" height="32"
-                        class="d-inline-block align-text-top" />
-                      {{user.user_fname}}
-                    </a>
-                    <ul class="dropdown-menu"
-                      aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" :href="'/profile/' +
-                          user.user_id + '/'">Profile</a></li>
-                      <li><a class="dropdown-item"
-                          :href="'/sign-out/' + user.user_id">Logout</a></li>
-                    </ul>
-                  </li>
-                </div>
-              </div>
-            </nav>
-            
-          </div>
-          <div v-else-if="user.role === 'teacher'"  class="d-inline">
-            <nav class="navbar navbar-expand-lg navbar-light"id="backgroud_nav">
-              <div class="container-fluid">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                  <img src="/uploads/logo.png" alt="" width="60" height="60" />
+                  <i class="bi bi-book fs-4"></i>
+                  My Course
                 </a>
-                <div class="d-flex">
-                  <a class="navbar-brand" :href="'/teacher/' + user.user_id">
-                    <i class="bi bi-book fs-4"></i>
-                    My Course
+                <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                  <i class="bi bi-cart4 fs-4"></i>
+                  My Cart
+                </a>
+                <li class="nav dropdown">
+                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                    {{user.user_fname}}
                   </a>
-                  <li class="nav dropdown">
-                    <a class="nav-link dropdown-toggle text-dark" href="#"
-                      id="navbarScrollingDropdown" role="button"
-                      data-bs-toggle="dropdown" aria-expanded="false">
-                      <img :src="user.image" alt="" width="32" height="32"
-                        class="d-inline-block align-text-top" />
-                      {{user.user_fname}}
-                    </a>
-                    <ul class="dropdown-menu"
-                      aria-labelledby="navbarScrollingDropdown">
-                      <li><a class="dropdown-item" :href="'/profile/' +
+                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    <li><a class="dropdown-item" :href="'/profile/' +
                           user.user_id + '/'">Profile</a></li>
-                      <li><a class="dropdown-item"
-                          :href="'/sign-out/' + user.user_id">Logout</a></li>
-                    </ul>
-                  </li>
-                </div>
+                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                  </ul>
+                </li>
               </div>
-            </nav>
-          </div>
-        </header>
-      </div>
-      <div class="container">
-        <div class="row mt-4">
-          <div class="col-md-6 col-sm-12">
-            <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
-            <input type="text" class="form-control form-inline bg_course" placeholder="Search" />
-          </div>
+            </div>
+          </nav>
 
-          <div class="col-md-6 col-sm-12 text-md-end mt-sm-3 mt-md-0">
-            <a class="btn btn-secondary dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
-              <span><i class="bi bi-funnel"></i></span>
-              Filters
-            </a>
+        </div>
+        <div v-else-if="user.role === 'teacher'" class="d-inline">
+          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+            <div class="container-fluid">
+              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                <img src="/uploads/logo.png" alt="" width="60" height="60" />
+              </a>
+              <div class="d-flex">
+                <a class="navbar-brand" :href="'/teacher/' + user.user_id">
+                  <i class="bi bi-book fs-4"></i>
+                  My Course
+                </a>
+                <li class="nav dropdown">
+                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                    {{user.user_fname}}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    <li><a class="dropdown-item" :href="'/profile/' +
+                          user.user_id + '/'">Profile</a></li>
+                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                  </ul>
+                </li>
+              </div>
+            </div>
+          </nav>
+        </div>
+      </header>
+    </div>
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-6 col-sm-12">
+          <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
+          <input type="text" class="form-control form-inline bg_course" placeholder="Search" v-model="search" />
+        </div>
 
-            <ul class="dropdown-menu p-2" aria-labelledby="dropdownMenuLink">
-              <li>
-                <input class="form-check-input" type="radio" value="alpha" v-model="sorted" />
-                <label class="form-check-label" for="flexRadioDefault1">Sort by Alphabet </label>
-              </li>
-              <li>
-                <input class="form-check-input" type="radio" value="sortID" v-model="sorted" />
-                <label class="form-check-label" for="flexRadioDefault1">Sort by ID</label>
-              </li>
-              <li>
-                <input class="form-check-input" type="radio" value="price" v-model="sorted" />
-                <label class="form-check-label" for="flexRadioDefault1"> Sort by Price </label>
-              </li>
-            </ul>
+        <div class="col-md-6 col-sm-12 text-md-end mt-3 mt-md-2">
+          <select v-model="sorted" class="form-select form-inline" style="width: auto;">
+            <option value="">Filters</option>
+            <option value="alpha">Sort by Alphabet</option>
+            <option value="price">Sort by Price</option>
+          </select>
+        </div>
+
+        <div v-if="search == ''">
+          <div v-if="sorted == ''">
+            <div class="row mt-4">
+              <h5>Recommended</h5>
+            </div>
+            <div class="row px-4" v-for="user in users">
+              <div class="col-sm-12 col-md-6 col-xl-4 my-3">
+                <a :href="'/course/4/' + user.user_id" class="card myAnim bg-light"
+                  style="width: 20rem; text-decoration: none; color: black">
+                  <img src="/uploads/ielts.png" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title text-center"><b>IELTS Full Course</b></h5>
+                    <p class="card-text text-center">IELTS Full Course in 10 hours - 2022', 'Concepts are explained in a
+                      simple, digestable and...</p>
+                    <div class="row">
+                      <div class="col-6">Courses price</div>
+                      <div class="col"></div>
+                      <div class="col text-danger">3999฿</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-xl-4 my-3">
+                <a :href="'/course/15/' + user.user_id" class="card myAnim bg-light"
+                  style="width: 20rem; text-decoration: none; color: black">
+                  <img src="/uploads/cyber-secure.png" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title text-center"><b>Cyber Security learning</b></h5>
+                    <p class="card-text text-center">Cyber Security Full Course will help you understand and learn the
+                      fundamentals of Cyber Security.</p>
+                    <div class="row">
+                      <div class="col-6">Courses price</div>
+                      <div class="col"></div>
+                      <div class="col text-danger">2250฿</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+
+              <div class="col-sm-12 col-md-6 col-xl-4 my-3">
+                <a :href="'/course/14/' + user.user_id" class="card myAnim bg-light"
+                  style="width: 20rem; text-decoration: none; color: black">
+                  <img src="/uploads/design-thinking.png" class="card-img-top" alt="..." />
+                  <div class="card-body">
+                    <h5 class="card-title text-center"><b>Design thinking</b></h5>
+                    <p class="card-text text-center">In this design thinking tutorial, we will be looking at what is
+                      design thinking, why design</p>
+                    <div class="row">
+                      <div class="col-6">Courses price</div>
+                      <div class="col"></div>
+                      <div class="col text-danger">2300฿</div>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div class="row mt-4">
-          <h5>Recommended</h5>
-        </div>
-        <div class="row px-4" v-for="user in users">
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a :href="'/course/4/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img src="/uploads/ielts.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center"><b>IELTS Full Course</b></h5>
-                <p class="card-text text-center">IELTS Full Course in 10 hours - 2022', 'Concepts are explained in a simple, digestable and...</p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">3999฿</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a :href="'/course/15/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img src="/uploads/cyber-secure.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center"><b>Cyber Security learning</b></h5>
-                <p class="card-text text-center">Cyber Security Full Course will help you understand and learn the fundamentals of Cyber Security.</p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">2250฿</div>
-                </div>
-              </div>
-            </a>
-          </div>
-
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a :href="'/course/14/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img src="/uploads/design-thinking.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center"><b>Design thinking</b></h5>
-                <p class="card-text text-center">In this design thinking tutorial, we will be looking at what is design thinking, why design</p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">2300฿</div>
-                </div>
-              </div>
-            </a>
+        <div class="row" v-if="search == ''">
+          <div v-if="sorted == ''" class="row mt-5">
+            <h5>All Course</h5>
           </div>
         </div>
-
-        <div class="row mt-5">
-          <h5>All Course</h5>
+        <div class="row mt-4" v-if="search != ''">
+          <h5>Result of "{{search}}"</h5>
+        </div>
+        <div v-if="search == ''">
+          <div class="row mt-4" v-if="sorted != ''">
+            <h5>Sort by "{{sorted}}"</h5>
+          </div>
         </div>
         <div class="row px-4" v-for="user in users">
           <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
+            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card myAnim bg-light"
+              style="width: 20rem; text-decoration: none; color: black">
               <img :src="'/' + course.image" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center">
@@ -183,8 +183,9 @@
                 </div>
               </div>
             </a>
+          </div>
         </div>
-        </div>
+
       </div>
 
     </div>
@@ -196,30 +197,22 @@
           users: JSON.parse(`<%- users %>`),
           sorted: "",
           idCounter: 16,
+          search: "",
         },
-        // created() {
-          // this.filteredTasks = this.courses
-        //     this.idCounter = this.courses.length
-        //     console.log(this.courses.length)
-        // this.filteredTasks = this.tasks
-        // this.courses = this.courses
-        // `this` points to the vm instance
-        // console.log('a is: ' + this.a)
-          // },
         computed: {
+          filteredList() {
+            return this.courses.filter(post => {
+              return post.course_name.toLowerCase().includes(this.search.toLowerCase())
+            })
+          },
           computedCourses() {
-            let results = this.courses
-            return results.map((b) => {
+            this.courses.map((b) => {
               if (b.course_info.length > 90) {
                 b.course_info = b.course_info.substring(0, 90) + "..."
               }
               return b
             })
-          },
-          filteredTasks() {
-            // get: function compareAlpha(a, b) {
-            //     return this.$store.state.sorted.filteredTasks
-            //     }
+
             function compareAlpha(a, b) {
               if (a.course_name < b.course_name) {
                 return -1
@@ -247,12 +240,19 @@
                 return 0
               }
             }
-            if (this.sorted == "alpha") {
-              return this.courses.sort(compareAlpha)
+
+            let res = this.courses.filter(post => { return post.course_name.toLowerCase().includes(this.search.toLowerCase()) })
+
+            if (this.sorted == "" && this.search != "") {
+              return res
+            } else if (this.sorted == "alpha") {
+              return res.sort(compareAlpha)
             } else if (this.sorted == "sortID") {
-              return this.courses.sort(compareID)
+              return res.sort(compareID)
             } else if (this.sorted == "price") {
-              return this.courses.sort(comparePrice)
+              return res.sort(comparePrice)
+            } else {
+              return this.courses
             }
           },
         },
@@ -260,63 +260,63 @@
     </script>
     <footer class="footer py-3  bg-light " id="footer">
       <div class="container">
-          <div class="row">
-              <div class="col-6">
-                  <h5>Browse popular topics</h5>
-                  <ul class="list-unstyled text-small">
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">ABC</a>
-                      </li>
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">Math</a>
-                      </li>
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">Eng</a>
-                      </li>
-                  </ul>
-              </div>
-              <div class="col-6">
-                  <h5>Popular courses and articles</h5>
-                  <ul class="list-unstyled text-small">
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">ABC</a>
-                      </li>
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">Math</a>
-                      </li>
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">Eng</a>
-                      </li>
-                  </ul>
-              </div>
-              <div class="col-6">
-                  <h5>VSB</h5>
-                  <ul class="list-unstyled text-small">
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">About</a>
-                      </li>
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-                      </li>
-                      <li>
-                          <a class="link-secondary text-decoration-none" href="#">Team</a>
-                      </li>
-                  </ul>
-              </div>
-              <div class="col-12 border-top my-4"></div>
-              <div class="col-9 mt-2">
-                  <small class="text-muted">© 2022 VSB. All rights reserved</small>
-              </div>
-              <div class="col-3 iconfooter">
-                  <i class="bi bi-facebook text-primary mx-2"></i>
-                  <i class="bi bi-twitter text-info mx-2"></i>
-                  <i class="bi bi-github mx-2"></i>
-                  <i class="bi bi-linkedin text-primary mx-2"></i>
-                  <i class="bi bi-youtube text-danger mx-2"></i>
-              </div>
+        <div class="row">
+          <div class="col-6">
+            <h5>Browse popular topics</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">ABC</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Math</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Eng</a>
+              </li>
+            </ul>
           </div>
+          <div class="col-6">
+            <h5>Popular courses and articles</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">ABC</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Math</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Eng</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-6">
+            <h5>VSB</h5>
+            <ul class="list-unstyled text-small">
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">About</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Catalog</a>
+              </li>
+              <li>
+                <a class="link-secondary text-decoration-none" href="#">Team</a>
+              </li>
+            </ul>
+          </div>
+          <div class="col-12 border-top my-4"></div>
+          <div class="col-9 mt-2">
+            <small class="text-muted">© 2022 VSB. All rights reserved</small>
+          </div>
+          <div class="col-3 iconfooter">
+            <i class="bi bi-facebook text-primary mx-2"></i>
+            <i class="bi bi-twitter text-info mx-2"></i>
+            <i class="bi bi-github mx-2"></i>
+            <i class="bi bi-linkedin text-primary mx-2"></i>
+            <i class="bi bi-youtube text-danger mx-2"></i>
+          </div>
+        </div>
       </div>
-  </footer>
-  </body>
-  
+    </footer>
+</body>
+
 </html>
