@@ -50,8 +50,7 @@
         </div>
         <div class="row px-4">
           <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a href="/allcourse/course/4" class="card myAnim bg-light"
-              style="width: 20rem; text-decoration: none; color: black">
+            <a href="/allcourse/course/4" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
               <img src="/uploads/ielts.png" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center"><b>IELTS Full Course</b></h5>
@@ -67,8 +66,7 @@
           </div>
 
           <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a href="/allcourse/course/15" class="card myAnim bg-light"
-              style="width: 20rem; text-decoration: none; color: black">
+            <a href="/allcourse/course/15" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
               <img src="/uploads/cyber-secure.png" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center"><b>Cyber Security learning</b></h5>
@@ -85,8 +83,7 @@
           </div>
 
           <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a href="/allcourse/course/14" class="card myAnim bg-light"
-              style="width: 20rem; text-decoration: none; color: black">
+            <a href="/allcourse/course/14" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
               <img src="/uploads/design-thinking.png" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center"><b>Design thinking</b></h5>
@@ -119,13 +116,52 @@
             <img :src="course.image" class="card-img-top" alt="..." />
             <div class="card-body">
               <h5 class="card-title text-center">
-                <b> {{ course.course_name }} </b>
+                <b>
+                  {{ course.course_name }} </b>
               </h5>
-              <p class="card-text text-center">{{ course.course_info }}</p>
+              <p class="card-text text-center">
+                {{ course.course_info }}
+              </p>
               <div class="row">
                 <div class="col-6">Courses price</div>
                 <div class="col"></div>
-                <div class="col text-danger">{{ course.course_price }}฿</div>
+                <div class="col text-danger">
+                  {{ course.course_price }}฿
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div v-if="search != ''">
+      <div class="row mt-4">
+        <div>
+          <h5>Result of "{{search}}"</h5>
+        </div>
+      </div>
+
+      <div class="row px-4">
+        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
+      filteredList">
+          <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
+            bg-light" style="width: 20rem; text-decoration: none; color: black">
+            <img :src="course.image" class="card-img-top" alt="..." />
+            <div class="card-body">
+              <h5 class="card-title text-center">
+                <b>
+                  {{ course.course_name }} </b>
+              </h5>
+              <p class="card-text text-center">
+                {{ course.course_info }}
+              </p>
+              <div class="row">
+                <div class="col-6">Courses price</div>
+                <div class="col"></div>
+                <div class="col text-danger">
+                  {{ course.course_price }}฿
+                </div>
               </div>
           </a>
         </div>
