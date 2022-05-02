@@ -143,8 +143,7 @@
       </div>
 
       <div class="row px-4">
-        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
-      filteredList">
+        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in filteredList">
           <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
             bg-light" style="width: 20rem; text-decoration: none; color: black">
             <img :src="course.image" class="card-img-top" alt="..." />
@@ -163,6 +162,7 @@
                   {{ course.course_price }}฿
                 </div>
               </div>
+            </div>
           </a>
         </div>
       </div>
