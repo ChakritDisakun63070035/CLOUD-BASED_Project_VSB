@@ -90,6 +90,10 @@ body {
   vertical-align: middle;
 }
 
+.inline-block{
+  display: inline-block;
+}
+
 a.myAnim:hover {
   animation: myAnim 1s ease 0s 1 normal forwards;
   box-shadow: 0 0 15px gray;
@@ -121,6 +125,12 @@ a.myAnim:hover {
 
 .nocourse{
   height: fit-content;
+  width: 100%;
+  margin-bottom: 10em;
+}
+
+.nocourse2{
+  height: 40%;
   width: 100%;
   margin-bottom: 10em;
 }
