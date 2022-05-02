@@ -118,7 +118,7 @@
                         <form :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
                           <div class="my-2">
                             <label class="form-label">Account Payment</label>
-                            <select class="form-select" name="account">
+                            <select class="form-select" name="account" required>
                               <option selected disabled>Select Bank Account</option>
                               <option value="KMA">KMA</option>
                               <option value="BBL">BBL</option>
@@ -127,10 +127,12 @@
                               <option value="SCB">SCB</option>
                               <option value="TTB">TTB</option>
                             </select>
+                            <div class="invalid-feedback"> Please select your bank. </div>
                           </div>
                           <div class="file my-2">
                             <label class="form-label" for="customFile">Payment Slip</label>
-                            <input type="file" class="form-control" id="customFile" name="slip" />
+                            <input type="file" class="form-control" id="customFile" name="slip" required />
+                            <div class="invalid-feedback"> Please send your slip. </div>
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
