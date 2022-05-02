@@ -35,7 +35,7 @@
                 <li class="nav dropdown">
                   <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
                     {{user.user_fname}}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
@@ -63,7 +63,7 @@
                 <li class="nav dropdown">
                   <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button"
                     data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="'/' + user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
                     {{user.user_fname}}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
@@ -168,9 +168,8 @@
         </div>
         <div class="row px-4" v-for="user in users">
           <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card myAnim bg-light"
-              style="width: 20rem; text-decoration: none; color: black">
-              <img :src="'/' + course.image" class="card-img-top" alt="..." />
+            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
+              <img :src="course.image" class="card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center">
                   <b> {{ course.course_name }} </b>
