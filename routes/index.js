@@ -234,7 +234,7 @@ router.post("/sign-up", async function (req, res, next) {
       role,
     ])
 
-    if (role == "teacher") {
+    if (role === "teacher") {
       const [rows2, fields2] = await conn.query("INSERT INTO `teacher` (teacher_fname, teacher_lname) VALUES(?, ?)", [fname, lname])
     }
 
@@ -496,7 +496,7 @@ router.get("/teacher/:id", async function (req, res, next) {
   await conn.beginTransaction()
 
   try {
-    const [rows, fields] = await conn.query("SELECT * FROM teacher t join user u ON(t.teacher_fname = u.user_fname) join course using (teacher_id) where user_id= ?", [
+    const [rows, fields] = await conn.query("SELECT * FROM teacher t join user u ON(t.teacher_fname = u.user_fname) join course using (teacher_id) join preview using (course_id) where user_id= ?", [
       req.params.id,
     ])
     const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
@@ -570,6 +570,83 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
     console.log(err)
     await conn.rollback()
   } finally {
+    await conn.release()
+  }
+})
+// /teacher/' + user.user_id + '/' + course.course_id + '/' + course.preview_id
+router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  const course_name = req.body.course_name
+  const course_info = req.body.course_info
+  const course_time = req.body.course_time
+  const course_price = req.body.course_price
+  const course_des = req.body.course_des
+  const preview_video = req.body.preview_video
+  const preview_learn1 = req.body.preview_learn1
+  const preview_learn2 = req.body.preview_learn2
+  const preview_learn3 = req.body.preview_learn3
+  const preview_learn4 = req.body.preview_learn4
+
+  const file_course = req.files.course_image[0]
+  const file_preview = req.files.preview_image[0]
+  const img_course = file_course.path.replace("static\\uploads\\", "/uploads/")
+  const img_preview = file_preview.path.replace("static\\uploads\\", "/uploads/")
+
+  try {
+    const [rows3, fields3] = await conn.query("SELECT * FROM `user` JOIN `teacher` ON(user.user_fname = teacher.teacher_fname) WHERE user_id=?", [req.params.id])
+    let teacher_id = rows3[0].teacher_id
+
+    const [rows2, fields2] = await conn.query("UPDATE `preview_preview_video` SET preview_video=?, preview_id=? WHERE preview_id=?", [preview_video, req.params.previewId, req.params.previewId])
+
+    const [rows1, fields1] = await conn.query("UPDATE `preview` SET preview_info=?, course_id=?, preview_img=?, learn1=?, learn2=?, learn3=?, learn4=? WHERE preview_id=?", [
+      course_info,
+      req.params.courseId,
+      img_preview,
+      preview_learn1,
+      preview_learn2,
+      preview_learn3,
+      preview_learn4,
+      req.params.previewId
+    ])
+
+    const [rows, fields] = await conn.query("UPDATE `course` SET course_name=?, course_info=?, time=?, course_price=?, teacher_id=?, course_des=?, image=? WHERE course_id=?", [
+      course_name,
+      course_info,
+      course_time,
+      course_price,
+      teacher_id,
+      course_des,
+      img_course,
+      req.params.courseId
+    ])
+
+    res.redirect("/teacher/" + req.params.id)
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    await conn.release()
+  }
+})
+
+
+// del course by teachcer
+router.get("/teacher/:id/delcourse/:courseId/:previewId", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+
+  try {
+    const [rows1, fields1] = await conn.query("DELETE FROM `preview_preview_video` WHERE preview_id=?", [req.params.previewId])
+    const [rows2, fields2] = await conn.query("DELETE FROM `preview` WHERE preview_id=?", [req.params.previewId])
+    const [rows3, fields3] = await conn.query("DELETE FROM `course` WHERE course_id=?", [req.params.courseId])
+    return res.redirect("/teacher/" + req.params.id)
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+  } finally {
+    console.log("Delete course Id: " + req.params.courseId + " successful")
     await conn.release()
   }
 })
