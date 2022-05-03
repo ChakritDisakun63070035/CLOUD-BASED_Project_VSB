@@ -82,7 +82,7 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
       const [rows2, fields2] = await pool.query("SELECT * FROM `order_item` JOIN `course` USING(course_id) WHERE order_id=?", [order_id])
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
       return res.render("user/cart", { items: JSON.stringify(rows2), users: JSON.stringify(rows3), carts: JSON.stringify(rows1), course: JSON.stringify(rows4) })
-    } else if(rows4.length = 0){
+    } else{
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
       // res.render("user/cart", {  users: JSON.stringify(rows3)})
       // res.send("nothing in your cart.")
@@ -704,7 +704,7 @@ router.get("/admin/:id/:payment_id/slip/:order_id", async function (req, res, ne
   const slip = req.body.slip
   try {
 
-    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id) join user using(user_id) join my_course using(order_id) join course using(course_id) where admin_id=? and status_payment =? and payment_id = ? and order_id=?",[req.params.id, 0, req.params.payment_id, req.params.order_id])
+    const [rows, fields] = await conn.query("SELECT *, DATE_FORMAT(order_date, GET_FORMAT(DATE, 'ISO')) AS order_date FROM payment join `order` using (order_id) join admin using (admin_id) join user using(user_id) join my_course using(order_id) join course using(course_id) where admin_id=? and status_payment =? and payment_id = ? and order_id=?",[req.params.id, 0, req.params.payment_id, req.params.order_id])
     const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
     // const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
     // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
