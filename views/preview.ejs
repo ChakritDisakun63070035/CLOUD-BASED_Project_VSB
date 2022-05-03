@@ -185,7 +185,7 @@
                       <a :href="'create/cart/' + user.user_id + '/' + info.course_price" class="button btn btn-primary" type="button">Add to cart</a>
                     </div>
                     <div class="col-sm-6 d-grid gap-2">
-                      <a href="/mycart" class="button btn btn-danger">Buy now</a>
+                      <a :href="'/mycart/' + user.user_id" class="button btn btn-danger">Buy now</a>
                     </div>
                   </div>
                 </div>

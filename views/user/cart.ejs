@@ -45,7 +45,7 @@
     </header>
     <div class="container">
       <h1 class="my-5 text-center">My Cart</h1>
-      <div class="row">
+      <div class="row" v-if="course != 0">
         <div class="col-12 my-3">
           <small class="text-secondary">{{idCounter}} Course in Cart</small>
         </div>
@@ -104,6 +104,13 @@
           </div>
         </div>
       </div>
+      <div class="row" v-if="course == 0">
+        <div class="nocourse"  v-for="user in users">
+          <h2>No item in your Cart</h2>
+          <a class="btn btn-warning mt-3" :href="'/allcourse/' +
+          user.user_id" role="button">Back to Course</a>
+      </div>
+      </div>
     </div>
   </div>
 </body>
@@ -114,6 +121,7 @@
       items: JSON.parse(`<%- items %>`),
       users: JSON.parse(`<%- users %>`),
       carts: JSON.parse(`<%- carts %>`),
+      course: JSON.parse(`<%- course %>`),
       idCounter: 0,
     },
     created() {
