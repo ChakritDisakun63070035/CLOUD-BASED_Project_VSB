@@ -106,7 +106,7 @@
         </div>
         <div class="row px-4" v-for="user in users">
           <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
+            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card my_card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
               <img :src="course.image" class="my_img card-img-top" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center">
@@ -116,10 +116,13 @@
                 <p class="card-text text-center">
                   {{ course.course_info }}
                 </p>
+                <div v-if="course.course_info.length < 80">
+                  <br><br>
+                </div>
                 <div class="row">
                   <div class="col-6">Courses price</div>
                   <div class="col"></div>
-                  <div class="col text-danger">
+                  <div class="col text-danger text-end">
                     {{ course.course_price }}฿
                   </div>
                 </div>
@@ -154,10 +157,10 @@
                 <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
                   <p class="ms-3"> SQL- Database Programming </p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
+                <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
                   <p class="ms-3"> C++ Programming Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
+                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
                   <p class="ms-3"> Digital marketing </p>
                 </a>
               </div>
@@ -231,6 +234,7 @@
       data: {
         courses: JSON.parse(`<%- courses %>`),
         users: JSON.parse(`<%- users %>`),
+        
         sorted: "",
         idCounter: 16,
         search: "",
@@ -245,7 +249,7 @@
           this.courses.map((b) => {
             if (b.course_info.length > 90) {
               b.course_info = b.course_info.substring(0, 90) + "..."
-            }
+            } 
             return b
           })
 

@@ -45,7 +45,7 @@
     </header>
     <div class="container">
       <h1 class="my-5 text-center">My Cart</h1>
-      <div class="row mb-5" v-if="course != 0">
+      <div class="row mb-5" v-if="items != 0">
         <div class="col-12 my-3">
           <small class="text-secondary">{{idCounter}} Course in Cart</small>
         </div>
@@ -104,7 +104,7 @@
           </div>
         </div>
       </div>
-      <div class="row" v-if="course == 0">
+      <div class="row" v-if="items == 0">
         <div class="nocourse" v-for="user in users">
           <h2>No item in your Cart</h2>
           <a class="btn btn-warning mt-3" :href="'/allcourse/' +
@@ -114,29 +114,29 @@
     </div>
     <br>
     <footer class="mt-5 footer bg-light">
-      <div class="container">
+      <div class="container" v-for="user in users">
         <div class="row">
           <div class="col-md-4 col-xs-12">
             <div class="my-3">
               <h4>Course Recommendation</h4>
               <div class="line1"></div>
               <div class="my-3">
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
+                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
                   <p class="ms-3"> Web Design for Beginners</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
+                <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
                   <p class="ms-3"> Cyber Security </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
+                <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
                   <p class="ms-3"> IELTS Full Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
+                <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
                   <p class="ms-3"> SQL- Database Programming </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
+                <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
                   <p class="ms-3"> C++ Programming Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
+                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
                   <p class="ms-3"> Digital marketing </p>
                 </a>
               </div>
@@ -147,7 +147,7 @@
             <div class="my-3 text-center">
               <h4> Navigate</h4>
               <div class="line2"></div>
-              <div class="my-3" v-for="user in users">
+              <div class="my-3">
                 <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
                   <p>Home</p>
                 </a>

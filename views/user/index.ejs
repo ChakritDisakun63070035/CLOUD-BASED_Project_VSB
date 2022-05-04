@@ -80,8 +80,6 @@
       <h1 class="text-dark text-center mt-4">
         <b>VSB ONLINE<br />LEARNING</b>
       </h1>
-
-      <!-- <button class="btn btn-outline-primary">Press Me</button> -->
       <h3>
         <b>Learn without limits</b>
       </h3>
@@ -97,8 +95,8 @@
         </div>
       </div>
       <div class="row mb-5">
-        <div class="col">
-          <a href="/allcourse" class="button_start">Get Started !!!</a>
+        <div class="col" v-for="user in users">
+          <a :href="'/allcourse/' + user.user_id" class="button_start">Get Started !!!</a>
         </div>
       </div>
       <div class="row">
@@ -132,23 +130,23 @@
             <div class="my-3">
               <h4>Course Recommendation</h4>
               <div class="line1"></div>
-              <div class="my-3">
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
+              <div class="my-3" v-for="user in users">
+                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
                   <p class="ms-3"> Web Design for Beginners</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
+                <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
                   <p class="ms-3"> Cyber Security </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
+                <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
                   <p class="ms-3"> IELTS Full Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
+                <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
                   <p class="ms-3"> SQL- Database Programming </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
+                <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
                   <p class="ms-3"> C++ Programming Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
+                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
                   <p class="ms-3"> Digital marketing </p>
                 </a>
               </div>
@@ -265,7 +263,6 @@
       data: {
         courses: JSON.parse(`<%- courses %>`),
         users: JSON.parse(`<%- users %>`),
-        alert: false,
       },
     })
   </script>
