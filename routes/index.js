@@ -740,7 +740,6 @@ router.get("/teacher/:id/delcourse/:courseId/:previewId", requiredLogin, async f
     const [preview_preview_video] = await conn.query("DELETE FROM `preview_preview_video` WHERE preview_id=?", [req.params.previewId])
     const [preview] = await conn.query("DELETE FROM `preview` WHERE preview_id=?", [req.params.previewId])
     const [my_course] = await conn.query("DELETE FROM `my_course` WHERE course_id=?", [req.params.courseId])
-    const [course1] = await conn.query("DELETE FROM `course_im` WHERE course_id=?", [req.params.courseId])
     const [course] = await conn.query("DELETE FROM `course` WHERE course_id=?", [req.params.courseId])
 
 
