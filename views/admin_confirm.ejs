@@ -158,33 +158,24 @@
                     </div>
                 </div>
             </div>
+        </div>
+        <script>
+            var app = new Vue({
+                el: "#app",
+                data: {
+                    data: JSON.parse(`<%- data %>`),
+                    users: JSON.parse(`<%- users %>`),
 
-            <script>
-        var app = new Vue({
-            el: "#app",
-            data: {
-                data: JSON.parse(`<%- data %>`),
-                users: JSON.parse(`<%- users %>`),
-                
-                sorted: "",
-                idCounter: 16,
-                pay_check: 0,
-            },
-            methods:{
-                updateslip() {
-          this.pay_check = 1
-          
-        },
-            }
-            // created() {
-            //     this.idCounter = this.courses.length
-            //     console.log(this.courses.length)
-            // this.filteredTasks = this.tasks
-            // this.courses = this.courses
-            // `this` points to the vm instance
-            // console.log('a is: ' + this.a)
-            //   },
+                    sorted: "",
+                    idCounter: 16,
+                    pay_check: 0,
+                },
+                methods: {
+                    updateslip() {
+                        this.pay_check = 1
 
+                    },
+                }
 
             })
         </script>
