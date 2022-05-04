@@ -131,6 +131,8 @@ router.get("/course/:course_id/create/cart/:user_id/:price", async function (req
   }
 })
 
+
+
 // del items
 router.get("/mycart/:id/:item_no/:order_id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
@@ -197,7 +199,7 @@ router.post("/payment/:id/:order_id", upload.single("slip"), async function (req
     let order_id_order = req.params.order_id
 
     if (order_id_payment == order_id_order) {
-      // const [rows3, fields3] = await conn.query("UPDATE `order` SET order_status=? WHERE order_id=?", ["complete", order_id_payment])
+      const [rows3, fields3] = await conn.query("UPDATE `order` SET order_status=? WHERE order_id=?", ["complete", order_id_payment])
       const [rows1, fields1] = await conn.query("DELETE FROM `order_item` WHERE order_id=?", [order_id_payment])
 
     }
@@ -274,7 +276,7 @@ router.post("/sign-in", async function (req, res, next) {
     const admin = rows3[0]
     if (rows3.length > 0) {
       // let admin_id = rows2[0].admin_id
-      res.redirect("/admin/" + admin.admin_id)
+      res.redirect("/admin/" + admin.admin_id +'/checkpayment')
     }
 
     if (!user) {
@@ -462,8 +464,8 @@ router.get("/allcourse/:id/mycourse", requiredLogin, async function (req, res, n
   try {
     const [rows, fields] = await conn.query("SELECT * FROM user WHERE user_id=? ", [req.params.id])
     const [rows1, fields1] = await conn.query(
-      "SELECT * FROM my_course join course using(course_id) join `order` using(order_id) join user using(user_id) join course_image using(course_id) WHERE user_id=? AND order_status=?",
-      [req.params.id, "complete"]
+      "SELECT * FROM my_course join course using(course_id) join `order` using(order_id) join user using(user_id) join course_image using(course_id) join payment using(order_id) WHERE user_id=? AND order_status=? AND status_payment=?",
+      [req.params.id, "complete", 1]
     )
     return res.render("own-course", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
   } catch (err) {
@@ -683,11 +685,13 @@ router.get("/admin/:id/checkpayment", async function (req, res, next) {
 
   try {
 
-    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join admin using (admin_id) join user using (user_id) group by order_id having admin_id=? and status_payment =? and order_status",[req.params.id, 0, 'pending'])
+    const [rows, fields] = await conn.query("SELECT * FROM payment join `order` using (order_id) join user using(user_id) join admin using (admin_id)  where admin_id=? and status_payment =?",[req.params.id, 0])
     const [rows1, fields1] = await conn.query("SELECT * FROM `admin` WHERE admin_id=?", [req.params.id])
+    
+    
     // const [rows2, fields2] = await conn.query("SELECT * FROM `admin` WHERE admin_id != ?", [req.params.id])
     // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("admin_check", { data: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("admin_check", { data: JSON.stringify(rows), users: JSON.stringify(rows1)})
   } catch (err) {
     console.log(err)
     await conn.rollback()
