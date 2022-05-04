@@ -45,7 +45,7 @@
     </header>
     <div class="container">
       <h1 class="my-5 text-center">My Cart</h1>
-      <div class="row" v-if="course != 0">
+      <div class="row mb-5" v-if="course != 0">
         <div class="col-12 my-3">
           <small class="text-secondary">{{idCounter}} Course in Cart</small>
         </div>
@@ -98,20 +98,111 @@
                 <div class="col-4 text-end">{{cart.price_total}}฿</div>
               </div>
               <div class="row" v-for="cart in carts">
-                  <a :href="'/payment/'+ cart.user_id + '/' + cart.order_id" class="btn btn-warning col-11 mx-auto mt-3">Checkout Items</a>
+                <a :href="'/payment/'+ cart.user_id + '/' + cart.order_id" class="btn btn-warning col-11 mx-auto mt-3">Checkout Items</a>
               </div>
             </div>
           </div>
         </div>
       </div>
       <div class="row" v-if="course == 0">
-        <div class="nocourse"  v-for="user in users">
+        <div class="nocourse" v-for="user in users">
           <h2>No item in your Cart</h2>
           <a class="btn btn-warning mt-3" :href="'/allcourse/' +
           user.user_id" role="button">Back to Course</a>
-      </div>
+        </div>
       </div>
     </div>
+    <br>
+    <footer class="mt-5 footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3">
+              <h4>Course Recommendation</h4>
+              <div class="line1"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
+                  <p class="ms-3"> Web Design for Beginners</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
+                  <p class="ms-3"> Cyber Security </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
+                  <p class="ms-3"> IELTS Full Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
+                  <p class="ms-3"> SQL- Database Programming </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
+                  <p class="ms-3"> C++ Programming Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
+                  <p class="ms-3"> Digital marketing </p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Navigate</h4>
+              <div class="line2"></div>
+              <div class="my-3" v-for="user in users">
+                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
+                  <p>Home</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
+                  <p>All Courses</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                  <p>My Course</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
+                  <p>My cart</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Contact </h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
+                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
+                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters, Whitehall, London</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <hr>
+            <div class="my-3 text-center iconfooter">
+              <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
+                <i class="bi bi-twitter text-info mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
+                <i class="bi bi-github text-dark mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
+                <i class="bi bi-youtube text-danger mx-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
   </div>
 </body>
 <script>
@@ -125,68 +216,10 @@
       idCounter: 0,
     },
     created() {
-        this.idCounter = this.items.length
+      this.idCounter = this.items.length
     }
   })
 </script>
-<footer class="footer py-3 mt-5 bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-6">
-        <h5>Browse popular topics</h5>
-        <ul class="list-unstyled text-small">
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">ABC</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Math</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Eng</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-6">
-        <h5>Popular courses and articles</h5>
-        <ul class="list-unstyled text-small">
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">ABC</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Math</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Eng</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-6">
-        <h5>VSB</h5>
-        <ul class="list-unstyled text-small">
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">About</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Team</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-12 border-top my-4"></div>
-      <div class="col-9 mt-2">
-        <small class="text-muted">© 2022 VSB. All rights reserved</small>
-      </div>
-      <div class="col-3 iconfooter">
-        <i class="bi bi-facebook text-primary mx-2"></i>
-        <i class="bi bi-twitter text-info mx-2"></i>
-        <i class="bi bi-github mx-2"></i>
-        <i class="bi bi-linkedin text-primary mx-2"></i>
-        <i class="bi bi-youtube text-danger mx-2"></i>
-      </div>
-    </div>
-  </div>
-</footer>
+
 
 </html>
