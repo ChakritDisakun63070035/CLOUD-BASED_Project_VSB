@@ -32,7 +32,6 @@
         <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
         <input type="text" class="form-control form-inline bg_course" placeholder="Search" v-model="search" />
       </div>
-
       <div class="col-md-6 col-sm-12 text-md-end mt-3 mt-md-2">
         <select v-model="sorted" class="form-select form-inline" style="width: auto;">
           <option value="">Filters</option>
@@ -40,9 +39,7 @@
           <option value="price">Sort by Price</option>
         </select>
       </div>
-
     </div>
-
     <div v-if="search === ''">
       <div v-if="sorted === ''">
         <div class="row mt-4">
@@ -64,7 +61,6 @@
               </div>
             </a>
           </div>
-
           <div class="col-sm-12 col-md-6 col-xl-4 my-3">
             <a href="/allcourse/course/15" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
               <img src="/uploads/cyber-secure.png" class="card-img-top" alt="..." />
@@ -81,7 +77,6 @@
               </div>
             </a>
           </div>
-
           <div class="col-sm-12 col-md-6 col-xl-4 my-3">
             <a href="/allcourse/course/14" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
               <img src="/uploads/design-thinking.png" class="card-img-top" alt="..." />
@@ -100,7 +95,6 @@
         </div>
       </div>
     </div>
-
     <div v-if="search === ''">
       <div class="row mt-4" v-if="sorted === ''">
         <h5>All Course</h5>
@@ -134,14 +128,12 @@
         </div>
       </div>
     </div>
-
     <div v-if="search != ''">
       <div class="row mt-4">
         <div>
           <h5>Result of "{{search}}"</h5>
         </div>
       </div>
-
       <div class="row px-4">
         <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in filteredList">
           <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
@@ -204,8 +196,7 @@
     <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
       <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
     </div>
-
-  <!-- </div> -->
+  </div>
   </div>
   <footer class="footer py-3 mt-5 bg-light">
     <div class="container">
@@ -276,7 +267,6 @@
         idCounter: 16,
         search: "",
       },
-
       computed: {
         filteredList() {
           return this.courses.filter(post => {
@@ -284,7 +274,6 @@
           })
         },
         computedCourses() {
-
           this.courses.map((b) => {
             if (b.course_info.length > 90) {
               b.course_info = b.course_info.substring(0, 90) + "..."
@@ -301,6 +290,7 @@
               return 0
             }
           }
+
           function compareID(a, b) {
             if (a.course_id < b.course_id) {
               return -1
@@ -310,6 +300,7 @@
               return 0
             }
           }
+
           function comparePrice(a, b) {
             if (a.course_price < b.course_price) {
               return -1
@@ -329,7 +320,6 @@
             return this.courses
           }
         },
-
       },
     })
   </script>

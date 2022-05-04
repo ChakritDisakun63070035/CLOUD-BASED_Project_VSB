@@ -40,6 +40,13 @@
       </nav>
     </header>
     <div class="container">
+      <% if (message.length > 0) { %>
+      <div class="alert alert-danger mt-3 text-center alert-dismissible fade show">
+        <i class="bi bi-check-circle-fill text-danger iconcart"></i>
+        <%= message %>
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+      <% } %>
       <div class="row mt-5">
         <h5>
           My Course
@@ -61,54 +68,66 @@
               <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body" v-for="user in users">
-              <form class="" :action="'/teacher/' + user.user_id" method="POST" enctype="multipart/form-data">
+              <form class="needs-validation" novalidate :action="'/teacher/' + user.user_id" method="POST" enctype="multipart/form-data">
                 <div class="file my-3">
                   <label class="form-label" for="customFile">Course Image</label>
-                  <input type="file" class="form-control" id="customFile" name="course_image" />
+                  <input type="file" class="form-control" id="customFile" name="course_image" required />
+                  <div class="invalid-feedback"> Please choose your course image. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Name</label>
                   <input type="text" class="form-control" name="course_name" value="" required />
+                  <div class="invalid-feedback"> Please enter your course name. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Information</label>
                   <input type="text" class="form-control" name="course_info" value="" required></input>
+                  <div class="invalid-feedback"> Please enter your course information. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Time</label>
-                  <input type="text" class="form-control" name="course_time" value="" required />
+                  <input pattern="[0-9]{1,2}:[0-9]{1,2}:[0-9]{1,2}" type="text" class="form-control" name="course_time" value="" required />
+                  <div class="invalid-feedback"> Please enter your course time using format hh:mm:ss </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Price</label>
-                  <input type="text" class="form-control" name="course_price" value="" required />
+                  <input type="number" class="form-control" name="course_price" value="" required />
+                  <div class="invalid-feedback"> Please enter your course price. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Course Description</label>
                   <textarea type="text" class="form-control" name="course_des" value="" required></textarea>
+                  <div class="invalid-feedback"> Please enter your course description. </div>
                 </div>
                 <div class="file my-3">
                   <label class="form-label" for="customFile">Preview Image</label>
-                  <input type="file" class="form-control" id="customFile" name="preview_image" />
+                  <input type="file" class="form-control" id="customFile" name="preview_image" required />
+                  <div class="invalid-feedback"> Please choose your preview image. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">Preview Video</label>
                   <input type="url" class="form-control" name="preview_video" value="" required />
+                  <div class="invalid-feedback"> Please enter your preview video. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">What You'll Learn?</label>
                   <input type="text" class="form-control" name="preview_learn1" value="" required />
+                  <div class="invalid-feedback"> Please enter your target. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">What You'll Learn?</label>
                   <input type="text" class="form-control" name="preview_learn2" value="" required />
+                  <div class="invalid-feedback"> Please enter your target. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">What You'll Learn?</label>
                   <input type="text" class="form-control" name="preview_learn3" value="" required />
+                  <div class="invalid-feedback"> Please enter your target. </div>
                 </div>
                 <div class="my-3">
                   <label class="form-label">What You'll Learn?</label>
                   <input type="text" class="form-control" name="preview_learn4" value="" required />
+                  <div class="invalid-feedback"> Please enter your target. </div>
                 </div>
                 <div class="modal-footer">
                   <button type="submit" class="btn btn-warning">Create</button>
@@ -124,7 +143,7 @@
         <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
           <div class="card myAnim bg-light" style="width: 20rem">
             <a :href="'/course/' + course.course_id + '/' + user.user_id" style="text-decoration: none; color:black">
-              <img :src="course.image" class="card-img-top" style="max-height: 30vh" alt="..." />
+              <img :src="course.image" class="mycourse_img card-img-top" style="max-height: 30vh" alt="..." />
               <div class="card-body">
                 <h5 class="card-title text-center text-dark">
                   <b>
@@ -144,73 +163,89 @@
             </a>
             <div class="card-footer">
               <div class="text-end">
-                <button :onclick="editcourse(course.course_id, course.preview_id)" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editcourse"><i class="bi bi-pencil-fill"></i> Edit</button>
-                <a :href="'/teacher/' + user.user_id + '/delcourse/' + course.course_id + '/' + course.preview_id" class="btn btn-danger btn-sm"><i class="bi bi-trash-fill"></i> Delete </a>
+                <button @click="editcourse(course)" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#editcourse"><i class="bi bi-pencil-fill"></i> Edit</button>
+                <button @click="editcourse(course)" class="btn btn-danger btn-sm" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#delcourse"><i class="bi bi-trash-fill"></i> Delete</button>
               </div>
-            </div>
-            <!-- modal edit course -->
-            <div class="modal fade" id="editcourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
-              <div class="modal-dialog">
-                <div class="modal-content">
-                  <div class="modal-header">
-                    <h5 class="modal-title">Edit Course {{editCourseId}} {{editPreviewId}} </h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+              <!-- modal edit course -->
+              <div class="modal fade" id="editcourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <h5 class="modal-title">Edit Course '{{name}}' </h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <form class="" :action="'/teacher/' + user.user_id + '/' + course_id + '/' + preview_id" method="POST" enctype="multipart/form-data">
+                        <div class="file my-3">
+                          <label class="form-label" for="customFile">Course Image</label>
+                          <input type="file" class="form-control" id="customFile" name="course_image" />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">Course Name</label>
+                          <input type="text" class="form-control" name="course_name" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">Course Information</label>
+                          <input type="text" class="form-control" name="course_info" value="" required></input>
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">Course Time</label>
+                          <input type="text" class="form-control" name="course_time" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">Course Price</label>
+                          <input type="text" class="form-control" name="course_price" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">Course Description</label>
+                          <textarea type="text" class="form-control" name="course_des" value="" required></textarea>
+                        </div>
+                        <div class="file my-3">
+                          <label class="form-label" for="customFile">Preview Image</label>
+                          <input type="file" class="form-control" id="customFile" name="preview_image" />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">Preview Video</label>
+                          <input type="url" class="form-control" name="preview_video" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">What You'll Learn?</label>
+                          <input type="text" class="form-control" name="preview_learn1" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">What You'll Learn?</label>
+                          <input type="text" class="form-control" name="preview_learn2" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">What You'll Learn?</label>
+                          <input type="text" class="form-control" name="preview_learn3" value="" required />
+                        </div>
+                        <div class="my-3">
+                          <label class="form-label">What You'll Learn?</label>
+                          <input type="text" class="form-control" name="preview_learn4" value="" required />
+                        </div>
+                        <div class="modal-footer">
+                          <button type="submit" class="btn btn-warning">Edit</button>
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        </div>
+                      </form>
+                    </div>
                   </div>
-                  <div class="modal-body">
-                    <form class="" :action="'/teacher/' + user.user_id + '/' + editCourseId + '/' + editPreviewId" method="POST" enctype="multipart/form-data">
-                      <div class="file my-3">
-                        <label class="form-label" for="customFile">Course Image</label>
-                        <input type="file" class="form-control" id="customFile" name="course_image" />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">Course Name</label>
-                        <input type="text" class="form-control" name="course_name" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">Course Information</label>
-                        <input type="text" class="form-control" name="course_info" value="" required></input>
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">Course Time</label>
-                        <input type="text" class="form-control" name="course_time" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">Course Price</label>
-                        <input type="text" class="form-control" name="course_price" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">Course Description</label>
-                        <textarea type="text" class="form-control" name="course_des" value="" required></textarea>
-                      </div>
-                      <div class="file my-3">
-                        <label class="form-label" for="customFile">Preview Image</label>
-                        <input type="file" class="form-control" id="customFile" name="preview_image" />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">Preview Video</label>
-                        <input type="url" class="form-control" name="preview_video" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">What You'll Learn?</label>
-                        <input type="text" class="form-control" name="preview_learn1" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">What You'll Learn?</label>
-                        <input type="text" class="form-control" name="preview_learn2" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">What You'll Learn?</label>
-                        <input type="text" class="form-control" name="preview_learn3" value="" required />
-                      </div>
-                      <div class="my-3">
-                        <label class="form-label">What You'll Learn?</label>
-                        <input type="text" class="form-control" name="preview_learn4" value="" required />
-                      </div>
-                      <div class="modal-footer">
-                        <button type="submit" class="btn btn-warning">Edit</button>
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      </div>
-                    </form>
+                </div>
+              </div>
+
+              <!-- modal del course -->
+              <div class="modal fade" id="delcourse" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+                <div class="modal-dialog">
+                  <div class="modal-content">
+                    <div class="modal-header">
+                      <div class="modal-title mx-auto text-danger">Are you sure you want to delete '{{name}}' ? </div>
+                    </div>
+                    <div class="my-2 mx-2 text-end">
+                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger">Delete</a>
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -220,7 +255,7 @@
       </div>
     </div>
   </div>
-
+  </div>
   <footer class="footer py-3 bg-light">
     <div class="container">
       <div class="row">
@@ -289,16 +324,20 @@
         users: JSON.parse(`<%- users %>`),
         sorted: "",
         idCounter: 16,
-        editCourseId: "",
-        editPreviewId: ""
+        course_id: "",
+        name: "",
+        preview_id: "",
       },
-      methods:{
-        editcourse(courseId, previewId){
-          this.editCourseId = courseId,
-          this.editPreviewId = previewId
+      methods: {
+        editcourse(course) {
+          const courseId = course.course_id
+          const previewId = course.preview_id
+          const name = course.course_name
+          this.course_id = courseId
+          this.name = name
+          this.preview_id = previewId
         }
       },
-
       computed: {
         computedCourses() {
           let results = this.courses
@@ -352,6 +391,27 @@
         },
       },
     })
+  </script>
+  <script>
+    (function() {
+      'use strict'
+
+      // Fetch all the forms we want to apply custom Bootstrap validation styles to
+      var forms = document.querySelectorAll('.needs-validation')
+
+      // Loop over them and prevent submission
+      Array.prototype.slice.call(forms)
+        .forEach(function(form) {
+          form.addEventListener('submit', function(event) {
+            if (!form.checkValidity()) {
+              event.preventDefault()
+              event.stopPropagation()
+            }
+
+            form.classList.add('was-validated')
+          }, false)
+        })
+    })()
   </script>
 </body>
 

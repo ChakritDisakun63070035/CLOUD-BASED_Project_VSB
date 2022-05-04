@@ -427,7 +427,7 @@ router.get("/course/:id/:userid", async function (req, res, next) {
     )
     const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
 
-    const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
+    const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date  FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2) })
   } catch (err) {
@@ -509,7 +509,7 @@ router.get("/teacher/:id", async function (req, res, next) {
     const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
 
     const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("teacher", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("teacher", { courses: JSON.stringify(rows), users: JSON.stringify(rows1), message: req.flash("message") })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -580,7 +580,8 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
     await conn.release()
   }
 })
-// /teacher/' + user.user_id + '/' + course.course_id + '/' + course.preview_id
+
+// edit-course
 router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
@@ -648,6 +649,7 @@ router.get("/teacher/:id/delcourse/:courseId/:previewId", async function (req, r
     const [rows1, fields1] = await conn.query("DELETE FROM `preview_preview_video` WHERE preview_id=?", [req.params.previewId])
     const [rows2, fields2] = await conn.query("DELETE FROM `preview` WHERE preview_id=?", [req.params.previewId])
     const [rows3, fields3] = await conn.query("DELETE FROM `course` WHERE course_id=?", [req.params.courseId])
+    // req.flash("message", "successfully! delete course '" + req.params.delcourse + "'")
     return res.redirect("/teacher/" + req.params.id)
   } catch (err) {
     console.log(err)
@@ -871,7 +873,7 @@ router.post("/course/:id/:userid", async function (req, res, next) {
       comment,
       req.params.userid,
     ])
-    const [rows2, fields2] = await conn.query("SELECT * FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?", [rows1.insertId])
+    const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?", [rows1.insertId])
     await conn.commit()
     return res.json(rows2[0])
   } catch (err) {
