@@ -458,37 +458,39 @@ router.get("/course/:id/:userid", async function (req, res, next) {
     // let check1 = req.params.id
     // let check3 = rows4.course_id
     // console.log(check1)
-    //     console.log(rows4.course_id)
-    // if (rows4.some(rows4 => rows4[0].course_id === req.params.id)) {
+    //     console.log(rows4)
+    // if (rows4.some(rows4 => rows4.course_id = req.params.id)) {
     //   console.log('true')
-    //   res.redirect('/course/' + req.params.id + '/' + req.params.userid + '/learn')
+    //   return res.redirect('/course/' + req.params.id + '/' + req.params.userid + '/learn')
     // } else {
     //   console.log('no')
     //   return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
     // }
 
     // for(let i = 0; i < rows4.length; i++){ 
-          let check1 = req.params.id
-        let check3 = rows4[0].course_id
-        let check4 = rows4[1].course_id
-        let check5 = rows4[2].course_id
-        let check6 = rows4[3].course_id
-        let check7 = rows4[4].course_id
-        let check8 = rows4[5].course_id
-        let check9 = rows4[6].course_id
+
+
+        //   let check1 = req.params.id
+        // let check3 = rows4[0].course_id
+        // let check4 = rows4[1].course_id
+        // let check5 = rows4[2].course_id
+        // let check6 = rows4[3].course_id
+        // let check7 = rows4[4].course_id
+        // let check8 = rows4[5].course_id
+        // let check9 = rows4[6].course_id
         
-        console.log(check1)
-        console.log(check3)
-        if(check1 != check3 && check1 != check4 && check1 != check5 && check1 != check6 && check1 != check7 
-          && check8 != check3 && check1 != check9 ){
-          return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
+        // console.log(check1)
+        // console.log(check3)
+        // if(check1 != check3 && check1 != check4 && check1 != check5 && check1 != check6 && check1 != check7 
+        //   && check8 != check3 && check1 != check9 ){
+        //   return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
 
-        }
+        // }
 
-        else if(check1 = check3){
-          res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
+        // else if(check1 = check3){
+        //   res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
 
-        }
+        // }
 
     //   }
 
@@ -504,7 +506,7 @@ router.get("/course/:id/:userid", async function (req, res, next) {
     //     res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
     // } else{
 
-    // return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
+    return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
     // }
   } catch (err) {
     console.log(err)
@@ -648,7 +650,6 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
 
     const [rows2, fields2] = await conn.query("INSERT INTO `preview_preview_video` (preview_video, preview_id) VALUES(?, ?)", [preview_video, preview_id])
 
-    const [rows4, fields4] = await conn.query("INSERT INTO `course_image` (image, course_id) VALUES(?, ?)", [img_course, course_id])
     res.redirect("/teacher/" + req.params.id)
   } catch (err) {
     console.log(err)

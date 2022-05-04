@@ -1,267 +1,156 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CheckSlip</title>
-  <link rel="icon" href="/uploads/logo.png" />
-  <link href="/css/bootstrap.css" rel="stylesheet" />
-  <link href="/css/css.css" rel="stylesheet" />
-  <script src="/js/bootstrap.bundle.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>CheckSlip</title>
+    <link rel="icon" href="/uploads/logo.png" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/css.css" rel="stylesheet" />
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
 
 <body>
-  <div class="" id="app">
-    <header>
-      <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+    <div class="" id="app">
+        <header>
+            <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
 
-        <div class="container-fluid" v-for="user in users">
+                <div class="container-fluid" v-for="user in users">
 
-          <a class="navbar-brand" :href="'/admin/' + user.admin_id + '/checkpayment'">
-            <img src="/uploads/logo.png" alt="" width="60" height="60" />
-          </a>
+                    <a class="navbar-brand" :href="'/admin/' + user.admin_id + '/checkpayment'">
+                        <img src="/uploads/logo.png" alt="" width="60" height="60" />
+                    </a>
 
-          <div class="d-flex">
-            <!-- <a class="navbar-brand
+                    <div class="d-flex">
+                        <!-- <a class="navbar-brand
                                 text-decoration-underline" href="">
                                 <i class="bi bi-book fs-4"></i>
                                 My Course
                             </a> -->
 
-            <li class="nav dropdown">
-              <a class="nav-link dropdown-toggle
-                                    text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img :src="user.admin_img" alt="" width="32" height="32" class="d-inline-block
+                        <li class="nav dropdown">
+                            <a class="nav-link dropdown-toggle
+                                    text-dark" href="#" id="navbarScrollingDropdown" role="button"
+                                data-bs-toggle="dropdown" aria-expanded="false">
+                                <img :src="user.admin_img" alt="" width="32" height="32" class="d-inline-block
                                         align-text-top" />
-                {{user.admin_fname}}
-              </a>
-              <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                <li><a class="dropdown-item" :href="'/admin/profile/' +
+                                {{user.admin_fname}}
+                            </a>
+                            <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                                <li><a class="dropdown-item" :href="'/admin/profile/' +
                                     user.admin_id + '/'">Profile</a></li>
-                <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
-              </ul>
-            </li>
-          </div>
+                                <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                            </ul>
+                        </li>
+                    </div>
 
-        </div>
-      </nav>
-    </header>
-    <div class="container">
-      <div class="row">
-        <div class="col-md-7 col-sm-7 text-start">
-          <h2 class="mt-5">Check payment slip </h2>
-        </div>
-        <!-- <div class="col-md-3 col-sm-3">
-                    
-                </div> -->
-        <!-- <div class="col-md-5 col-sm-5 text-center">
-                    <h3 class="mt-5">Total :</h3>
-                </div> -->
-      </div>
-      <hr>
-      <div class="row">
-        <div class="row justify-content-center">
-          <div class="col-4 me-5">
-            <div v-for="img in data.slice(0,1)">
-              <div class="col-md-12 d-flex justify-content-end mt-1">
-                <img :src="img.payment_slip" class="card-img-top  p-2  cropimg" alt="no slip" />
-              </div>
+                </div>
+            </nav>
+        </header>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-7 col-sm-7 text-start">
+                    <h2 class="mt-5">Check payment slip </h2>
+                </div>
             </div>
-          </div>
-          <div class="col-4 ms-4" v-for="info in data.slice(0,1)">
-            <div class="row ">
-              <div v-for="info in data.slice(0,1)">
-                <form method="POST" :action="'/admin/' + info.admin_id +'/'+info.payment_id+'/slip/'+info.order_id">
-                  <div class="row my-3 mt-5">
-                    <h5>Payment Detail <i class="bi bi-info-circle"></i></h5>
-                  </div>
-                  <div class="row my-3">
-                    <h6>User : {{info.user_fname+' '+info.user_lname}} &emsp14; id: {{info.user_id}} </h6>
-                  </div>
-                  <div class="row my-3">
-                    <h6>Order id : {{info.order_id}} </h6>
-                  </div>
-                  <div class="row my-3">
-                    <h6>Order date : {{info.order_date}} </h6>
-                  </div>
-                  <div class="row my-3">
-                    <h6>Type of transaction : {{info.payment_account}} </h6>
-                  </div>
-
-                  <div class="row my-3">
-                    <h6>Total : {{info.price_total}} &emsp13;&emsp13;&emsp13;&emsp13;
-                      <span>
-                        <div class="form-check form-check-inline ">
-                          <input class="form-check-input " type="checkbox" name="slip" value=1 />
-                          <label class="form-check-label">Correct</label>
+            <hr>
+            <div class="row">
+                <div class="row justify-content-center">
+                    <div class="col-4 me-5">
+                        <div v-for="img in data.slice(0,1)">
+                            <div class="col-md-12 d-flex justify-content-end mt-1">
+                                <img :src="img.payment_slip" class="card-img-top  p-2  cropimg" alt="no slip" />
+                            </div>
                         </div>
                     </div>
                     <div class="col-4 ms-4" v-for="info in data.slice(0,1)">
-                         <div class="row ">
-                        <div v-for="info in data.slice(0,1)">
-                            <form method="POST" 
-                                                    :action="'/admin/' + info.admin_id +'/'+info.payment_id+'/slip/'+info.order_id">
-                                                    <div class="row my-3 mt-5">
-                                                        <h5>Payment Detail  <i class="bi bi-info-circle"></i></h5>
-                                                    </div>
-                                                    <div class="row my-3">
-                                                        <h6>User : {{info.user_fname+' '+info.user_lname}} &emsp14; id: {{info.user_id}} </h6>
-                                                    </div>
-                                                    <div class="row my-3">
-                                                        <h6>Order id : {{info.order_id}} </h6>
-                                                    </div>
-                                                    <div class="row my-3">
-                                                        <h6>Order date : {{info.order_date}} </h6>
-                                                    </div>
-                                                    <div class="row my-3">
-                                                        <h6>Type of transaction : {{info.payment_account}} </h6>
-                                                    </div>
-                                                    
-                                                    <div class="row my-3">
-                                                        <h6>Total : {{info.price_total}}  &emsp13;&emsp13;&emsp13;&emsp13;
-                                                            <span>
-                                                                <div data-name="check" class="d-inline">
-                                                            <span><div class="form-check form-check-inline "  >
-                                                                <input class="form-check-input " type="checkbox" name="slip" value=1 
-                                                                />
-                                                                <label class="form-check-label">Correct</label>
-                                                            </div></span>
-                                                            &emsp13;&emsp13;&emsp13;&emsp13;
-                                                            <span><div class="form-check form-check-inline "  >
-                                                                <input class="form-check-input " type="checkbox" name="wrong_slip" 
-                                                                />
-                                                                <label class="form-check-label">Incorrect</label>
-                                                            </div></span>
-                                                            </div>
-                                                        </span>
-                                                        </h6>
-                                                        
-                                                        <!-- <span><div class="form-check form-check-inline "  >
-                                                        <input class="form-check-input " type="checkbox" name="slip" value=1
-                                                            />
-                                                        <label class="form-check-label">Check</label>
-                                                    </div></span> -->
-                  </div>
-                  <div class="row my-4">
-                    <button type="submit" class="btn btn-warning text-dark">Confirm Check</button>
-                  </div>
-                </form>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- <div class="col-md-4 col-sm-4 border">
+                        <div class="row ">
 
-                </div>
-                <div class="col-md-4 col-sm-4 border">
-                    <div v-for="img in data.slice(0,1)">
-                        <div class="col-md-12 d-flex justify-content-center">
-                            <img :src="img.payment_slip" class="card-img-top  p-2  " style="width: 50%; height: auto;" alt="no slip" />
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4 col-sm-4 border">
-                    <div v-for="info in data.slice(0,1)">
-                        <form method="POST" 
-                                                :action="'/admin/' + info.admin_id +'/'+info.payment_id+'/slip/'+info.order_id">
-                                                <div class="form-check form-check-inline "  >
-                                                    <input class="form-check-input " type="checkbox" name="slip" value=1
-                                                        />
-                                                    <label class="form-check-label">Check</label>
-                                                </div>
-                                                <button type="submit" class="btn btn-outline-success">Confirm Check</button>
-                                                </form>
-                    </div>
-                </div> -->
-        <!-- <div class="col-md-4 col-sm-4">
-                    <div v-for="info in data">
-                        <div class="row">
-                            <div class="col-12 d-flex justify-content-center">
-                                <div class="card mb-3" style="width: 1080px;">
-                                    <div class="row g-0">
-                                        
-                                        <div class="col-md-12">
-                                            <div class="card-body ">
-                                                <div class="row ">
-        
-                                                    <p>
-                                                        Order ID &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;:
-                                                        &emsp;&emsp;&emsp;&emsp;{{info.order_id}}
-                                                    </p>
-        
-        
-                                                </div>
-                                                <div class="row">
-                                                    <p>
-                                                        User
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;:
-                                                        &emsp;&emsp;&emsp;&emsp;{{info.user_fname
-                                                        + ' ' +info.user_lname}}
-                                                    </p>
-                                                </div>
-                                                <div class="row" >
-                                                    <p>
-                                                        Course
-                                                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&emsp;:
-                                                        &emsp;&emsp;&emsp;&nbsp;{{' '+info.course_name}}
-                                                    </p>
-                                                </div>
-                                                <div class="row">
-                                                    <p>
-                                                        Total Price
-                                                        &nbsp;&nbsp;&nbsp;:
-                                                        &emsp;&emsp;&emsp;&nbsp;&nbsp;{{info.price_total+' '+'฿'}}
-                                                    </p>
-                                                </div>
-                                                <form method="POST" 
-                                                :action="'/admin/' + info.admin_id +'/'+info.payment_id+'/slip/'+info.order_id">
-                                                <div class="form-check form-check-inline"  >
-                                                    <input class="form-check-input" type="radio" name="slip" value=1
-                                                        />
-                                                    <label class="form-check-label">Check</label>
-                                                </div>
-                                                <button type="submit" class="btn btn-outline-success">Confirm Check</button>
-                                                </form>
-                                            </div>
-                                        </div>
+                            <div v-for="info in data.slice(0,1)">
+                                <form method="POST"
+                                    :action="'/admin/' + info.admin_id +'/'+info.payment_id+'/slip/'+info.order_id">
+                                    <div class="row my-3 mt-5">
+                                        <h5>Payment Detail <i class="bi bi-info-circle"></i></h5>
                                     </div>
-                                </div>
+                                    <div class="row my-3">
+                                        <h6>User : {{info.user_fname+' '+info.user_lname}} &emsp14; id:
+                                            {{info.user_id}} </h6>
+                                    </div>
+                                    <div class="row my-3">
+                                        <h6>Order id : {{info.order_id}} </h6>
+                                    </div>
+                                    <div class="row my-3">
+                                        <h6>Order date : {{info.order_date}} </h6>
+                                    </div>
+                                    <div class="row my-3">
+                                        <h6>Type of transaction : {{info.payment_account}} </h6>
+                                    </div>
+
+                                    <div class="row my-3">
+                                        <h6>Total : {{info.price_total}} &emsp13;&emsp13;&emsp13;&emsp13;
+                                            <span>
+                                                <div data-name="check" class="d-inline">
+                                                    <span>
+                                                        <div class="form-check form-check-inline ">
+                                                            <input class="form-check-input " type="checkbox" name="slip"
+                                                                value=1 />
+                                                            <label class="form-check-label">Correct</label>
+                                                        </div>
+                                                    </span>
+                                                    &emsp13;&emsp13;&emsp13;&emsp13;
+                                                    <span>
+                                                        <div class="form-check form-check-inline ">
+                                                            <input class="form-check-input " type="checkbox"
+                                                                name="wrong_slip" />
+                                                            <label class="form-check-label">Incorrect</label>
+                                                        </div>
+                                                    </span>
+                                                </div>
+                                            </span>
+                                        </h6>
+
+                                        <div class="row my-4">
+                                            <button type="submit" class="btn btn-warning text-dark">Confirm
+                                                Check</button>
+                                        </div>
+                                </form>
                             </div>
                         </div>
-                        
+
                     </div>
-                </div> -->
-      </div>
+                </div>
 
+            </div>
+        </div>
     </div>
-</body>
+    </div>
 
-<script>
+    <script>
         var last;
-        document.addEventListener('input',(e)=>{
-        var closest=e.target.closest("*[data-name='check']");
-            if(e.target.closest("*[data-name]")){
-                if(last)
-                last.checked=false;
+        document.addEventListener('input', (e) => {
+            var closest = e.target.closest("*[data-name='check']");
+            if (e.target.closest("*[data-name]")) {
+                if (last)
+                    last.checked = false;
             }
-            if(e.target!==last)
-                last=e.target;
+            if (e.target !== last)
+                last = e.target;
             else
-                last=undefined;
-            })
-    var app = new Vue({
-        el: "#app",
-        data: {
-            data: JSON.parse(`<%- data %>`),
-            users: JSON.parse(`<%- users %>`),
-        },
-        method:{
-            
-        }
-    })
-</script>
+                last = undefined;
+        })
+        var app = new Vue({
+            el: "#app",
+            data: {
+                data: JSON.parse(`<%- data %>`),
+                users: JSON.parse(`<%- users %>`),
+            },
+            method: {
 
+            }
+        })
+    </script>
+</body>
 
 </html>
