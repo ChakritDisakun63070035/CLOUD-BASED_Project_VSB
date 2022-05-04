@@ -166,7 +166,7 @@
           </div>
           <div class="col-md-5 col-sm-12" v-for="user in users">
             <div v-if="user.role === 'student'" class="d-inline">
-              <div class="card gray" style="width: 35rem;">
+              <div class="card gray" style="width: 30rem;">
                 <div class="text-center mt-3">
                   <div class="text-center mt-3">
                     <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;
@@ -190,13 +190,6 @@
                   </div>
                 </div>
               </div>
-              <!-- ADD LIKE -->
-              <div class="my-3 text-center py-3" style="background-color: pink; border-radius: 20px;">
-                <div style="font-size: 100px;">
-                  <a @click="addLikeCourse(info.course_id, users[0].user_id)"><i class="bi bi-suit-heart-fill text-danger"></i> </a>
-                </div>
-                <div class="fs-3">{{info.like}} Liked</div>
-              </div>
             </div>
             <div v-if="user.role === 'teacher'" class="d-inline">
               <div class="card gray pb-4" style="width: 35rem;">
@@ -211,6 +204,13 @@
                 </div>
               </div>
             </div>
+            <!-- ADD LIKE -->
+            <div class="my-3 text-center py-3" style="background-color: pink; border-radius: 20px;">
+              <div style="font-size: 100px;">
+                <a @click="addLikeCourse(info.course_id, users[0].user_id)"><i class="bi bi-suit-heart-fill text-danger"></i> </a>
+              </div>
+              <div class="fs-3">{{info.like}} Liked</div>
+            </div>
           </div>
         </div>
 
@@ -222,10 +222,10 @@
             </div>
             <div class="mt-3 row bg-light" style="border-radius: 10px;" v-for="(info, index) in comment">
               <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="info.image" style="width:100px; height:100px; object-fit:cover;" /> </div>
-              <div class="col-9 col-sm-9 col-md-10 mt-2">
-                <h5>{{info.user_fname}}</h5>
+              <div class="col-9 col-sm-9 col-md-10 mt-2 position-relative">
+                <h5>{{info.user_fname}} {{info.user_lname}} <span class="badge bg-success">{{info.role}}</span></h5><span class="text-muted position-absolute top-0 end-0 me-2"> On {{info.comm_date.substring(0, 10)}} at {{info.comm_date.substring(11, 16)}}</span>
                 <p>{{info.comment}}</p>
-                <div class="text-end fs-3 mb-2" v-if="info.user_id === users[0].user_id"> <a @click="deleteComment(info.comment_course_id, users[0].user_id, info.id, index)"> <i class="bi bi-trash-fill"></i> </a> </div>
+                <div class="position-absolute bottom-0 end-0 fs-3 mb-2 me-2 text-danger" v-if="info.user_id === users[0].user_id"> <a @click="deleteComment(info.comment_course_id, users[0].user_id, info.id, index)"> <i class="bi bi-trash-fill"></i> </a> </div>
               </div>
             </div>
           </div>
@@ -236,7 +236,7 @@
             <div class="mt-3 row bg-light" style="border-radius: 10px;">
               <span class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="users[0].image" style="width:100px; height:100px; object-fit:cover;" /> </span>
               <span class="col-9 col-sm-9 col-md-10 text-start mt-2">
-                <h5>{{users[0].user_fname}}</h5>
+                <h5>{{users[0].user_fname}} {{users[0].user_lname}}</h5>
                 <input v-model="commTxt" type="text" class="form-control">
               </span>
             </div>
@@ -344,7 +344,6 @@
               this.comment_bnt = 1
             })
             .catch((error) => {
-              console.log("ok");
               this.error = error.response.data.message;
             });
         }

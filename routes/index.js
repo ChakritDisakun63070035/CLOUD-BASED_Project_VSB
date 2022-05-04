@@ -425,7 +425,7 @@ router.get("/course/:id/:userid", async function (req, res, next) {
     )
     const [rows1, fields1] = await conn.query("SELECT * FROM user  WHERE user_id=?", [req.params.userid])
 
-    const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
+    const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date  FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2) })
   } catch (err) {
@@ -869,7 +869,7 @@ router.post("/course/:id/:userid", async function (req, res, next) {
       comment,
       req.params.userid,
     ])
-    const [rows2, fields2] = await conn.query("SELECT * FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?", [rows1.insertId])
+    const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date FROM `comments` JOIN `user` ON comment_by_id = user_id WHERE `id` = ?", [rows1.insertId])
     await conn.commit()
     return res.json(rows2[0])
   } catch (err) {
