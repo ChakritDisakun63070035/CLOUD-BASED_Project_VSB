@@ -239,7 +239,7 @@
                       <div class="modal-title mx-auto text-danger">Are you sure you want to delete '{{name}}' ? </div>
                     </div>
                     <div class="my-2 mx-2 text-end">
-                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger" @click="alertdel">Delete</a>
+                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger" @load="alertdel">Delete</a>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>

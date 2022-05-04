@@ -126,7 +126,8 @@ a.myAnim:hover {
 .nocourse {
   height: 22vh;
   width: 100%;
-  margin-bottom: 10em;
+  margin-bottom: 15em;
+  margin-top: 2em;
 }
 
 .nocourse2 {
@@ -166,6 +167,11 @@ a.myAnim:hover {
 .my_img{
   object-fit: cover;
   height: 180px;
+}
+
+.my_card{
+  object-fit: cover;
+  height: 360px;
 }
 
 .footer {

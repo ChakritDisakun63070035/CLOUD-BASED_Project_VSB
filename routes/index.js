@@ -7,20 +7,15 @@ const bcrypt = require("bcrypt")
 const { generateToken } = require("../utils/token")
 router = express.Router()
 
-async function requiredLogin(req, res, next) {
+const requiredLogin = async function requiredLogin(req, res, next) {
   if (!req.session.user) {
-    console.log(req.session.user)
-    res.redirect("/sign-in")
+    console.log("You aren't logged-in! Please sign-in first.")
+    req.flash("message", "You aren't logged-in! Please sign-in first.")
+    return res.redirect("/sign-in")
   } else {
     next()
   }
 }
-
-// set middleware
-router.use(async function (req, res, next) {
-  res.locals.user = req.session.user
-  next()
-})
 
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
@@ -42,7 +37,7 @@ router.get("/", async function (req, res, next) {
   }
 })
 
-router.get("/home/:id", async function (req, res, next) {
+router.get("/home/:id", requiredLogin, async function (req, res, next) {
   try {
     const [rows, fields] = await pool.query("SELECT * FROM course")
     const [users] = await pool.query("SELECT * FROM user WHERE user_id=?", [req.params.id])
@@ -113,7 +108,7 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
 })
 
 // create cart
-router.get("/course/:course_id/create/cart/:user_id/:price", async function (req, res, next) {
+router.get("/course/:course_id/create/cart/:user_id/:price", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   const admin = Math.floor(Math.random() * (7 - 1)) + 1
@@ -149,8 +144,6 @@ router.get("/course/:course_id/create/cart/:user_id/:price", async function (req
     await conn.release()
   }
 })
-
-
 
 // del items
 router.get("/mycart/:id/:item_no/:order_id", requiredLogin, async function (req, res, next) {
@@ -191,7 +184,7 @@ router.get("/payment/:id/:order_id", requiredLogin, async function (req, res, ne
   }
 })
 
-router.post("/payment/:id/:order_id", upload.single("slip"), async function (req, res, next) {
+router.post("/payment/:id/:order_id", upload.single("slip"), requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -319,13 +312,14 @@ router.post("/sign-in", async function (req, res, next) {
 
     const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE email=?", ["on", email])
 
+    const date = new Date().toString().substring(0, 25);
     if (user.role === "student") {
-      req.session.user = true
-      console.log(req.session.user)
+      req.session.user = "Logged-in! Welcome Learner😀"
+      console.log(date + ': ' + req.session.user)
       return res.redirect("/allcourse/" + user.user_id)
     } else if (user.role === "teacher") {
-      req.session.user = true
-      console.log(req.session.user)
+      req.session.user = "Logged-in! Welcome Teacher😀"
+      console.log(date + ': ' + req.session.user)
       return res.redirect("/teacher/" + user.user_id)
     }
   } catch (err) {
@@ -341,7 +335,10 @@ router.get("/sign-out/:id", requiredLogin, async function (req, res, next) {
   await conn.beginTransaction()
   try {
     const [rows2, fields2] = await conn.query("UPDATE `user` SET status_user=? WHERE user.user_id=?", ["off", req.params.id])
-    req.session.user = null
+    const date = new Date().toString().substring(0, 25);
+    // req.session.user = "Logged-out! Bye-Bye😀"
+    req.session.destroy()
+    console.log(date + ': ' + "Logged-out! Bye-Bye😀")
     res.redirect("/")
   } catch (err) {
     console.log(err)
@@ -376,7 +373,7 @@ router.get("/profile/:id", requiredLogin, async function (req, res, next) {
   }
 })
 
-router.post("/profile/:id", upload.single("image"), async function (req, res, next) {
+router.post("/profile/:id", upload.single("image"), requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -389,8 +386,7 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
 
   const file = req.file
   const img = file.path.replace("static\\uploads\\", "/uploads/")
-  console.log(file)
-  console.log(file.path)
+
   if (!file) {
     const error = new Error("Please upload a file")
     error.httpStatusCode = 400
@@ -435,8 +431,7 @@ router.post("/profile/:id", upload.single("image"), async function (req, res, ne
 })
 
 // preview page
-
-router.get("/course/:id/:userid", async function (req, res, next) {
+router.get("/course/:id/:userid", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -555,7 +550,7 @@ router.get("/allcourse/:id/mycourse", requiredLogin, async function (req, res, n
 })
 
 // info-course
-router.get("/course/:id/:userid/learn", async function (req, res, next) {
+router.get("/course/:id/:userid/learn", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
   try {
@@ -576,7 +571,7 @@ router.get("/course/:id/:userid/learn", async function (req, res, next) {
 })
 
 //teacher-after-login
-router.get("/teacher/:id", async function (req, res, next) {
+router.get("/teacher/:id", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -660,7 +655,7 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
 })
 
 // edit-course
-router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, res, next) {
+router.post("/teacher/:id/:courseId/:previewId", cpUpload, requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -679,7 +674,7 @@ router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, 
   const file_preview = req.files.preview_image[0]
   const img_course = file_course.path.replace("static\\uploads\\", "/uploads/")
   const img_preview = file_preview.path.replace("static\\uploads\\", "/uploads/")
-
+  console.log(file_preview)
   try {
     const [rows3, fields3] = await conn.query("SELECT * FROM `user` JOIN `teacher` ON(user.user_fname = teacher.teacher_fname) WHERE user_id=?", [req.params.id])
     let teacher_id = rows3[0].teacher_id
@@ -719,7 +714,7 @@ router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, 
 
 
 // del course by teachcer
-router.get("/teacher/:id/delcourse/:courseId/:previewId", async function (req, res, next) {
+router.get("/teacher/:id/delcourse/:courseId/:previewId", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -941,8 +936,9 @@ router.post("/admin/profile/:id", upload.single("image"), async function (req, r
     await conn.release()
   }
 })
+
 // Create new comment
-router.post("/course/:id/:userid", async function (req, res, next) {
+router.post("/course/:id/:userid", requiredLogin, async function (req, res, next) {
   const comment = req.body.comment
   const conn = await pool.getConnection()
   // Begin transaction
@@ -966,7 +962,7 @@ router.post("/course/:id/:userid", async function (req, res, next) {
 })
 
 // ADD LIKE 2
-router.put("/course/:id/:userid", async function (req, res, next) {
+router.put("/course/:id/:userid", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   // Begin transaction
   await conn.beginTransaction()
@@ -988,7 +984,7 @@ router.put("/course/:id/:userid", async function (req, res, next) {
 })
 
 // Delete comment
-router.delete("/course/:id/:userid/:commentID", async function (req, res, next) {
+router.delete("/course/:id/:userid/:commentID", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   // Begin transaction
   await conn.beginTransaction()
@@ -1005,9 +1001,8 @@ router.delete("/course/:id/:userid/:commentID", async function (req, res, next) 
   }
 })
 
-
 // ADD LIKE 2
-router.put("/course/:id/:userid", async function (req, res, next) {
+router.put("/course/:id/:userid", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection();
   // Begin transaction
   await conn.beginTransaction();
@@ -1038,15 +1033,4 @@ router.put("/course/:id/:userid", async function (req, res, next) {
 });
 
 
-// router.get("/courseId/allcourse", async function (req, res, next) {
-//   try {
-//     const [rows, fields] = await pool.query(
-//       'SELECT * FROM course join teacher using(teacher_id) WHERE course_id=?',
-//       [req.params.courseId]
-//     );
-//     return res.render("allcourse", { courses: JSON.stringify(rows) });
-//   } catch (err) {
-//     return next(err)
-//   }
-// });
 exports.router = router
