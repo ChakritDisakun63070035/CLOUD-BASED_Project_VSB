@@ -115,11 +115,11 @@
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                       </div>
                       <div class="modal-body" v-for="cart in carts">
-                        <form :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
+                        <form class="needs-validation" novalidate :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
                           <div class="my-2">
                             <label class="form-label">Account Payment</label>
                             <select class="form-select" name="account" required>
-                              <option selected disabled>Select Bank Account</option>
+                              <option class="text-secondary" value="">Select Bank Account</option>
                               <option value="KMA">KMA</option>
                               <option value="BBL">BBL</option>
                               <option value="KBANK">KBANK</option>
@@ -160,16 +160,17 @@
                           <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body" v-for="cart in carts">
-                          <form :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
+                          <form class="needs-validation" novalidate :action="'/payment/' + cart.user_id + '/' + cart.order_id" method="POST" enctype="multipart/form-data">
                             <div class="my-2">
                               <label class="form-label">Account Payment</label>
-                            <select class="form-select" name="account">
-                              <option selected value="qrcode">QR Code Payment</option>
-                            </select>
+                              <select class="form-select" name="account">
+                                <option selected value="qrcode">QR Code Payment</option>
+                              </select>
                             </div>
                             <div class="file my-2">
                               <label class="form-label" for="customFile">Payment Slip</label>
-                              <input type="file" class="form-control" id="customFile" name="slip" />
+                              <input type="file" class="form-control" id="customFile" name="slip" required/>
+                              <div class="invalid-feedback"> Please send your slip. </div>
                             </div>
                             <div class="modal-footer">
                               <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
@@ -187,6 +188,98 @@
         </div>
       </div>
     </div>
+    <br>
+    <footer class="mt-5 footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3">
+              <h4>Course Recommendation</h4>
+              <div class="line1"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
+                  <p class="ms-3"> Web Design for Beginners</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
+                  <p class="ms-3"> Cyber Security </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
+                  <p class="ms-3"> IELTS Full Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
+                  <p class="ms-3"> SQL- Database Programming </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
+                  <p class="ms-3"> C++ Programming Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
+                  <p class="ms-3"> Digital marketing </p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Navigate</h4>
+              <div class="line2"></div>
+              <div class="my-3" v-for="user in users">
+                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
+                  <p>Home</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
+                  <p>All Courses</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                  <p>My Course</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
+                  <p>My cart</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Contact </h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
+                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
+                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters, Whitehall, London</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <hr>
+            <div class="my-3 text-center iconfooter">
+              <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
+                <i class="bi bi-twitter text-info mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
+                <i class="bi bi-github text-dark mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
+                <i class="bi bi-youtube text-danger mx-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
 </body>
 <script>
   var app = new Vue({
@@ -197,64 +290,27 @@
     },
   })
 </script>
-<footer class="footer py-3 mt-5 bg-light">
-  <div class="container">
-    <div class="row">
-      <div class="col-6">
-        <h5>Browse popular topics</h5>
-        <ul class="list-unstyled text-small">
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">ABC</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Math</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Eng</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-6">
-        <h5>Popular courses and articles</h5>
-        <ul class="list-unstyled text-small">
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">ABC</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Math</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Eng</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-6">
-        <h5>VSB</h5>
-        <ul class="list-unstyled text-small">
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">About</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-          </li>
-          <li>
-            <a class="link-secondary text-decoration-none" href="#">Team</a>
-          </li>
-        </ul>
-      </div>
-      <div class="col-12 border-top my-4"></div>
-      <div class="col-9 mt-2">
-        <small class="text-muted">© 2022 VSB. All rights reserved</small>
-      </div>
-      <div class="col-3 iconfooter">
-        <i class="bi bi-facebook text-primary mx-2"></i>
-        <i class="bi bi-twitter text-info mx-2"></i>
-        <i class="bi bi-github mx-2"></i>
-        <i class="bi bi-linkedin text-primary mx-2"></i>
-        <i class="bi bi-youtube text-danger mx-2"></i>
-      </div>
-    </div>
-  </div>
-</footer>
+
+<script>
+  (function() {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
 
 </html>

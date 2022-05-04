@@ -40,13 +40,9 @@
       </nav>
     </header>
     <div class="container">
-      <% if (message.length > 0) { %>
-      <div class="alert alert-danger mt-3 text-center alert-dismissible fade show">
-        <i class="bi bi-check-circle-fill text-danger iconcart"></i>
-        <%= message %>
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      <div class="my-5 text-center alert alert-danger w-50 mx-auto" role="alert" v-if="alert">
+        <span><i class="fs-4 bi bi-exclamation-circle text-danger"></i> Success.</span>
       </div>
-      <% } %>
       <div class="row mt-5">
         <h5>
           My Course
@@ -139,7 +135,7 @@
         </div>
       </div>
 
-      <div class="row px-4" v-for="user in users">
+      <div class="row px-4 mt-3" v-for="user in users">
         <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
           <div class="card myAnim bg-light" style="width: 20rem">
             <a :href="'/course/' + course.course_id + '/' + user.user_id" style="text-decoration: none; color:black">
@@ -243,7 +239,7 @@
                       <div class="modal-title mx-auto text-danger">Are you sure you want to delete '{{name}}' ? </div>
                     </div>
                     <div class="my-2 mx-2 text-end">
-                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger">Delete</a>
+                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger" @click="alertdel">Delete</a>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>
@@ -256,66 +252,7 @@
     </div>
   </div>
   </div>
-  <footer class="footer py-3 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <h5>Browse popular topics</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>Popular courses and articles</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>VSB</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">About</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Team</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 border-top my-4"></div>
-        <div class="col-9 mt-2">
-          <small class="text-muted">© 2022 VSB. All rights
-            reserved</small>
-        </div>
-        <div class="col-3 iconfooter">
-          <i class="bi bi-facebook text-primary mx-2"></i>
-          <i class="bi bi-twitter text-info mx-2"></i>
-          <i class="bi bi-github mx-2"></i>
-          <i class="bi bi-linkedin text-primary mx-2"></i>
-          <i class="bi bi-youtube text-danger mx-2"></i>
-        </div>
-      </div>
-    </div>
-  </footer>
+
   <script>
     var app = new Vue({
       el: "#app",
@@ -327,6 +264,7 @@
         course_id: "",
         name: "",
         preview_id: "",
+        alert: false,
       },
       methods: {
         editcourse(course) {
@@ -336,6 +274,10 @@
           this.course_id = courseId
           this.name = name
           this.preview_id = previewId
+        },
+        alertdel(){
+          this.alert = true;
+          setTimeout(() => { this.alert = false }, 5000);
         }
       },
       computed: {

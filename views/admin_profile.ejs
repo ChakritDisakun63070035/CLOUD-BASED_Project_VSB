@@ -139,7 +139,7 @@
                   <div class="file my-2">
                     <label class="form-label" for="customFile">Profile Image</label>
                     <input type="file" class="form-control" id="customFile"
-                      name="image" />
+                      name="image" required/>
                   </div>
                   <div class="my-2">
                     <label class="form-label">Firstname</label>
@@ -216,5 +216,27 @@
         },
       })
     </script>
+
+<script>
+  (function() {
+    'use strict'
+
+    // Fetch all the forms we want to apply custom Bootstrap validation styles to
+    var forms = document.querySelectorAll('.needs-validation')
+
+    // Loop over them and prevent submission
+    Array.prototype.slice.call(forms)
+      .forEach(function(form) {
+        form.addEventListener('submit', function(event) {
+          if (!form.checkValidity()) {
+            event.preventDefault()
+            event.stopPropagation()
+          }
+
+          form.classList.add('was-validated')
+        }, false)
+      })
+  })()
+</script>
   </body>
 </html>

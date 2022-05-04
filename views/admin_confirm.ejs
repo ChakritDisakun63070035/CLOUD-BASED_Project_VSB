@@ -158,93 +158,32 @@
                     </div>
                 </div>
             </div>
-        </div>
-        <footer class="footer py-3 bg-light" id="footer">
-            <div class="container">
-                <div class="row">
-                    <div class="col-md-6 col-sm-12">
-                        <h5>Browse popular topics</h5>
-                        <ul class="list-unstyled text-small">
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">ABC</a>
-                            </li>
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">Math</a>
-                            </li>
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">Eng</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-md-6 col-sm-12">
-                        <h5>Popular courses and articles</h5>
-                        <ul class="list-unstyled text-small">
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">ABC</a>
-                            </li>
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">Math</a>
-                            </li>
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">Eng</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-6">
-                        <h5>VSB</h5>
-                        <ul class="list-unstyled text-small">
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">About</a>
-                            </li>
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">Catalog</a>
-                            </li>
-                            <li>
-                                <a class="link-secondary
-                                    text-decoration-none" href="#">Team</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-12 border-top my-4"></div>
-                    <div class="col-9 mt-2">
-                        <small class="text-muted">© 2022 VSB. All rights
-                            reserved</small>
-                    </div>
-                    <div class="col-3 iconfooter">
-                        <i class="bi bi-facebook text-primary mx-2"></i>
-                        <i class="bi bi-twitter text-info mx-2"></i>
-                        <i class="bi bi-github mx-2"></i>
-                        <i class="bi bi-linkedin text-primary mx-2"></i>
-                        <i class="bi bi-youtube text-danger mx-2"></i>
-                    </div>
-                </div>
-            </div>
-        </footer>
-        <script>
-            var app = new Vue({
-                el: "#app",
-                data: {
-                    data: JSON.parse(`<%- data %>`),
-                    users: JSON.parse(`<%- users %>`),
 
-                    sorted: "",
-                    idCounter: 16,
-                    pay_check: 0,
-                },
-                methods: {
-                    updateslip() {
-                        this.pay_check = 1
-
-                    },
-                }
+            <script>
+        var app = new Vue({
+            el: "#app",
+            data: {
+                data: JSON.parse(`<%- data %>`),
+                users: JSON.parse(`<%- users %>`),
+                
+                sorted: "",
+                idCounter: 16,
+                pay_check: 0,
+            },
+            methods:{
+                updateslip() {
+          this.pay_check = 1
+          
+        },
+            }
+            // created() {
+            //     this.idCounter = this.courses.length
+            //     console.log(this.courses.length)
+            // this.filteredTasks = this.tasks
+            // this.courses = this.courses
+            // `this` points to the vm instance
+            // console.log('a is: ' + this.a)
+            //   },
 
 
             })
