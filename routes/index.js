@@ -36,7 +36,17 @@ const upload = multer({ storage: storage })
 router.get("/", async function (req, res, next) {
   try {
     const [rows, fields] = await pool.query("SELECT * FROM course")
-    return res.render("index", { courses: JSON.stringify(rows) })
+    return res.render("index", { courses: JSON.stringify(rows)})
+  } catch (err) {
+    return next(err)
+  }
+})
+
+router.get("/home/:id", async function (req, res, next) {
+  try {
+    const [rows, fields] = await pool.query("SELECT * FROM course")
+    const [users] = await pool.query("SELECT * FROM user WHERE user_id=?", [req.params.id])
+    return res.render("user/index", { courses: JSON.stringify(rows), users: JSON.stringify(users)})
   } catch (err) {
     return next(err)
   }
@@ -281,7 +291,7 @@ router.post("/sign-in", async function (req, res, next) {
 
     if (!user) {
       req.flash("message", "Incorrect Username")
-      return res.render("user/sign-in", { message: req.flash("message") })
+      return res.redirect("/sign-in")
     }
 
     if (!(await bcrypt.compare(password, user.password))) {

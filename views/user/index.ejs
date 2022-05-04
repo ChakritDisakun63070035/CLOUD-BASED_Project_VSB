@@ -5,36 +5,82 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>VSB</title>
-  <link rel="icon" href="uploads/logo.png" />
-  <link href="css/bootstrap.css" rel="stylesheet" />
-  <link href="../css/css.css" rel="stylesheet" />
-  <script src="js/bootstrap.bundle.js"></script>
+  <link rel="icon" href="/uploads/logo.png" />
+  <link href="/css/bootstrap.css" rel="stylesheet" />
+  <link href="/css/css.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
 </head>
-<header>
-  <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-    <div class="container-fluid">
-      <!-- logo -->
-      <a class="navbar-brand" href="/">
-        <img src="uploads/logo.png" alt="" width="60" height="60" />
-      </a>
-      <div class="d-flex">
-        <a class="nav-link active text-dark fs-6" aria-current="page" href="/sign-up">Sign up</a>
-        <a class="nav-link text-dark fs-6" href="/sign-in">Login</a>
-      </div>
-    </div>
-  </nav>
-</header>
 
 <body>
-  <h1 class="text-dark text-center mt-4">
-    <b>VSB ONLINE<br />LEARNING</b>
-  </h1>
   <div class="" id="app">
-    <div class="container">
-      <div class="my-5 text-center alert alert-danger w-50 mx-auto" role="alert" v-if="alert">
-        <span><i class="fs-4 bi bi-exclamation-circle text-danger"></i> You haven't signed in. Please sign in first.</span>
+    <header>
+      <div v-for="user in users">
+        <div v-if="user.role === 'student'" class="d-inline">
+          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+            <div class="container-fluid ">
+              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                <img src="/uploads/logo.png" alt="" width="60" height="60" />
+              </a>
+              <div class="d-flex">
+                <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
+                  '/mycourse'">
+                  <i class="bi bi-book fs-4"></i>
+                  My Course
+                </a>
+                <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                  <i class="bi bi-cart4 fs-4"></i>
+                  My Cart
+                </a>
+                <li class="nav dropdown">
+                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                    {{user.user_fname}}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    <li><a class="dropdown-item" :href="'/profile/' +
+                        user.user_id + '/'">Profile</a></li>
+                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                  </ul>
+                </li>
+              </div>
+            </div>
+          </nav>
+
+        </div>
+        <div v-else-if="user.role === 'teacher'" class="d-inline">
+          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+            <div class="container-fluid">
+              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                <img src="/uploads/logo.png" alt="" width="60" height="60" />
+              </a>
+              <div class="d-flex">
+                <a class="navbar-brand" :href="'/teacher/' + user.user_id">
+                  <i class="bi bi-book fs-4"></i>
+                  My Course
+                </a>
+                <li class="nav dropdown">
+                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                    {{user.user_fname}}
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    <li><a class="dropdown-item" :href="'/profile/' +
+                        user.user_id + '/'">Profile</a></li>
+                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                  </ul>
+                </li>
+              </div>
+            </div>
+          </nav>
+        </div>
       </div>
+    </header>
+    <div class="container">
+      <h1 class="text-dark text-center mt-4">
+        <b>VSB ONLINE<br />LEARNING</b>
+      </h1>
+
       <!-- <button class="btn btn-outline-primary">Press Me</button> -->
       <h3>
         <b>Learn without limits</b>
@@ -112,17 +158,17 @@
             <div class="my-3 text-center">
               <h4> Navigate</h4>
               <div class="line2"></div>
-              <div class="my-3">
-                <a class="text-decoration-none text-dark" href="/">
+              <div class="my-3" v-for="user in users">
+                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
                   <p>Home</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/">
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
                   <p>All Courses</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="#" @click="alertlog()">
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
                   <p>My Course</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="#" @click="alertlog()">
+                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id" >
                   <p>My cart</p>
                 </a>
               </div>
@@ -217,14 +263,9 @@
       el: "#app",
       data: {
         courses: JSON.parse(`<%- courses %>`),
+        users: JSON.parse(`<%- users %>`),
         alert: false,
       },
-      methods: {
-        alertlog() {
-          this.alert = true;
-          setTimeout(() => this.alert = false, 2000);
-        }
-      }
     })
   </script>
 </body>

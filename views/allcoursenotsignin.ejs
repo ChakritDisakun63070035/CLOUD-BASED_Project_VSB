@@ -26,237 +26,276 @@
 </header>
 
 <body>
-  <div class="container" id="app">
-    <div class="row mt-4">
-      <div class="col-md-6 col-sm-12">
-        <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
-        <input type="text" class="form-control form-inline bg_course" placeholder="Search" v-model="search" />
+  <div id="app">
+    <div class="container">
+      <div class="row mt-4">
+        <div class="col-md-6 col-sm-12">
+          <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
+          <input type="text" class="form-control form-inline bg_course" placeholder="Search" v-model="search" />
+        </div>
+        <div class="col-md-6 col-sm-12 text-md-end mt-3 mt-md-2">
+          <select v-model="sorted" class="form-select form-inline" style="width: auto;">
+            <option value="">Filters</option>
+            <option value="alpha">Sort by Alphabet</option>
+            <option value="price">Sort by Price</option>
+          </select>
+        </div>
       </div>
-      <div class="col-md-6 col-sm-12 text-md-end mt-3 mt-md-2">
-        <select v-model="sorted" class="form-select form-inline" style="width: auto;">
-          <option value="">Filters</option>
-          <option value="alpha">Sort by Alphabet</option>
-          <option value="price">Sort by Price</option>
-        </select>
+
+      <div class="my-5 text-center alert alert-danger w-50 mx-auto" role="alert" v-if="alert">
+        <span><i class="fs-4 bi bi-exclamation-circle text-danger"></i> You haven't signed in. Please sign in first.</span>
       </div>
-    </div>
-    <div v-if="search === ''">
-      <div v-if="sorted === ''">
-        <div class="row mt-4">
-          <h5>Recommended</h5>
+
+      <div v-if="search === ''">
+        <div v-if="sorted === ''">
+          <div class="row mt-4">
+            <h5>Recommended</h5>
+          </div>
+          <div class="row px-4">
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3">
+              <a href="/allcourse/course/4" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
+                <img src="/uploads/ielts.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-center"><b>IELTS Full Course</b></h5>
+                  <p class="card-text text-center">IELTS Full Course in 10 hours -
+                    2022', 'Concepts are explained in a simple, digestable and...</p>
+                  <div class="row">
+                    <div class="col-6">Courses price</div>
+                    <div class="col"></div>
+                    <div class="col text-danger">3999฿</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3">
+              <a href="/allcourse/course/15" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
+                <img src="/uploads/cyber-secure.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-center"><b>Cyber Security learning</b></h5>
+                  <p class="card-text text-center">Cyber Security Full Course will
+                    help you understand and learn the fundamentals of Cyber
+                    Security.</p>
+                  <div class="row">
+                    <div class="col-6">Courses price</div>
+                    <div class="col"></div>
+                    <div class="col text-danger">2250฿</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3">
+              <a href="/allcourse/course/14" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
+                <img src="/uploads/design-thinking.png" class="card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-center"><b>Design thinking</b></h5>
+                  <p class="card-text text-center">In this design thinking tutorial,
+                    we will be looking at what is design thinking, why design</p>
+                  <div class="row">
+                    <div class="col-6">Courses price</div>
+                    <div class="col"></div>
+                    <div class="col text-danger">2300฿</div>
+                  </div>
+                </div>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div v-if="search === ''">
+        <div class="row mt-4" v-if="sorted === ''">
+          <h5>All Course</h5>
+        </div>
+        <div class="row mt-4" v-if="sorted != ''">
+          <h5>Sort by {{sorted}}</h5>
         </div>
         <div class="row px-4">
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a href="/allcourse/course/4" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img src="/uploads/ielts.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center"><b>IELTS Full Course</b></h5>
-                <p class="card-text text-center">IELTS Full Course in 10 hours -
-                  2022', 'Concepts are explained in a simple, digestable and...</p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">3999฿</div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a href="/allcourse/course/15" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img src="/uploads/cyber-secure.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center"><b>Cyber Security learning</b></h5>
-                <p class="card-text text-center">Cyber Security Full Course will
-                  help you understand and learn the fundamentals of Cyber
-                  Security.</p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">2250฿</div>
-                </div>
-              </div>
-            </a>
-          </div>
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3">
-            <a href="/allcourse/course/14" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img src="/uploads/design-thinking.png" class="card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center"><b>Design thinking</b></h5>
-                <p class="card-text text-center">In this design thinking tutorial,
-                  we will be looking at what is design thinking, why design</p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">2300฿</div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div v-if="search === ''">
-      <div class="row mt-4" v-if="sorted === ''">
-        <h5>All Course</h5>
-      </div>
-      <div class="row mt-4" v-if="sorted != ''">
-        <h5>Sort by {{sorted}}</h5>
-      </div>
-      <div class="row px-4">
-        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
+          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
           computedCourses">
-          <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
+            <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
             bg-light" style="width: 20rem; text-decoration: none; color: black">
-            <img :src="course.image" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <b>
-                  {{ course.course_name }} </b>
-              </h5>
-              <p class="card-text text-center">
-                {{ course.course_info }}
-              </p>
-              <div class="row">
-                <div class="col-6">Courses price</div>
-                <div class="col"></div>
-                <div class="col text-danger">
-                  {{ course.course_price }}฿
+              <img :src="course.image" class="my_img card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  <b>
+                    {{ course.course_name }} </b>
+                </h5>
+                <p class="card-text text-center">
+                  {{ course.course_info }}
+                </p>
+                <div class="row">
+                  <div class="col-6">Courses price</div>
+                  <div class="col"></div>
+                  <div class="col text-danger">
+                    {{ course.course_price }}฿
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
-    <div v-if="search != ''">
-      <div class="row mt-4">
-        <div>
-          <h5>Result of "{{search}}"</h5>
+      <div v-if="search != ''">
+        <div class="row mt-4">
+          <div>
+            <h5>Result of "{{search}}"</h5>
+          </div>
         </div>
-      </div>
-      <div class="row px-4">
-        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in filteredList">
-          <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
+        <div class="row px-4">
+          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in filteredList">
+            <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
             bg-light" style="width: 20rem; text-decoration: none; color: black">
-            <img :src="course.image" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <b>
-                  {{ course.course_name }} </b>
-              </h5>
-              <p class="card-text text-center">
-                {{ course.course_info }}
-              </p>
-              <div class="row">
-                <div class="col-6">Courses price</div>
-                <div class="col"></div>
-                <div class="col text-danger">
-                  {{ course.course_price }}฿
+              <img :src="course.image" class="my_img card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  <b>
+                    {{ course.course_name }} </b>
+                </h5>
+                <p class="card-text text-center">
+                  {{ course.course_info }}
+                </p>
+                <div class="row">
+                  <div class="col-6">Courses price</div>
+                  <div class="col"></div>
+                  <div class="col text-danger">
+                    {{ course.course_price }}฿
+                  </div>
                 </div>
               </div>
-            </div>
-          </a>
+            </a>
+          </div>
         </div>
       </div>
-    </div>
 
-    <div v-if="search === ''">
-      <div class="row mt-4" v-if="sorted === ''">
-        <h5>All Course</h5>
-      </div>
-      <div class="row mt-4" v-if="sorted != ''">
-        <h5>Sort by {{sorted}}</h5>
-      </div>
-      <div class="row px-4">
-        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
+      <div v-if="search === ''">
+        <div class="row mt-4" v-if="sorted === ''">
+          <h5>All Course</h5>
+        </div>
+        <div class="row mt-4" v-if="sorted != ''">
+          <h5>Sort by {{sorted}}</h5>
+        </div>
+        <div class="row px-4">
+          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
           computedCourses">
-          <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
+            <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
             bg-light" style="width: 20rem; text-decoration: none; color: black">
-            <img :src="course.image" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <b>
-                  {{ course.course_name }} </b>
-              </h5>
-              <p class="card-text text-center">
-                {{ course.course_info }}
-              </p>
-              <div class="row">
-                <div class="col-6">Courses price</div>
-                <div class="col"></div>
-                <div class="col text-danger">
-                  {{ course.course_price }}฿
+              <img :src="course.image" class="my_img card-img-top" alt="..." />
+              <div class="card-body">
+                <h5 class="card-title text-center">
+                  <b>
+                    {{ course.course_name }} </b>
+                </h5>
+                <p class="card-text text-center">
+                  {{ course.course_info }}
+                </p>
+                <div class="row">
+                  <div class="col-6">Courses price</div>
+                  <div class="col"></div>
+                  <div class="col text-danger">
+                    {{ course.course_price }}฿
+                  </div>
                 </div>
               </div>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
+        <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
+      </div>
+    </div>
+    <br>
+    <footer class="mt-5 footer bg-light">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3">
+              <h4>Course Recommendation</h4>
+              <div class="line1"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
+                  <p class="ms-3"> Web Design for Beginners</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
+                  <p class="ms-3"> Cyber Security </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
+                  <p class="ms-3"> IELTS Full Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
+                  <p class="ms-3"> SQL- Database Programming </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
+                  <p class="ms-3"> C++ Programming Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
+                  <p class="ms-3"> Digital marketing </p>
+                </a>
+              </div>
             </div>
-          </a>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Navigate</h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" href="/">
+                  <p>Home</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/">
+                  <p>All Courses</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="#" @click="alertlog()">
+                  <p>My Course</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="#" @click="alertlog()">
+                  <p>My cart</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Contact </h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
+                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
+                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters, Whitehall, London</p>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-    <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
-      <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
-    </div>
-  </div>
-  </div>
-  <footer class="footer py-3 mt-5 bg-light">
-    <div class="container">
-      <div class="row">
-        <div class="col-6">
-          <h5>Browse popular topics</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>Popular courses and articles</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">ABC</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Math</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Eng</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-6">
-          <h5>VSB</h5>
-          <ul class="list-unstyled text-small">
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">About</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Catalog</a>
-            </li>
-            <li>
-              <a class="link-secondary text-decoration-none" href="#">Team</a>
-            </li>
-          </ul>
-        </div>
-        <div class="col-12 border-top my-4"></div>
-        <div class="col-9 mt-2">
-          <small class="text-muted">© 2022 VSB. All rights reserved</small>
-        </div>
-        <div class="col-3 iconfooter">
-          <i class="bi bi-facebook text-primary mx-2"></i>
-          <i class="bi bi-twitter text-info mx-2"></i>
-          <i class="bi bi-github mx-2"></i>
-          <i class="bi bi-linkedin text-primary mx-2"></i>
-          <i class="bi bi-youtube text-danger mx-2"></i>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <hr>
+            <div class="my-3 text-center iconfooter">
+              <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
+                <i class="bi bi-twitter text-info mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
+                <i class="bi bi-github text-dark mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
+                <i class="bi bi-youtube text-danger mx-2"></i>
+              </a>
+            </div>
+          </div>
         </div>
       </div>
-    </div>
-  </footer>
+    </footer>
+  </div>
+
 
   <script>
     var app = new Vue({
@@ -266,6 +305,13 @@
         sorted: "",
         idCounter: 16,
         search: "",
+        alert: false,
+      },
+      methods:{
+        alertlog() {
+          this.alert = true;
+          setTimeout(() => this.alert = false, 2000);
+        }
       },
       computed: {
         filteredList() {
