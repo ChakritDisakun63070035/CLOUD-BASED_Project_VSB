@@ -519,7 +519,10 @@ router.get("/teacher/:id", async function (req, res, next) {
     const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
 
     const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("teacher", { courses: JSON.stringify(rows), users: JSON.stringify(rows1)})
+
+    const [rows3, fields3] = await conn.query("SELECT * FROM `my_video`", [req.params.id])
+
+    return res.render("teacher", { courses: JSON.stringify(rows), users: JSON.stringify(rows1), message: req.flash("message"), video: JSON.stringify(rows3) })
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -527,6 +530,7 @@ router.get("/teacher/:id", async function (req, res, next) {
     await conn.release()
   }
 })
+
 
 const cpUpload = upload.fields([
   { name: "course_image", maxCount: 1 },
@@ -582,6 +586,8 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
 
     const [rows2, fields2] = await conn.query("INSERT INTO `preview_preview_video` (preview_video, preview_id) VALUES(?, ?)", [preview_video, preview_id])
 
+    const [rows4, fields4] = await conn.query("INSERT INTO `course_image` (image, course_id) VALUES(?, ?)", [img_course, course_id])
+
     res.redirect("/teacher/" + req.params.id)
   } catch (err) {
     console.log(err)
@@ -590,6 +596,18 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
     await conn.release()
   }
 })
+
+
+    // const path = req.body.path
+    // const course_id2 = req.body.course_id
+
+    // const [rows5, fields5] = await conn.query("INSERT INTO `my_video` (`course_id`, `path`) VALUES ( ?, ?)", [
+    //   course_id2,
+    //   path,
+    // ])
+    // const [rows6, fields6] = await conn.query("SELECT * FROM `my_video`")
+    // await conn.commit()
+    // return res.json(rows6[0])
 
 // edit-course
 router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, res, next) {
@@ -609,8 +627,8 @@ router.post("/teacher/:id/:courseId/:previewId", cpUpload, async function (req, 
 
   const file_course = req.files.course_image[0]
   const file_preview = req.files.preview_image[0]
-  const img_course = file_course.path.replace("static\\uploads\\", "/uploads/")
-  const img_preview = file_preview.path.replace("static\\uploads\\", "/uploads/")
+  const img_course = file_course.path.replace(".static\\uploads\\", "/uploads/")
+  const img_preview = file_preview.path.replace(".static\\uploads\\", "/uploads/")
 
   try {
     const [rows3, fields3] = await conn.query("SELECT * FROM `user` JOIN `teacher` ON(user.user_fname = teacher.teacher_fname) WHERE user_id=?", [req.params.id])
@@ -659,6 +677,7 @@ router.get("/teacher/:id/delcourse/:courseId/:previewId", async function (req, r
     const [preview_preview_video] = await conn.query("DELETE FROM `preview_preview_video` WHERE preview_id=?", [req.params.previewId])
     const [preview] = await conn.query("DELETE FROM `preview` WHERE preview_id=?", [req.params.previewId])
     const [my_course] = await conn.query("DELETE FROM `my_course` WHERE course_id=?", [req.params.courseId])
+    const [course1] = await conn.query("DELETE FROM `course_im` WHERE course_id=?", [req.params.courseId])
     const [course] = await conn.query("DELETE FROM `course` WHERE course_id=?", [req.params.courseId])
 
 
@@ -873,6 +892,31 @@ router.post("/admin/profile/:id",  upload.single("image"), async function (req, 
     await conn.release()
   }
 })
+
+// Create new content
+router.post("/teacher/:id/addcontent", async function (req, res, next) {
+  const path = req.body.path
+  const course_id2 = req.body.course_id
+  const conn = await pool.getConnection()
+  // Begin transaction
+  await conn.beginTransaction()
+  try {
+        const [rows5, fields5] = await conn.query("INSERT INTO `my_video` (`course_id`, `path`) VALUES ( ?, ?)", [
+      course_id2,
+      path,
+    ])
+    const [rows6, fields6] = await conn.query("SELECT * FROM `my_video` WHERE `video_id` = ?", [rows5.insertId])
+    await conn.commit()
+    return res.json(rows6[0])
+  } catch (err) {
+    await conn.rollback()
+    return res.status(500).json(err)
+  } finally {
+    console.log("finally")
+    conn.release()
+  }
+})
+
 // Create new comment
 router.post("/course/:id/:userid", async function (req, res, next) {
   const comment = req.body.comment
@@ -892,7 +936,6 @@ router.post("/course/:id/:userid", async function (req, res, next) {
     await conn.rollback()
     return res.status(500).json(err)
   } finally {
-    console.log("finally")
     conn.release()
   }
 })
@@ -918,6 +961,37 @@ router.put("/course/:id/:userid", async function (req, res, next) {
     conn.release()
   }
 })
+
+// Delete Content
+router.delete("/teacher/:videoID/deletecontent/:index", async function (req, res, next) {
+  const conn = await pool.getConnection()
+  // Begin transaction
+  await conn.beginTransaction()
+  try {
+    const [rows, fields] = await conn.query("DELETE FROM `my_video` WHERE `video_id` = ?", [req.params.videoID])
+    await conn.commit()
+    res.json()
+  } catch (err) {
+    console.log(err)
+    await conn.rollback()
+    return res.status(500).json(err)
+  } finally {
+    conn.release()
+  }
+})
+
+//Edit Content
+// router.put('/teacher/:videoID/editcontent/:index', async function (req, res, next) {
+//   try {
+//       const [rows1, fields1] = await pool.query(
+//           'UPDATE my_video SET path=? WHERE video_id=?', [req.body.path, req.params.video_id]
+//       )
+//       console.log(rows1)
+//       res.json({ path: req.body.path })
+//   } catch (error) {
+//       res.status(500).json(error)
+//   }
+// });
 
 // Delete comment
 router.delete("/course/:id/:userid/:commentID", async function (req, res, next) {

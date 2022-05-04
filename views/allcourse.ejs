@@ -236,11 +236,11 @@
         search: "",
       },
       computed: {
-        filteredList() {
-          return this.courses.filter(post => {
-            return post.course_name.toLowerCase().includes(this.search.toLowerCase())
-          })
-        },
+        // filteredList() {
+        //   return this.courses.filter(post => {
+        //     return post.course_name.toLowerCase().includes(this.search.toLowerCase())
+        //   })
+        // },
         computedCourses() {
           this.courses.map((b) => {
             if (b.course_info.length > 90) {
