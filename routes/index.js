@@ -445,7 +445,7 @@ router.get("/allcourse/course/:id", async function (req, res, next) {
       "SELECT * FROM course join teacher using(teacher_id) join preview using(course_id) join preview_preview_video using(preview_id)  WHERE course_id=?",
       [req.params.id]
     )
-    const [rows2, fields2] = await conn.query("SELECT * FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
+    const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
     return res.render("previewnotsignin", { data: JSON.stringify(rows), comment: JSON.stringify(rows2) })
   } catch (err) {

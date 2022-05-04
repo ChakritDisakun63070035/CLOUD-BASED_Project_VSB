@@ -223,10 +223,14 @@
 
                 <!-- showคอมเม้น -->
       <div>
-        <div style="border-bottom: 5px solid gray"><h3>COMMENTS</h3></div>
+        <div style="border-bottom: 5px solid gray">
+          <h3>COMMENTS</h3>
+        </div>
         <div class="mt-3 row bg-light" style="border-radius: 10px;" v-for="(info, index) in comment">
-          <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="info.image" style="width:100px; height:100px; object-fit:cover;"/> </div>
-          <div class="col-9 col-sm-9 col-md-10 mt-2"> <h5>{{info.user_fname}}</h5> <p>{{info.comment}}</p>
+          <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="info.image" style="width:100px; height:100px; object-fit:cover;" /> </div>
+          <div class="col-9 col-sm-9 col-md-10 mt-2 position-relative">
+            <h5>{{info.user_fname}} {{info.user_lname}} <span class="badge bg-success">{{info.role}}</span></h5><span class="text-muted position-absolute top-0 end-0 me-2"> On {{info.comm_date.substring(0, 10)}} at {{info.comm_date.substring(11, 16)}}</span>
+            <p>{{info.comment}}</p>
           </div>
         </div>
 

@@ -40,7 +40,7 @@
         </select>
       </div>
     </div>
-    <div v-if="search === ''">
+    <!-- <div v-if="search === ''">
       <div v-if="sorted === ''">
         <div class="row mt-4">
           <h5>Recommended</h5>
@@ -94,7 +94,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
     <div v-if="search === ''">
       <div class="row mt-4" v-if="sorted === ''">
         <h5>All Course</h5>
@@ -160,39 +160,6 @@
       </div>
     </div>
 
-    <div v-if="search === ''">
-      <div class="row mt-4" v-if="sorted === ''">
-        <h5>All Course</h5>
-      </div>
-      <div class="row mt-4" v-if="sorted != ''">
-        <h5>Sort by {{sorted}}</h5>
-      </div>
-      <div class="row px-4">
-        <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
-          computedCourses">
-          <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
-            bg-light" style="width: 20rem; text-decoration: none; color: black">
-            <img :src="course.image" class="card-img-top" alt="..." />
-            <div class="card-body">
-              <h5 class="card-title text-center">
-                <b>
-                  {{ course.course_name }} </b>
-              </h5>
-              <p class="card-text text-center">
-                {{ course.course_info }}
-              </p>
-              <div class="row">
-                <div class="col-6">Courses price</div>
-                <div class="col"></div>
-                <div class="col text-danger">
-                  {{ course.course_price }}฿
-                </div>
-              </div>
-            </div>
-          </a>
-        </div>
-      </div>
-    </div>
     <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
       <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
     </div>
@@ -312,7 +279,7 @@
           }
           if (this.sorted == "alpha") {
             return this.courses.sort(compareAlpha)
-          } else if (this.sorted == "sortID") {
+          } else if (this.sorted == "") {
             return this.courses.sort(compareID)
           } else if (this.sorted == "price") {
             return this.courses.sort(comparePrice)
