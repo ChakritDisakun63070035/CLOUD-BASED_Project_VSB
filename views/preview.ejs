@@ -166,7 +166,7 @@
           </div>
           <div class="col-md-5 col-sm-12" v-for="user in users">
             <div v-if="user.role === 'student'" class="d-inline">
-              <div class="card gray" style="width: 30rem;">
+              <div class="card gray" style="width: 100%;">
                 <div class="text-center mt-3">
                   <div class="text-center mt-3">
                     <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;
@@ -192,7 +192,7 @@
               </div>
             </div>
             <div v-if="user.role === 'teacher'" class="d-inline">
-              <div class="card gray pb-4" style="width: 35rem;">
+              <div class="card gray pb-4" style="width: 100%;">
                 <div class="text-center mt-3">
                   <div class="text-center mt-3">
                     <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;

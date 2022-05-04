@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
 
 <head>
   <meta charset="UTF-8" />
@@ -14,8 +14,8 @@
 
 <body>
   <div class="" id="app">
-    <div v-for="user in users">
-      <header>
+    <header>
+      <div v-for="user in users">
         <div v-if="user.role === 'student'" class="d-inline">
           <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
             <div class="container-fluid ">
@@ -24,7 +24,7 @@
               </a>
               <div class="d-flex">
                 <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
-                    '/mycourse'">
+                  '/mycourse'">
                   <i class="bi bi-book fs-4"></i>
                   My Course
                 </a>
@@ -39,7 +39,7 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                     <li><a class="dropdown-item" :href="'/profile/' +
-                          user.user_id + '/'">Profile</a></li>
+                        user.user_id + '/'">Profile</a></li>
                     <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
                   </ul>
                 </li>
@@ -66,7 +66,7 @@
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                     <li><a class="dropdown-item" :href="'/profile/' +
-                          user.user_id + '/'">Profile</a></li>
+                        user.user_id + '/'">Profile</a></li>
                     <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
                   </ul>
                 </li>
@@ -74,90 +74,80 @@
             </div>
           </nav>
         </div>
-      </header>
-    </div>
+      </div>
+    </header>
     <div class="container">
-      <div class="row mt-4">
-        <div class="col-md-6 col-sm-12">
-          <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
-          <input type="text" class="form-control form-inline bg_course" placeholder="Search" v-model="search" />
-        </div>
+      <h1 class="text-dark text-center mt-4">
+        <b>VSB ONLINE<br />LEARNING</b>
+      </h1>
 
-        <div class="col-md-6 col-sm-12 text-md-end mt-3 mt-md-2">
-          <select v-model="sorted" class="form-select form-inline" style="width: auto;">
-            <option value="">Filters</option>
-            <option value="alpha">Sort by Alphabet</option>
-            <option value="price">Sort by Price</option>
-          </select>
+      <!-- <button class="btn btn-outline-primary">Press Me</button> -->
+      <h3>
+        <b>Learn without limits</b>
+      </h3>
+      <div class="row">
+        <div class="col">
+          <p>
+            Get that "ready for anything" feeling with more than 15 courses,
+            <br />Professional Certificates, and degrees from world-class
+            universities <br />and companies.
+          </p>
         </div>
-
-        <div class="row" v-if="search == ''">
-          <div v-if="sorted == ''" class="row mt-5">
-            <h5>All Course</h5>
-          </div>
+        <div class="col">
         </div>
-        <div class="row mt-4" v-if="search != ''">
-          <h5>Result of "{{search}}"</h5>
+      </div>
+      <div class="row mb-5">
+        <div class="col">
+          <a href="/allcourse" class="button_start">Get Started !!!</a>
         </div>
-        <div v-if="search == ''">
-          <div class="row mt-4" v-if="sorted != ''">
-            <h5>Sort by "{{sorted}}"</h5>
-          </div>
-        </div>
-        <div class="row px-4" v-for="user in users">
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-            <a :href="'/course/' + course.course_id + '/' + user.user_id" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img :src="course.image" class="my_img card-img-top" alt="..." />
+      </div>
+      <div class="row">
+        <div class="col-12 mb-3"><b>Explore Course</b></div>
+      </div>
+      <div class="row d-flex justify-content-center gap-2">
+        <div class="card sm-3 mx-3 p-0" style="max-width: 380px" v-for="course
+          in courses.slice(0,6)">
+          <div class="row g-0">
+            <div class="col-md-6">
+              <img :src="course.image" class="img-fluid" alt="404-not found" />
+            </div>
+            <div class="col-md-6">
               <div class="card-body">
-                <h5 class="card-title text-center">
+                <small class="card-title">
                   <b>
                     {{ course.course_name }} </b>
-                </h5>
-                <p class="card-text text-center">
-                  {{ course.course_info }}
-                </p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">
-                    {{ course.course_price }}฿
-                  </div>
-                </div>
+                </small>
               </div>
-            </a>
-          </div>
-          <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
-            <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
+            </div>
           </div>
         </div>
       </div>
     </div>
-
     <br>
     <footer class="mt-5 footer bg-light">
-      <div class="container" v-for="user in users">
+      <div class="container">
         <div class="row">
           <div class="col-md-4 col-xs-12">
             <div class="my-3">
               <h4>Course Recommendation</h4>
               <div class="line1"></div>
               <div class="my-3">
-                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
                   <p class="ms-3"> Web Design for Beginners</p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
                   <p class="ms-3"> Cyber Security </p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
                   <p class="ms-3"> IELTS Full Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
                   <p class="ms-3"> SQL- Database Programming </p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
                   <p class="ms-3"> C++ Programming Course </p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
                   <p class="ms-3"> Digital marketing </p>
                 </a>
               </div>
@@ -168,8 +158,8 @@
             <div class="my-3 text-center">
               <h4> Navigate</h4>
               <div class="line2"></div>
-              <div class="my-3">
-                <a :href="'/home/' + user.user_id" class="text-decoration-none text-dark">
+              <div class="my-3" v-for="user in users">
+                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
                   <p>Home</p>
                 </a>
                 <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
@@ -178,7 +168,7 @@
                 <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
                   <p>My Course</p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
+                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id" >
                   <p>My cart</p>
                 </a>
               </div>
@@ -226,75 +216,55 @@
     </footer>
   </div>
   <script>
+    document.addEventListener('DOMContentLoaded', function(event) {
+      // array with texts to type in typewriter
+      var dataText = ["Learn without limits", "Light tomorrow with today", "Every moment is a fresh beginning!"];
+
+      // type one text in the typwriter
+      // keeps calling itself until the text is finished
+      function typeWriter(text, i, fnCallback) {
+        // chekc if text isn't finished yet
+        if (i < (text.length)) {
+          // add next character to h1
+          document.querySelector("h3").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+
+          // wait for a while and call this function again for next character
+          setTimeout(function() {
+            typeWriter(text, i + 1, fnCallback)
+          }, 100);
+        }
+        // text finished, call callback if there is a callback function
+        else if (typeof fnCallback == 'function') {
+          // call callback after timeout
+          setTimeout(fnCallback, 900);
+        }
+      }
+      // start a typewriter animation for a text in the dataText array
+      function StartTextAnimation(i) {
+        if (typeof dataText[i] == 'undefined') {
+          setTimeout(function() {
+            StartTextAnimation(0);
+          }, 20000);
+        }
+        // check if dataText[i] exists
+        if (i < dataText[i].length) {
+          // text exists! start typewriter animation
+          typeWriter(dataText[i], 0, function() {
+            // after callback (and whole text has been animated), start next text
+            StartTextAnimation(i + 1);
+          });
+        }
+      }
+      // start the text animation
+      StartTextAnimation(0);
+    });
+
     var app = new Vue({
       el: "#app",
       data: {
         courses: JSON.parse(`<%- courses %>`),
         users: JSON.parse(`<%- users %>`),
-        sorted: "",
-        idCounter: 16,
-        search: "",
-      },
-      computed: {
-        filteredList() {
-          return this.courses.filter(post => {
-            return post.course_name.toLowerCase().includes(this.search.toLowerCase())
-          })
-        },
-        computedCourses() {
-          this.courses.map((b) => {
-            if (b.course_info.length > 90) {
-              b.course_info = b.course_info.substring(0, 90) + "..."
-            }
-            return b
-          })
-
-          function compareAlpha(a, b) {
-            if (a.course_name < b.course_name) {
-              return -1
-            } else if (a.course_name > b.course_name) {
-              return 1
-            } else {
-              return 0
-            }
-          }
-
-          function compareID(a, b) {
-            if (a.course_id < b.course_id) {
-              return -1
-            } else if (a.course_id > b.course_id) {
-              return 1
-            } else {
-              return 0
-            }
-          }
-
-          function comparePrice(a, b) {
-            if (a.course_price < b.course_price) {
-              return -1
-            } else if (a.course_price > b.course_price) {
-              return 1
-            } else {
-              return 0
-            }
-          }
-
-          let res = this.courses.filter(post => {
-            return post.course_name.toLowerCase().includes(this.search.toLowerCase())
-          })
-
-          if (this.sorted == "" && this.search != "") {
-            return res
-          } else if (this.sorted == "alpha") {
-            return res.sort(compareAlpha)
-          } else if (this.sorted == "sortID") {
-            return res.sort(compareID)
-          } else if (this.sorted == "price") {
-            return res.sort(comparePrice)
-          } else {
-            return this.courses
-          }
-        },
+        alert: false,
       },
     })
   </script>
