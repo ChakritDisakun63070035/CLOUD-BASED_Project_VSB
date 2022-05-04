@@ -10,7 +10,7 @@ router = express.Router()
 const requiredLogin = async function requiredLogin(req, res, next) {
   if (!req.session.user) {
     console.log("You aren't logged-in! Please sign-in first.")
-    req.flash("message", "You aren't logged-in! Please sign-in first.")
+    req.flash("message", "You aren't signed-in! Please sign-in first.")
     return res.redirect("/sign-in")
   } else {
     next()

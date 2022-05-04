@@ -32,10 +32,6 @@
   </h1>
   <div class="" id="app">
     <div class="container">
-      <div class="my-5 text-center alert alert-danger w-50 mx-auto" role="alert" v-if="alert">
-        <span><i class="fs-4 bi bi-exclamation-circle text-danger"></i> You haven't signed in. Please sign in first.</span>
-      </div>
-      <!-- <button class="btn btn-outline-primary">Press Me</button> -->
       <h3>
         <b>Learn without limits</b>
       </h3>
@@ -119,10 +115,10 @@
                 <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/">
                   <p>All Courses</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="#" @click="alertlog()">
+                <a class="text-decoration-none text-dark" href="/allcourse/id/mycourse">
                   <p>My Course</p>
                 </a>
-                <a class="text-decoration-none text-dark" href="#" @click="alertlog()">
+                <a class="text-decoration-none text-dark" href="/mycart/id">
                   <p>My cart</p>
                 </a>
               </div>
@@ -217,14 +213,7 @@
       el: "#app",
       data: {
         courses: JSON.parse(`<%- courses %>`),
-        alert: false,
       },
-      methods: {
-        alertlog() {
-          this.alert = true;
-          setTimeout(() => this.alert = false, 2000);
-        }
-      }
     })
   </script>
 </body>
