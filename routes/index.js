@@ -5,6 +5,7 @@ const bodyParser = require("body-parser")
 const multer = require("multer")
 const bcrypt = require("bcrypt")
 const { generateToken } = require("../utils/token")
+const Joi = require("joi")
 router = express.Router()
 
 const requiredLogin = async function requiredLogin(req, res, next) {
@@ -227,10 +228,80 @@ router.post("/payment/:id/:order_id", upload.single("slip"), requiredLogin, asyn
 })
 
 router.get("/sign-up", async function (req, res, next) {
-  res.render("user/sign-up")
+  res.render("user/sign-up" )
+})
+
+
+
+const fnameValidator = (value, helper) =>{
+  if(value.length < 4){  //เช็คว่าค่าที่รับเข้ามามีขนาดน้อยกว่า8
+    let error =  new Joi.ValidationError('fname must me at least 3 characters')
+    error.details = 'fname must me at least 3 characters'
+         throw error
+  }
+  
+  return value
+}
+
+const passwordValidator = (value, helper) =>{
+  if(value.length < 8){  //เช็คว่าค่าที่รับเข้ามามีขนาดน้อยกว่า8
+    throw new Joi.ValidationError('Password must me at least 8 characters')
+  }
+  if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+         let error = new Joi.ValidationError('Password must be harder')
+         error.details = 'Invalid Password'
+         throw error
+        }
+  return value
+}
+
+const usernameValidator = async (value, helpers) => {
+  const[rows, fields] = await pool.query('select user_fname from user WHERE user_fname=?',[value])
+
+  if(rows.length>0){  // ถ้าหาเจอในฐานข้อมูล หรือ พบเจอชื่อซ้ำ
+    throw new Joi.ValidationError('Duplicate_ERROR',{
+    message: 'This username is already taken'
+    })
+  }
+  return value //ถ้าvalidateผ่าน จะreturnค่ากลับไปเพื่อไปเช็คค่า
+}
+
+const emailValidator = async (value, helpers) => {
+  const[rows, fields] = await pool.query('select email from user WHERE email=?',[value])
+
+  if(rows.length>0){  // ถ้าหาเจอในฐานข้อมูล หรือ พบเจอชื่อซ้ำ
+    throw new Joi.ValidationError('Duplicate_ERROR',{
+    message: 'This email is already taken'
+    })
+  }
+  return value //ถ้าvalidateผ่าน จะreturnค่ากลับไปเพื่อไปเช็คค่า
+}
+
+
+schema = Joi.object({
+  fname:Joi.string().required().min(3),
+  lname:Joi.string().required().min(3),
+  email:Joi.string().email().required().max(99).external(emailValidator),
+  password:Joi.string().required().custom(passwordValidator),
+  dob:Joi.string().required(),
+  gender:Joi.string().required(),
+  role:Joi.string().required(),
+  
+
 })
 
 router.post("/sign-up", async function (req, res, next) {
+  try {
+    await schema.validateAsync(req.body,  { abortEarly: false }) //จะvalidateทุกfieldsให้เสร็จก่อน ถ้าเจอปัญหาจะresponseกลับไปเลยว่ามันมีปัญหา
+    
+  }catch(error){
+    console.log(error)
+    
+    // req.flash("message", "Incorrect")
+    // return res.redirect("/sign-up")
+    return res.status(400).json(error)
+  }
+
   const fname = req.body.fname
   const lname = req.body.lname
   const email = req.body.email
@@ -443,66 +514,15 @@ router.get("/course/:id/:userid", requiredLogin, async function (req, res, next)
 
     const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date  FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
-    const [rows3, fields3] = await conn.query("SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=?", [req.params.userid, 1])
-    // if(rows3.length > 0){
-    const [rows4, fields4] = await conn.query("SELECT course_id FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=?", [req.params.userid, 1])
-    // console.log(rows4)
-    // var i = 0;
-    const [rows5, fields5] = await conn.query("SELECT course_id FROM course WHERE course_id IN (SELECT course_id FROM `user` join `order` using (user_id) join my_course using(order_id)  join payment using(order_id) WHERE user_id=?  and status_payment =?)", [req.params.userid, 1])
-    // console.log(rows5.course_id)      
-    // let check1 = req.params.id
-    // let check3 = rows4.course_id
-    // console.log(check1)
-    //     console.log(rows4)
-    // if (rows4.some(rows4 => rows4.course_id = req.params.id)) {
-    //   console.log('true')
-    //   return res.redirect('/course/' + req.params.id + '/' + req.params.userid + '/learn')
-    // } else {
-    //   console.log('no')
-    //   return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-    // }
 
-    // for(let i = 0; i < rows4.length; i++){ 
-
-
-        //   let check1 = req.params.id
-        // let check3 = rows4[0].course_id
-        // let check4 = rows4[1].course_id
-        // let check5 = rows4[2].course_id
-        // let check6 = rows4[3].course_id
-        // let check7 = rows4[4].course_id
-        // let check8 = rows4[5].course_id
-        // let check9 = rows4[6].course_id
-        
-        // console.log(check1)
-        // console.log(check3)
-        // if(check1 != check3 && check1 != check4 && check1 != check5 && check1 != check6 && check1 != check7 
-        //   && check8 != check3 && check1 != check9 ){
-        //   return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-
-        // }
-
-        // else if(check1 = check3){
-        //   res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
-
-        // }
-
-    //   }
-
-
-    //   let check1 = req.params.id
-    //   let check3 = rows3[0].course_id
-    //   console.log(check1)
-    //   console.log(check3)
-    //   if(check1 != check3){
-    //     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-    //   }
-    //   else if(check1 = check3){
-    //     res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
-    // } else{
-
-    return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-    // }
+    const [rows3, fields3] = await conn.query("SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=? and course_id=?", [req.params.userid, 1, req.params.id])
+    
+    if(rows3.length >0){
+      return res.redirect('/course/' + req.params.id + '/' + req.params.userid + '/learn')
+    }
+    else{
+      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
+    }
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -649,7 +669,7 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
 
     const [rows2, fields2] = await conn.query("INSERT INTO `preview_preview_video` (preview_video, preview_id) VALUES(?, ?)", [preview_video, preview_id])
 
-    const [rows4, fields4] = await conn.query("INSERT INTO `course_image` (image, course_id) VALUES(?, ?)", [img_course, course_id])
+    
 
     res.redirect("/teacher/" + req.params.id)
   } catch (err) {
@@ -740,7 +760,7 @@ router.get("/teacher/:id/delcourse/:courseId/:previewId", requiredLogin, async f
     const [preview_preview_video] = await conn.query("DELETE FROM `preview_preview_video` WHERE preview_id=?", [req.params.previewId])
     const [preview] = await conn.query("DELETE FROM `preview` WHERE preview_id=?", [req.params.previewId])
     const [my_course] = await conn.query("DELETE FROM `my_course` WHERE course_id=?", [req.params.courseId])
-    const [course1] = await conn.query("DELETE FROM `course_im` WHERE course_id=?", [req.params.courseId])
+    
     const [course] = await conn.query("DELETE FROM `course` WHERE course_id=?", [req.params.courseId])
 
 
