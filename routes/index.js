@@ -574,7 +574,7 @@ router.post("/profile/:id", upload.single("image"), requiredLogin, async functio
   }
 })
 
-// preview page
+// preview page 
 router.get("/course/:id/:userid", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
@@ -596,10 +596,11 @@ router.get("/course/:id/:userid", requiredLogin, async function (req, res, next)
     )
     const [rows6, fields6] = await conn.query("SELECT * FROM `order` join `my_course` using(order_id) WHERE user_id =? and order_status ='pending' and course_id =?", [req.params.userid, req.params.id])
 
+    const [path_video] = await conn.query("SELECT * FROM my_video join course using(course_id)  WHERE course_id=?; ", [req.params.id])
     if (rows3.length > 0) {
       return res.redirect("/course/" + req.params.id + "/" + req.params.userid + "/learn")
     } else {
-      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3), cart: JSON.stringify(rows6)})
+      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3), cart: JSON.stringify(rows6), video: JSON.stringify(path_video)})
     }
     // }
   } catch (err) {
