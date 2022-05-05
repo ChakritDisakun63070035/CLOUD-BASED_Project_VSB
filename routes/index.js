@@ -18,6 +18,16 @@ const requiredLogin = async function requiredLogin(req, res, next) {
   }
 }
 
+const alreadyLoggedin = async function (req, res, next) {
+  if (req.session.user) {
+    console.log("You already logged-in🤗")
+    req.flash("message", "You already logged-in.")
+    return res.redirect("/allcourse/" + req.session.user)
+  } else {
+    next()
+  }
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, "./static/uploads")
@@ -54,17 +64,7 @@ router.get("/allcourse/:id", requiredLogin, async function (req, res, next) {
   try {
     const [rows, fields] = await conn.query("SELECT * FROM `course`")
     const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
-    // const [rows2, fields2] = await conn.query("SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=?", [req.params.id,1])
-    // if(rows2.length > 0){
-    //   let check1 = rows1[0].course_id
-    //   let check2 = rows2[0].course_id
-    //   if(check1 = check2){
-    //     res.redirect('/course/'+check1+'/'+req.params.id+'/learn')
-    //   }
-    // }
-
-    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("allcourse", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("allcourse", { courses: JSON.stringify(rows), users: JSON.stringify(rows1), message: req.flash("message")})
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -87,7 +87,7 @@ router.get("/allcourse/", async function (req, res, next) {
   }
 })
 
-// my cart
+// my cart --> กดไอคอนตะกร้า
 router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
   try {
     const [rows1, fields1] = await pool.query("SELECT * FROM `order` WHERE user_id=? AND order_status=?", [req.params.id, "pending"])
@@ -99,8 +99,6 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
       return res.render("user/cart", { items: JSON.stringify(rows2), users: JSON.stringify(rows3), carts: JSON.stringify(rows1), course: JSON.stringify(rows4) })
     } else {
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
-      // res.render("user/cart", {  users: JSON.stringify(rows3)})
-      // res.send("nothing in your cart.")
       res.render("user/cart-no", { carts: JSON.stringify(rows1), users: JSON.stringify(rows3), course: JSON.stringify(rows4) })
     }
   } catch (err) {
@@ -108,7 +106,7 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
   }
 })
 
-// create cart
+// create cart --> กดปุ่ม add to cart
 router.get("/course/:course_id/create/cart/:user_id/:price", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
@@ -338,11 +336,11 @@ router.post("/sign-up", async function (req, res, next) {
   }
 })
 
-router.get("/sign-in", async function (req, res, next) {
+router.get("/sign-in", alreadyLoggedin, async function (req, res, next) {
   res.render("user/sign-in", { message: req.flash("message") })
 })
 
-router.post("/sign-in", async function (req, res, next) {
+router.post("/sign-in", alreadyLoggedin, async function (req, res, next) {
   const email = req.body.email
   const password = req.body.password
   const role = req.body.role
@@ -385,12 +383,12 @@ router.post("/sign-in", async function (req, res, next) {
 
     const date = new Date().toString().substring(0, 25);
     if (user.role === "student") {
-      req.session.user = "Logged-in! Welcome Learner😀"
-      console.log(date + ': ' + req.session.user)
+      req.session.user = user.user_id
+      console.log(date + ': ' + "Logged-in! Welcome Learner😀")
       return res.redirect("/allcourse/" + user.user_id)
     } else if (user.role === "teacher") {
-      req.session.user = "Logged-in! Welcome Teacher😀"
-      console.log(date + ': ' + req.session.user)
+      req.session.user = user.user_id
+      console.log(date + ': ' + "Logged-in! Welcome Teacher😀")
       return res.redirect("/teacher/" + user.user_id)
     }
   } catch (err) {
@@ -760,7 +758,6 @@ router.get("/teacher/:id/delcourse/:courseId/:previewId", requiredLogin, async f
     const [preview_preview_video] = await conn.query("DELETE FROM `preview_preview_video` WHERE preview_id=?", [req.params.previewId])
     const [preview] = await conn.query("DELETE FROM `preview` WHERE preview_id=?", [req.params.previewId])
     const [my_course] = await conn.query("DELETE FROM `my_course` WHERE course_id=?", [req.params.courseId])
-    
     const [course] = await conn.query("DELETE FROM `course` WHERE course_id=?", [req.params.courseId])
 
 

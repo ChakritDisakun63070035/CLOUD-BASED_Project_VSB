@@ -17,8 +17,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
         <div class="container-fluid" v-for="user in users">
-          <a class="navbar-brand" :href="'/allcourse/' +
-                            user.user_id">
+          <a class="navbar-brand" :href="'/home/' + user.user_id">
             <img src="/uploads/logo.png" alt="" width="60" height="60" />
           </a>
           <div class="d-flex">

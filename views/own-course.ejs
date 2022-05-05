@@ -44,84 +44,63 @@
 
 <body>
 
-    <div id="app">
-        <div v-for="info in data">
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-                    <div class="container-fluid" v-for="user in data.slice(0,1)">
-                        <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                            <img src="/uploads/logo.png" alt="" width="60" height="60" />
-                        </a>
+  <div id="app">
+    <div v-for="info in data">
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+          <div class="container-fluid" v-for="user in data.slice(0,1)">
+            <a class="navbar-brand" :href="'/home/' + user.user_id">
+              <img src="/uploads/logo.png" alt="" width="60" height="60" />
+            </a>
 
-                        <div class="d-flex">
-                            <a class="navbar-brand text-decoration-underline" href="">
-                                <i class="bi bi-book fs-4 line"></i>
-                                My Course
-                            </a>
-                            <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                                <i class="bi bi-cart4 fs-4"></i>
-                                My Cart
-                            </a>
-                            <li class="nav dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img :src="info.image" alt="" width="32" height="32"
-                                        class="d-inline-block align-text-top" />
-                                    {{user.user_fname}}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                    <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a>
-                                    </li>
-                                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
-                                </ul>
-                            </li>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-            <div class="container">
-                <div class="row mt-4">
-                    <div class="col-md-6 col-sm-12">
-                        <img src="/uploads/search.png" alt="Girl in a jacket" width="50px" height="50px" />
-                        <input type="text" class="form-control form-inline bg_course" placeholder="Search"
-                            v-model="search" />
-                    </div>
-
-                    <div class="col-md-6 col-sm-12 text-md-end mt-3 mt-md-2">
-                        <select v-model="sorted" class="form-select form-inline" style="width: auto;">
-                            <option value="">Filters</option>
-                            <option value="alpha">Sort by Alphabet</option>
-                            <option value="price">Sort by Price</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div class="row mt-5">
-                    <h5>My Course</h5>
-                </div>
-                <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
-                    <h1 class="position-absolute top-50 start-50 translate-middle">NO COURSE</h1>
-                </div>
-                <div class="row px-4">
-
-                    <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-                        <a :href="'/course/' + course.course_id + '/' + course.user_id + '/learn'"
-                            class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color:black;">
-                            <img :src="course.course_img" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-center"><b> {{ course.course_name }} </b></h5>
-                                <p class="card-text text-center"> {{ course.course_info }} </p>
-                                <div class="row">
-
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
+            <div class="d-flex">
+              <a class="navbar-brand text-decoration-underline" href="">
+                <i class="bi bi-book fs-4 line"></i>
+                My Course
+              </a>
+              <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                <i class="bi bi-cart4 fs-4"></i>
+                My Cart
+              </a>
+              <li class="nav dropdown">
+                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img :src="info.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                  {{user.user_fname}}
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a>
+                  </li>
+                  <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                </ul>
+              </li>
             </div>
         </div>
-        
-       
+
+        <div class="row mt-5">
+          <h5>My Course</h5>
+        </div>
+        <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
+          <h1 class="position-absolute top-50 start-50 translate-middle">NO COURSE</h1>
+        </div>
+        <div class="row px-4">
+
+          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
+            <a :href="'/course/' + course.course_id + '/' + course.user_id + '/learn'" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color:black;">
+              <img :src="course.course_img" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>
+                    {{ course.course_name }} </b></h5>
+                <p class="card-text text-center">
+                  {{ course.course_info }}
+                </p>
+                <div class="row">
+
+                </div>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
     <br>
     <footer class="mt-5 footer bg-light">
@@ -216,31 +195,31 @@
             </div>
         </div>
     </footer>
-    </div>
-    <script>
-        var app = new Vue({
-            el: "#app",
-            data: {
-                data: JSON.parse(`<%- data %>`),
-                users: JSON.parse(`<%- users %>`),
-                sorted: "",
-                search: "",
+  </div>
 
-            },
-            // computed: {
-            computed: {
-                filteredList() {
-                    return this.users.filter(post => {
-                        return post.course_name.toLowerCase().includes(this.search.toLowerCase())
-                    })
-                },
-                computedCourses() {
-                    this.users.map((b) => {
-                        if (b.course_info.length > 90) {
-                            b.course_info = b.course_info.substring(0, 90) + "..."
-                        }
-                        return b
-                    })
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        data: JSON.parse(`<%- data %>`),
+        users: JSON.parse(`<%- users %>`),
+        sorted: "",
+        search: "",
+      },
+      // computed: {
+      computed: {
+        filteredList() {
+          return this.users.filter(post => {
+            return post.course_name.toLowerCase().includes(this.search.toLowerCase())
+          })
+        },
+        computedCourses() {
+          this.users.map((b) => {
+            if (b.course_info.length > 90) {
+              b.course_info = b.course_info.substring(0, 90) + "..."
+            }
+            return b
+          })
 
                     function compareAlpha(a, b) {
                         if (a.course_name < b.course_name) {

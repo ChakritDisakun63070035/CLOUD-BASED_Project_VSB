@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>User Profile</title>
+    <title>Profile</title>
     <link rel="icon" href="/uploads/logo.png" />
     <link href="/css/bootstrap.css" rel="stylesheet" />
     <link href="/css/css.css" rel="stylesheet" />
@@ -18,7 +18,7 @@
           <div v-if="user.role === 'student'" class="d-inline">
             <nav class="navbar navbar-expand-lg navbar-light"id="backgroud_nav">
               <div class="container-fluid ">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                <a class="navbar-brand" :href="'/home/' + user.user_id">
                   <img src="/uploads/logo.png" alt="" width="60" height="60" />
                 </a>
                 <div class="d-flex">                  
@@ -55,7 +55,7 @@
           <div v-else-if="user.role === 'teacher'"  class="d-inline">
             <nav class="navbar navbar-expand-lg navbar-light"id="backgroud_nav">
               <div class="container-fluid">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+                <a class="navbar-brand" :href="'/home/' + user.user_id">
                   <img src="/uploads/logo.png" alt="" width="60" height="60" />
                 </a>
                 <div class="d-flex">
