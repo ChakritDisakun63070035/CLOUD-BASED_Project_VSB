@@ -331,8 +331,8 @@ router.post("/sign-up", alreadyLoggedin, async function (req, res, next) {
     console.log(error)
 
     // req.flash("message", "Incorrect")
-    // return res.redirect("/sign-up")
-    return res.status(400).json(error)
+    return res.redirect("/sign-up")
+    // return res.status(400).json(error)
   }
 
   const fname = req.body.fname
