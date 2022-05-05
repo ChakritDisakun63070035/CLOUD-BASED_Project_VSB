@@ -263,26 +263,15 @@ router.post("/payment/:id/:order_id", upload.single("slip"), requiredLogin, asyn
 })
 
 router.get("/sign-up", alreadyLoggedin, async function (req, res, next) {
-  res.render("user/sign-up")
+  res.render("user/sign-up", { message: req.flash("message")})
 })
-
-const fnameValidator = (value, helper) => {
-  if (value.length < 4) {
-    //เช็คว่าค่าที่รับเข้ามามีขนาดน้อยกว่า8
-    let error = new Joi.ValidationError("fname must me at least 3 characters")
-    error.details = "fname must me at least 3 characters"
-    throw error
-  }
-
-  return value
-}
 
 const passwordValidator = (value, helper) => {
   if (value.length < 8) {
     //เช็คว่าค่าที่รับเข้ามามีขนาดน้อยกว่า8
     throw new Joi.ValidationError("Password must me at least 8 characters")
   }
-  if (!(value.match(/[a-z]/) && value.match(/[A-Z]/) && value.match(/[0-9]/))) {
+  if (!(value.match(/[a-z]/) || value.match(/[A-Z]/) && value.match(/[0-9]/))) {
     let error = new Joi.ValidationError("Password must be harder")
     error.details = "Invalid Password"
     throw error
@@ -329,10 +318,8 @@ router.post("/sign-up", alreadyLoggedin, async function (req, res, next) {
     await schema.validateAsync(req.body, { abortEarly: false }) //จะvalidateทุกfieldsให้เสร็จก่อน ถ้าเจอปัญหาจะresponseกลับไปเลยว่ามันมีปัญหา
   } catch (error) {
     console.log(error)
-
-    // req.flash("message", "Incorrect")
+    req.flash("message", error.message)
     return res.redirect("/sign-up")
-    // return res.status(400).json(error)
   }
 
   const fname = req.body.fname
