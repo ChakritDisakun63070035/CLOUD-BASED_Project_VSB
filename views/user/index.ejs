@@ -19,7 +19,7 @@
         <div v-if="user.role === 'student'" class="d-inline">
           <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
             <div class="container-fluid ">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+              <a class="navbar-brand" :href="'/home/' + user.user_id">
                 <img src="/uploads/logo.png" alt="" width="60" height="60" />
               </a>
               <div class="d-flex">
@@ -51,7 +51,7 @@
         <div v-else-if="user.role === 'teacher'" class="d-inline">
           <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
             <div class="container-fluid">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+              <a class="navbar-brand" :href="'/home/' + user.user_id">
                 <img src="/uploads/logo.png" alt="" width="60" height="60" />
               </a>
               <div class="d-flex">
@@ -164,10 +164,13 @@
                 <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
                   <p>All Courses</p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                <a v-if="user.role == 'student'" class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
                   <p>My Course</p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id" >
+                <a v-else-if="user.role == 'teacher'" class="text-decoration-none text-dark" :href="'/teacher/' + user.user_id">
+                  <p>My Course</p>
+                </a>
+                <a v-if="user.role == 'student'" class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id" >
                   <p>My cart</p>
                 </a>
               </div>

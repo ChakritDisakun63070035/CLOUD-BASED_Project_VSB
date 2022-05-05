@@ -17,6 +17,16 @@ const requiredLogin = async function requiredLogin(req, res, next) {
   }
 }
 
+const alreadyLoggedin = async function (req, res, next) {
+  if (req.session.user) {
+    console.log("You already logged-in🤗")
+    req.flash("message", "You aren't signed-in! Please sign-in first.")
+    return res.redirect("/sign-in")
+  } else {
+    next()
+  }
+}
+
 const storage = multer.diskStorage({
   destination: function (req, file, callback) {
     callback(null, "./static/uploads")
@@ -86,7 +96,7 @@ router.get("/allcourse/", async function (req, res, next) {
   }
 })
 
-// my cart
+// my cart --> กดไอคอนตะกร้า
 router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
   try {
     const [rows1, fields1] = await pool.query("SELECT * FROM `order` WHERE user_id=? AND order_status=?", [req.params.id, "pending"])
@@ -98,8 +108,6 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
       return res.render("user/cart", { items: JSON.stringify(rows2), users: JSON.stringify(rows3), carts: JSON.stringify(rows1), course: JSON.stringify(rows4) })
     } else {
       const [rows3, fields3] = await pool.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
-      // res.render("user/cart", {  users: JSON.stringify(rows3)})
-      // res.send("nothing in your cart.")
       res.render("user/cart-no", { carts: JSON.stringify(rows1), users: JSON.stringify(rows3), course: JSON.stringify(rows4) })
     }
   } catch (err) {
@@ -107,7 +115,7 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
   }
 })
 
-// create cart
+// create cart --> กดปุ่ม add to cart
 router.get("/course/:course_id/create/cart/:user_id/:price", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
@@ -226,11 +234,11 @@ router.post("/payment/:id/:order_id", upload.single("slip"), requiredLogin, asyn
   }
 })
 
-router.get("/sign-up", async function (req, res, next) {
+router.get("/sign-up", alreadyLoggedin, async function (req, res, next) {
   res.render("user/sign-up")
 })
 
-router.post("/sign-up", async function (req, res, next) {
+router.post("/sign-up", alreadyLoggedin, async function (req, res, next) {
   const fname = req.body.fname
   const lname = req.body.lname
   const email = req.body.email
@@ -267,11 +275,11 @@ router.post("/sign-up", async function (req, res, next) {
   }
 })
 
-router.get("/sign-in", async function (req, res, next) {
+router.get("/sign-in", alreadyLoggedin, async function (req, res, next) {
   res.render("user/sign-in", { message: req.flash("message") })
 })
 
-router.post("/sign-in", async function (req, res, next) {
+router.post("/sign-in", alreadyLoggedin, async function (req, res, next) {
   const email = req.body.email
   const password = req.body.password
   const role = req.body.role

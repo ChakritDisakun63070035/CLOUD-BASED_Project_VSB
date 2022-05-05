@@ -1,433 +1,296 @@
-<div>
+<html>
 
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>VSB</title>
-    <link rel="icon" href="/uploads/logo.png" />
-    <link href="/css/bootstrap.css" rel="stylesheet" />
-    <link href="/css/css.css" rel="stylesheet" />
-    <script src="/js/bootstrap.bundle.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-    <script src="https://unpkg.com/vue@2.2.6/dist/vue.js"></script>
-  </head>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VSB</title>
+  <link rel="icon" href="/uploads/logo.png" />
+  <link href="/css/bootstrap.css" rel="stylesheet" />
+  <link href="/css/css.css" rel="stylesheet" />
+  <script src="/js/bootstrap.bundle.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  <script src="https://unpkg.com/vue@2.2.6/dist/vue.js"></script>
+</head>
 
-  <body>
-    <div id="app">
-      <div v-for="info in data">
-        <header>
-          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-            <div class="container-fluid" v-for="user in users">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
-                <img src="/uploads/logo.png" alt="" width="60" height="60" />
-              </a>
+<body>
+  <div id="app">
+    <div v-for="info in data">
+      <header>
+        <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+          <div class="container-fluid" v-for="user in users">
+            <a class="navbar-brand" :href="'/home/' + user.user_id"
+              <img src="/uploads/logo.png" alt="" width="60" height="60" />
+            </a>
 
-              <div class="d-flex">
-                <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
+            <div class="d-flex">
+              <a class="navbar-brand" :href="'/allcourse/' + user.user_id +
                   '/mycourse'">
-                  <i class="bi bi-book fs-4"></i>
-                  My Course
+                <i class="bi bi-book fs-4"></i>
+                My Course
+              </a>
+              <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                <i class="bi bi-cart4 fs-4"></i>
+                My Cart
+              </a>
+              <li class="nav dropdown">
+                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
+                  {{user.user_fname}}
                 </a>
-                <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                  <i class="bi bi-cart4 fs-4"></i>
-                  My Cart
-                </a>
-                <li class="nav dropdown">
-                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
-                    {{user.user_fname}}
-                  </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                    <li><a class="dropdown-item" :href="'/profile/' +
+                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                  <li><a class="dropdown-item" :href="'/profile/' +
                         user.user_id + '/'">Profile</a></li>
-                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
-                  </ul>
-                </li>
-              </div>
-            </div>
-          </nav>
-        </header>
-        <div v-for="info in data">
-          <img :src="info.preview_img" alt="Girl in a jacket" width="100%" height="450">
-
-          <div class="container">
-            <div class="row mt-5">
-
-              <div class="col-md-7 col-sm-12">
-                <div class="row">
-
-                  <div class="card" style="width: 38rem;">
-                    <div class="card-body">
-                      <h3 class="card-title">{{info.course_name}}</h3>
-                      <p class="card-text"> {{info.course_info}} </p>
-                      <img :src=info.teacher_image width="60" height="60" alt="">
-                      <span> {{info.teacher_fname+ ' '+ info.teacher_lname}}</span>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-
-                  <div class="col-sm-12 ps-0">
-                    <div class="card border-trans" style="width:
-                    28rem;">
-                      <div class="card-body">
-                        <h5 class="card-title">Description</h5>
-                        <p class="card-text">
-                          {{info.course_des}}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="col-sm-12 ps-0">
-                    <div class="card border-trans" style="width:
-                    35rem;">
-                      <div class="card-body">
-                        <h5 class="card-title">What you'll
-                          learn</h5>
-                        <div class="row">
-                          <div class="col-sm-6">
-                            <p><i class="bi
-                              bi-check-lg"></i> {{info.learn1}}</p>
-                            <p><i class="bi
-                              bi-check-lg"></i> {{info.learn2}}</p>
-
-                          </div>
-                          <div class="col-sm-6">
-                            <p><i class="bi
-                              bi-check-lg"></i> {{info.learn3}}</p>
-                            <p><i class="bi
-                              bi-check-lg"></i> {{info.learn4}}</p>
-
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <h5><b>Instructors</b></h5>
-                </div>
-                <div class="row">
-                  <div class="card mb-3" style="max-width:
-                  540px;">
-                    <div class="row g-0">
-                      <div class="col-md-4">
-                        <div class="text-center mt-4">
-                          <img :src=info.teacher_image class="img-fluid
-                          rounded-circle" alt="..." width="130" height="130">
-                        </div>
-                      </div>
-                      <div class="col-md-8">
-                        <div class="card-body">
-                          <br>
-                          <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname
-                            + ' ' +
-                            info.teacher_lname}}</p>
-                          <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}}
-                          </p>
-                          <br>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="row">
-                  <div class="card border-trans">
-                    <div class="card-body ps-0">
-                      <p> {{info.teacher_des}} </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <!-- </div> -->
-              <!-- </div> -->
-              <!-- </div> -->
-              <div class="col-md-5 col-sm-12">
-                <div class="list-group">
-                  <a href="#" class="list-group-item list-group-item-action
-                  active bg-secondary border-trans" aria-current="true">
-                    Course content
-                  </a>
-                  <div v-for="(videos,index) in video">
-                    <a @click="learn(index)" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                      <div class="row">
-                        <div class="col-sm-7">
-                          <iframe :src="videos.path" width="270" height="150" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                        </div>
-                        <div class="col-sm-5">
-                          <h5 class="mt-4">{{info.course_name +' part'}} {{parseInt(index)+1}}</h5>
-                          <!-- <button type="button" class="btn btn-link" >Link</button> -->
-                        </div>
-                      </div>
-                    </a>
-
-                    <!-- <div v-if="index===0">
-                      <div v-for="(videos,index) in video.slice(0,1)">
-                        <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                          tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                          <div class="modal-dialog modal-xl text-center">
-                            <div class="modal-content">
-                              <div class="modal-header">
-                                <h5 class="modal-title" id="staticBackdropLabel"><b>{{info.course_name}}</b></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                  aria-label="Close"></button>
-                              </div>
-                              <div class="modal-body">
-                                <iframe :key="index" :src="videos.path" width="942" height="530"
-                                  title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                                    encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                      
-                    </div>
-                    <div v-else-if="index===1">
-                        <div v-for="(videos,index) in video.slice(1,2)">
-
-                          <div class="modal fade " id="staticBackdrop" data-bs-backdrop="static"
-                            data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel"
-                            aria-hidden="true">
-                            <div class="modal-dialog modal-xl text-center">
-                              <div class="modal-content">
-                                <div class="modal-header">
-                                  <h5 class="modal-title" id="staticBackdropLabel"><b>{{info.course_name}}</b></h5>
-                                  <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                                </div>
-                                <div class="modal-body">
-                                  <iframe :key="index" :src="videos.path" width="942" height="530"
-                                    title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                                      encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div> -->
-                    <!-- Modal -->
-
-                    <!-- <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false"
-                      tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true"
-                      >
-                      <div class="modal-dialog modal-xl text-center">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="staticBackdropLabel"><b>{{info.course_name}}</b></h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                          </div>
-                          <div class="modal-body">
-                            <p v-bind:key="index">{{videos.path}}</p>
-                            <iframe v-bind:key="index" :src="videos.path" width="942" height="530"
-                              title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                      encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                          </div>
-                        </div>
-                      </div>
-                    </div> -->
-                  </div>
-                  <!-- <a href="#" class="list-group-item list-group-item-action"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <img src="./static/uploads/web_pro.jpg" alt=""
-                                    width="180" height="100">
-                            </div>
-                            <div class="col-sm-6">
-                                <h5 class="mt-4">SQL part 2</h5>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <img src="./static/uploads/web_pro.jpg" alt=""
-                                    width="180" height="100">
-                            </div>
-                            <div class="col-sm-6">
-                                <h5 class="mt-4">SQL part 3</h5>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="#" class="list-group-item list-group-item-action"
-                        data-bs-toggle="modal" data-bs-target="#staticBackdrop">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <img src="./static/uploads/web_pro.jpg" alt=""
-                                    width="180" height="100">
-                            </div>
-                            <div class="col-sm-6">
-                                <h5 class="mt-4">SQL part 4</h5>
-                            </div>
-                        </div>
-                    </a> -->
-                </div>
-              </div>
+                  <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                </ul>
+              </li>
             </div>
           </div>
-        </div>
-        <!-- Modal -->
-        <div v-for="(videos,index) in video.slice(0,1)">
-
-          <div class="modal fade" :class="{'active': showEditModal}" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl text-center">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel"><b>{{info.course_name}}</b></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" @click="showEditModal= false" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <iframe :key="index" :src="videos.path" width="942" height="530" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-        <div v-for="(videos,index) in video.slice(1,2)">
-
-          <div class="modal fade " :class="{'active': showEditModal1}" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div class="modal-dialog modal-xl text-center">
-              <div class="modal-content">
-                <div class="modal-header">
-                  <h5 class="modal-title" id="staticBackdropLabel"><b>{{info.course_name}}</b></h5>
-                  <button type="button" class="btn-close" data-bs-dismiss="modal" @click="showEditModal1= false" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                  <iframe :key="index" :src="videos.path" width="942" height="530" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
-                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-                </div>
-              </div>
-            </div>
-          </div>
-
-        </div>
-
-      </div>
-      <br>
-      <footer class="mt-5 footer bg-light">
-        <div class="container" v-for="user in users">
-          <div class="row">
-            <div class="col-md-4 col-xs-12">
-              <div class="my-3">
-                <h4>Course Recommendation</h4>
-                <div class="line1"></div>
-                <div class="my-3">
-                  <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
-                    <p class="ms-3"> Web Design for Beginners</p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
-                    <p class="ms-3"> Cyber Security </p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
-                    <p class="ms-3"> IELTS Full Course </p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
-                    <p class="ms-3"> SQL- Database Programming </p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
-                    <p class="ms-3"> C++ Programming Course </p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
-                    <p class="ms-3"> Digital marketing </p>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 col-xs-12">
-              <div class="my-3 text-center">
-                <h4> Navigate</h4>
-                <div class="line2"></div>
-                <div class="my-3">
-                  <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
-                    <p>Home</p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
-                    <p>All Courses</p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
-                    <p>My Course</p>
-                  </a>
-                  <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
-                    <p>My cart</p>
-                  </a>
-                </div>
-              </div>
-            </div>
-
-            <div class="col-md-4 col-xs-12">
-              <div class="my-3 text-center">
-                <h4> Contact </h4>
-                <div class="line2"></div>
-                <div class="my-3">
-                  <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
-                  <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
-                  <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters, Whitehall, London</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        </nav>
+      </header>
+      <div v-for="info in data">
+        <img :src="info.preview_img" alt="Girl in a jacket" width="100%" height="450">
 
         <div class="container">
-          <div class="row">
-            <div class="col-12">
-              <hr>
-              <div class="my-3 text-center iconfooter">
-                <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
-                  <i class="bi bi-facebook text-primary mx-2"></i>
-                </a>
-                <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
-                  <i class="bi bi-twitter text-info mx-2"></i>
-                </a>
-                <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
-                  <i class="bi bi-github text-dark mx-2"></i>
-                </a>
-                <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
-                  <i class="bi bi-linkedin text-primary mx-2"></i>
-                </a>
-                <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
-                  <i class="bi bi-youtube text-danger mx-2"></i>
-                </a>
+          <div class="row mt-5">
+
+            <div class="col-md-7 col-sm-12">
+              <div class="row">
+
+                <div class="card" style="width: 38rem;">
+                  <div class="card-body">
+                    <h3 class="card-title">{{info.course_name}}</h3>
+                    <p class="card-text"> {{info.course_info}} </p>
+                    <img :src=info.teacher_image width="60" height="60" alt="">
+                    <span> {{info.teacher_fname+ ' '+ info.teacher_lname}}</span>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+
+                <div class="col-sm-12 ps-0">
+                  <div class="card border-trans" style="width:
+                    28rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">Description</h5>
+                      <p class="card-text">
+                        {{info.course_des}}
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 ps-0">
+                  <div class="card border-trans" style="width:
+                    35rem;">
+                    <div class="card-body">
+                      <h5 class="card-title">What you'll
+                        learn</h5>
+                      <div class="row">
+                        <div class="col-sm-6">
+                          <p><i class="bi
+                              bi-check-lg"></i> {{info.learn1}}</p>
+                          <p><i class="bi
+                              bi-check-lg"></i> {{info.learn2}}</p>
+
+                        </div>
+                        <div class="col-sm-6">
+                          <p><i class="bi
+                              bi-check-lg"></i> {{info.learn3}}</p>
+                          <p><i class="bi
+                              bi-check-lg"></i> {{info.learn4}}</p>
+
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <h5><b>Instructors</b></h5>
+              </div>
+              <div class="row">
+                <div class="card mb-3" style="max-width:
+                  540px;">
+                  <div class="row g-0">
+                    <div class="col-md-4">
+                      <div class="text-center mt-4">
+                        <img :src=info.teacher_image class="img-fluid
+                          rounded-circle" alt="..." width="130" height="130">
+                      </div>
+                    </div>
+                    <div class="col-md-8">
+                      <div class="card-body">
+                        <br>
+                        <p><i class="bi bi-person-square me-2"></i>{{info.teacher_fname
+                            + ' ' +
+                            info.teacher_lname}}</p>
+                        <p><i class="bi bi-caret-right-fill me-2"></i>{{info.position}}
+                        </p>
+                        <br>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="row">
+                <div class="card border-trans">
+                  <div class="card-body ps-0">
+                    <p> {{info.teacher_des}} </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-5 col-sm-12">
+              <div class="list-group">
+                <div class="list-group-item bg-secondary text-light" aria-current="true">
+                  Course content
+                </div>
+                <div v-for="(videos,index) in video">
+                  <a @click="learn(videos, index)" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#video">
+                    <div class="row">
+                      <div class="col-sm-7">
+                        <iframe :src="videos.path" width="270" height="150" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                      </div>
+                      <div class="col-sm-5">
+                        <h5 class="mt-4">{{info.course_name +' part'}} {{parseInt(index)+1}}</h5>
+                      </div>
+                    </div>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </footer>
+      </div>
+      <!-- Modal -->
+      <div class="modal fade" id="video" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl text-center">
+          <div class="modal-content">
+            <div class="modal-header bg-warning">
+              <h5 class="modal-title" id="staticBackdropLabel"><b>{{name_content}}</b></h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+              <iframe :src="video_content" width="942" height="530" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
-  </body>
-  <script>
-    var app = new Vue({
-      el: "#app",
-      data: {
-        data: JSON.parse(`<%- data %>`),
-        users: JSON.parse(`<%- users %>`),
-        video: JSON.parse(`<%- video %>`),
-        numbers: [1, 2, 3, 4, 5, 6, 7],
-        index2: [],
-        newindex: '',
-        showEditModal: false,
-        showEditModal1: false
-      },
-      methods: {
-        learn(index) {
-          if (index === 0) {
-            this.showEditModal = true
-          } else if (index === 1) {
-            this.showEditModal1 = true
-          }
-        },
-      }
-    })
-  </script>
+    <br>
+    <footer class="mt-5 footer bg-light">
+      <div class="container" v-for="user in users">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3">
+              <h4>Course Recommendation</h4>
+              <div class="line1"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
+                  <p class="ms-3"> Web Design for Beginners</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
+                  <p class="ms-3"> Cyber Security </p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
+                  <p class="ms-3"> IELTS Full Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
+                  <p class="ms-3"> SQL- Database Programming </p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
+                  <p class="ms-3"> C++ Programming Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
+                  <p class="ms-3"> Digital marketing </p>
+                </a>
+              </div>
+            </div>
+          </div>
 
-  </html>
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Navigate</h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
+                  <p>Home</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
+                  <p>All Courses</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                  <p>My Course</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
+                  <p>My cart</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Contact </h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
+                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
+                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters, Whitehall, London</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <hr>
+            <div class="my-3 text-center iconfooter">
+              <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
+                <i class="bi bi-twitter text-info mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
+                <i class="bi bi-github text-dark mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
+                <i class="bi bi-youtube text-danger mx-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+</body>
+<script>
+  var app = new Vue({
+    el: "#app",
+    data: {
+      data: JSON.parse(`<%- data %>`),
+      users: JSON.parse(`<%- users %>`),
+      video: JSON.parse(`<%- video %>`),
+      video_content: "",
+      name_content: "",
+    },
+    methods: {
+      learn(videos, index) {
+        this.video_content = videos.path
+        this.name_content = videos.course_name + ': Part ' + parseInt(index + 1)
+      },
+    }
+  })
+</script>
+
+</html>

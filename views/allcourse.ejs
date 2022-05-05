@@ -19,7 +19,7 @@
         <div v-if="user.role === 'student'" class="d-inline">
           <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
             <div class="container-fluid ">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+              <a class="navbar-brand" :href="'/home/' + user.user_id">
                 <img src="/uploads/logo.png" alt="" width="60" height="60" />
               </a>
               <div class="d-flex">
@@ -51,7 +51,7 @@
         <div v-else-if="user.role === 'teacher'" class="d-inline">
           <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
             <div class="container-fluid">
-              <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+              <a class="navbar-brand" :href="'/home/' + user.user_id">
                 <img src="/uploads/logo.png" alt="" width="60" height="60" />
               </a>
               <div class="d-flex">
@@ -240,11 +240,11 @@
         search: "",
       },
       computed: {
-        // filteredList() {
-        //   return this.courses.filter(post => {
-        //     return post.course_name.toLowerCase().includes(this.search.toLowerCase())
-        //   })
-        // },
+        filteredList() {
+          return this.courses.filter(post => {
+            return post.course_name.toLowerCase().includes(this.search.toLowerCase())
+          })
+        },
         computedCourses() {
           this.courses.map((b) => {
             if (b.course_info.length > 90) {

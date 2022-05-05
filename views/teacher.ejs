@@ -19,7 +19,7 @@
     <header>
       <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
         <div class="container-fluid" v-for="user in users">
-          <a class="navbar-brand" :href="'/allcourse/' + user.user_id">
+          <a class="navbar-brand" :href="'/home/' + user.user_id">
             <img src="/uploads/logo.png" alt="" width="60" height="60" />
           </a>
           <div class="d-flex">
@@ -303,7 +303,7 @@
                       </div>
                     </div>
                     <div class="my-2 mx-2 text-end">
-                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger" @load="alertdel">Delete</a>
+                      <a :href="'/teacher/' + user.user_id + '/delcourse/' + course_id + '/' + preview_id" class="btn btn-danger">Delete</a>
                       <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                     </div>
                   </div>
@@ -329,7 +329,6 @@
         course_id: "",
         name: "",
         preview_id: "",
-        alert: false,
         contTxt: "",
         content_bnt: 1,
         countCont: 1,
@@ -345,10 +344,6 @@
           this.course_id = courseId
           this.name = name
           this.preview_id = previewId
-        },
-        alertdel() {
-          this.alert = true;
-          setTimeout(() => { this.alert = false }, 5000);
         },
         content(course) {
           const courseId = course.course_id
