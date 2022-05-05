@@ -707,8 +707,8 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
   } catch (invalid) {
     console.log(invalid)
     // alert('Duplicate course name')
-    // req.flash("message", "Incorrect")
-    return res.redirect('/teacher/'+req.params.id)
+    req.flash("message", invalid.message)
+    return res.redirect('/teacher/'+ req.params.id)
     // return res.status(400).json(error2)
   }
   
