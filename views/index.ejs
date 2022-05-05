@@ -31,11 +31,11 @@
     <b>VSB ONLINE<br />LEARNING</b>
   </h1>
   <div class="" id="app">
-    <div class="container">
-      <h3>
+    <div class="container mt-5">
+      <h3 class="mt-5">
         <b>Learn without limits</b>
       </h3>
-      <div class="row">
+      <div class="row mt-4">
         <div class="col">
           <p>
             Get that "ready for anything" feeling with more than 15 courses,
@@ -48,26 +48,30 @@
       </div>
       <div class="row mb-5">
         <div class="col">
-          <a href="/allcourse" class="button_start">Get Started !!!</a>
+          <a href="/allcourse" class="myAnim2 button_start">Get Started <i class="bi bi-arrow-right-circle"></i></a>
         </div>
       </div>
-      <div class="row">
-        <div class="col-12 mb-3"><b>Explore Course</b></div>
+      <div class="row mt-5">
+        <div class="col-12 mb-3"><h4>Explore Course</h4></div>
       </div>
-      <div class="row d-flex justify-content-center gap-2">
-        <div class="card sm-3 mx-3 p-0" style="max-width: 380px" v-for="course
+      <div class="row d-flex justify-content-center gap-4">
+        <div class="myAnim1 card sm-3 mx-3 p-0" style="max-width: 380px" v-for="course
           in courses.slice(0,6)">
           <div class="row g-0">
             <div class="col-md-6">
-              <img :src="course.image" class="img-fluid" alt="404-not found" />
+              <a :href="'/allcourse/course/' + course.course_id">
+                <img :src="course.image" class="img-fluid" alt="404-not found" />
+              </a>
             </div>
             <div class="col-md-6">
-              <div class="card-body">
-                <small class="card-title">
-                  <b>
-                    {{ course.course_name }} </b>
-                </small>
-              </div>
+              <a class="text-decoration-none text-dark" :href="'/allcourse/course/' + course.course_id">
+                <div class="card-body">
+                  <small class="card-title">
+                    <b>
+                      {{ course.course_name }} </b>
+                  </small>
+                </div>
+              </a>
             </div>
           </div>
         </div>
@@ -76,51 +80,39 @@
         <div class="row p-5 d-flex justify-content-center">
           <div class="col-md-4 m-auto">
 
-            <div class="d-flex justify-content-center">
+            <div class="myAnim1 d-flex justify-content-center">
 
-              <img
-                src="https://cdn.discordapp.com/attachments/876025140490698753/971873730810740786/003-man.png"
-                alt="Girl in a jacket" width="30%"
-                height="30%"
-                class="d-flex justify-content-center">
+              <img src="https://cdn.discordapp.com/attachments/876025140490698753/971873730810740786/003-man.png" alt="Girl in a jacket" width="30%" height="30%" class="d-flex justify-content-center">
 
             </div>
-            <p class="text-center">
+            <p class="text-center my-2">
               Get help from experienced professionals to take your course to the next level.
             </p>
 
           </div>
           <div class="col-md-4 m-auto">
 
-            <div class="d-flex justify-content-center">
+            <div class="myAnim1 d-flex justify-content-center">
 
-              <img
-                src="https://cdn.discordapp.com/attachments/876025140490698753/971873747067879494/002-search.png"
-                alt="Girl in a jacket" width="30%"
-                height="30%"
-                class="d-flex justify-content-center">
+              <img src="https://cdn.discordapp.com/attachments/876025140490698753/971873747067879494/002-search.png" alt="Girl in a jacket" width="30%" height="30%" class="d-flex justify-content-center">
 
             </div>
-            <p class="text-center">
+            <p class="text-center my-2">
               Preview and see every change to make it exactly the way you want.
             </p>
 
           </div>
           <div class="col-md-4 m-auto">
 
-            <div class="d-flex justify-content-center">
+            <div class="myAnim1 d-flex justify-content-center">
 
-              <img
-                src="https://cdn.discordapp.com/attachments/876025140490698753/971873766802071652/001-desktop.png"
-                alt="Girl in a jacket" width="30%"
-                height="30%"
-                class="d-flex justify-content-center">
+              <img src="https://cdn.discordapp.com/attachments/876025140490698753/971873766802071652/001-desktop.png" alt="Girl in a jacket" width="30%" height="30%" class="d-flex justify-content-center">
 
             </div>
-            <p class="text-center">
+            <p class="text-center my-2">
               VSB online platform learning offering video based
               micro-learning content for teams..
-              
+
             </p>
 
           </div>

@@ -51,7 +51,7 @@
                                         :href="'/admin/profile/' +
                                         user.admin_id + '/'">Profile</a></li>
                                 <li><a class="dropdown-item"
-                                        :href="'/sign-out/' + user.user_id">Logout</a></li>
+                                  href="/sign-out/">Logout</a></li>
                             </ul>
                         </li>
                     </div>
@@ -118,7 +118,8 @@
         <br />
         <!-- ปุ่ม log out -->
         <div class="text-center mt-4" v-for="user in users">
-          <a class="btn btn-danger" aria-pressed="true" :href="'/sign-out/' + user.user_id"><i class="bi bi-box-arrow-right"></i> Log Out</a>
+          <a v-if="user.role == 'student' || user.role == 'teacher'" class="btn btn-danger" aria-pressed="true" :href="'/sign-out/' + user.user_id"><i class="bi bi-box-arrow-right"></i> Log Out</a>
+          <a class="btn btn-danger" aria-pressed="true" href="/sign-out/"><i class="bi bi-box-arrow-right"></i> Log Out</a>
         </div>
         <br /><br />
 
