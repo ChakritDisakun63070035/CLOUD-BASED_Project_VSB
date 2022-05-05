@@ -194,7 +194,7 @@ router.get("/mycart/:id/:item_no/:order_id", requiredLogin, async function (req,
     const [rows1, fields1] = await conn.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
     const [rows2, fields2] = await conn.query("DELETE FROM `my_course` WHERE my_id=?", [req.params.item_no])
     // const [rows3, fields3] = await conn.query("DELETE FROM `payment` WHERE order_id=?", [req.params.order_id])
-    const [rows6, fields6] = await conn.query("DELETE FROM `order` WHERE order_id=?", [req.params.order_id])
+    // const [rows6, fields6] = await conn.query("DELETE FROM `order` WHERE order_id=?", [req.params.order_id])
     const [itemprice, fields4] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [req.params.order_id])
     let total = itemprice[0].total
     const [orderprice, fields5] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total, req.params.order_id])
