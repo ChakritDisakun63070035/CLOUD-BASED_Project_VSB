@@ -205,8 +205,9 @@
               </div>
             </div>
             <div v-if="user.role === 'teacher'" class="d-inline">
-              <div class="card gray pb-4" style="width: 100%;">
-                <div class="text-center mt-3">
+              <div class="card gray pb-3" style="width: 100%;">
+                <div class="text-center">
+                  <h5 class="card-header bg-warning">Preview</h5>
                   <div class="text-center mt-3">
                     <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;
                       autoplay;
@@ -254,10 +255,6 @@
                 </div>
               </div>
             </div>
-
-
-
-
 
             <!-- ADD LIKE -->
             <div class="my-3 text-center py-3" style="background-color: pink; border-radius: 20px;">
