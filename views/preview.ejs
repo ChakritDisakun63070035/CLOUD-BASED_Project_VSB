@@ -344,10 +344,13 @@
                 <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
                   <p>All Courses</p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                <a v-if="user.role == 'student'" class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
                   <p>My Course</p>
                 </a>
-                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
+                <a v-else-if="user.role == 'teacher'" class="text-decoration-none text-dark" :href="'/teacher/' + user.user_id">
+                  <p>My Course</p>
+                </a>
+                <a v-if="user.role == 'student'" class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
                   <p>My cart</p>
                 </a>
               </div>
