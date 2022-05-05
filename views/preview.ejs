@@ -205,8 +205,9 @@
               </div>
             </div>
             <div v-if="user.role === 'teacher'" class="d-inline">
-              <div class="card gray pb-4" style="width: 100%;">
-                <div class="text-center mt-3">
+              <div class="card gray pb-3" style="width: 100%;">
+                <div class="text-center">
+                  <h5 class="card-header bg-warning">Preview</h5>
                   <div class="text-center mt-3">
                     <iframe width="442" height="245" :src="info.preview_video" title="YouTube video player" frameborder="0" allow="accelerometer;
                       autoplay;
@@ -216,7 +217,45 @@
                   </div>
                 </div>
               </div>
+
+              <div class="col-md-12 col-sm-12 my-3">
+                <div class="list-group">
+                  <div class="list-group-item bg-secondary text-light" aria-current="true">
+                    Course content
+                  </div>
+                  <div v-for="(videos,index) in video">
+                    <a @click="learn(videos, index)" class="list-group-item list-group-item-action" data-bs-toggle="modal" data-bs-target="#video">
+                      <div class="row">
+                        <div class="col-sm-7">
+                          <iframe :src="videos.path" width="270" height="150" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                          encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                        </div>
+                        <div class="col-sm-5">
+                          <h5 class="mt-4">{{info.course_name +' part'}} {{parseInt(index)+1}}</h5>
+                        </div>
+                      </div>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Modal -->
+              <div class="modal fade" id="video" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-xl text-center">
+                  <div class="modal-content">
+                    <div class="modal-header bg-warning">
+                      <h5 class="modal-title" id="staticBackdropLabel"><b>{{name_content}}</b></h5>
+                      <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                      <iframe :src="video_content" width="942" height="530" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write;
+                        encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
+
             <!-- ADD LIKE -->
             <div class="my-3 text-center py-3" style="background-color: pink; border-radius: 20px;">
               <div style="font-size: 100px;">
@@ -237,9 +276,10 @@
               <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="info.image" style="width:100px; height:100px; object-fit:cover;" /> </div>
               <div class="col-9 col-sm-9 col-md-10 mt-2 position-relative">
                 <h5>{{info.user_fname}} {{info.user_lname}}
-                  <span class="badge bg-success" v-if="info.role === 'student'">{{info.role}}</span> 
-                  <span class="badge bg-warning" v-if="info.role === 'teacher'">{{info.role}}</span> </h5>
-                  <span class="text-muted position-absolute top-0 end-0 me-2"> On {{info.comm_date.substring(0, 10)}} at {{info.comm_date.substring(11, 16)}}</span>
+                  <span class="badge bg-success" v-if="info.role === 'student'">{{info.role}}</span>
+                  <span class="badge bg-warning" v-if="info.role === 'teacher'">{{info.role}}</span>
+                </h5>
+                <span class="text-muted position-absolute top-0 end-0 me-2"> On {{info.comm_date.substring(0, 10)}} at {{info.comm_date.substring(11, 16)}}</span>
                 <p>{{info.comment}}</p>
                 <div class="position-absolute bottom-0 end-0 fs-3 mb-2 me-2 text-danger" v-if="info.user_id == users[0].user_id || user.role == 'teacher'"> <a @click="deleteComment(info.comment_course_id, users[0].user_id, info.id, index)"> <i class="bi bi-trash-fill"></i> </a> </div>
               </div>
@@ -364,11 +404,18 @@
       comment: JSON.parse(`<%- comment %>`),
       check: JSON.parse(`<%- check %>`),
       cart: JSON.parse(`<%- cart %>`),
+      video: JSON.parse(`<%- video %>`),
       comment_bnt: 1,
       commTxt: "",
       alertCart: 0,
+      video_content: "",
+      name_content: "",
     },
     methods: {
+      learn(videos, index) {
+        this.video_content = videos.path
+        this.name_content = videos.course_name + ': Part ' + parseInt(index + 1)
+      },
       addLikeCourse(courseID, userID) {
         axios
           .put(`http://localhost:3000/course/${courseID}/${userID}`)

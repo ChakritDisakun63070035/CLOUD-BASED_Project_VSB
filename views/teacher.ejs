@@ -198,13 +198,13 @@
                             <span><div class="mt-2 mb-2 text-center text-decoration-underline">Change To</div>
                               <input v-model="editContentMessage" type="text" class="form-control"></span>
                               <div class="my-2 text-center">
-                              <button type="button" class="btn btn-outline-success" @click="editContent(videos.video_id, index), index_check = ''">Save</button>
+                              <button type="button" class="btn btn-outline-success" @click="editContent(videos.video_id, index)">Save</button>
                               <button type="button" class="btn btn-outline-danger" @click="index_check = '', editContentMessage = ''">Cancle</button>
                              </div>
                             </div>
 
                           <div class="position-absolute bottom-0 end-0 fs-4" v-if="index != index_check">
-                            <span><a @click="editcontent_bnt2(videos.video_id, index)"><i class="bi bi-pencil-fill text-warning"></i></a></span>
+                            <span><a @click="editcontent_bnt2(videos.video_id, index), content_bnt = 1"><i class="bi bi-pencil-fill text-warning"></i></a></span>
                             <span><a @click="deleteContent(videos.video_id, index)"><i class="bi bi-trash-fill text-danger"></i></a></span>
                           </div>
                           <hr>
@@ -380,7 +380,7 @@
         },
         addContent(userID) {
           if (this.contTxt == "") {
-            window.alert("Please fill Content")
+            window.alert("Please fill content")
           } else {
             axios
               .post(`http://localhost:3000/teacher/${userID}/addcontent`, {
@@ -413,17 +413,23 @@
         this.index_check = index
       },
       editContent(videoID, index) {
-      axios
+        if(this.editContentMessage == ''){
+          window.alert("Please fill content")
+          this.index_check = index
+        }else{
+          axios
         .put(`http://localhost:3000/teacher/${videoID}/editcontent/${index}`, {
           path: this.editContentMessage,
         })
         .then((response) => {
           this.video[index].path = response.data.path;
           this.editContentMessage = ''
+          this.index_check = ''
         })
         .catch((error) => {
           this.error = error.message;
         });
+        }
     },
       },
         computed: {

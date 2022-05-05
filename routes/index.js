@@ -194,7 +194,7 @@ router.get("/mycart/:id/:item_no/:order_id", requiredLogin, async function (req,
     const [rows1, fields1] = await conn.query("DELETE FROM `order_item` WHERE item_no=?", [req.params.item_no])
     const [rows2, fields2] = await conn.query("DELETE FROM `my_course` WHERE my_id=?", [req.params.item_no])
     // const [rows3, fields3] = await conn.query("DELETE FROM `payment` WHERE order_id=?", [req.params.order_id])
-    // const [rows6, fields6] = await conn.query("DELETE FROM `order` WHERE order_id=?", [req.params.order_id])
+    const [rows6, fields6] = await conn.query("DELETE FROM `order` WHERE order_id=?", [req.params.order_id])
     const [itemprice, fields4] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [req.params.order_id])
     let total = itemprice[0].total
     const [orderprice, fields5] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total, req.params.order_id])
@@ -574,7 +574,7 @@ router.post("/profile/:id", upload.single("image"), requiredLogin, async functio
   }
 })
 
-// preview page
+// preview page 
 router.get("/course/:id/:userid", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
@@ -596,10 +596,11 @@ router.get("/course/:id/:userid", requiredLogin, async function (req, res, next)
     )
     const [rows6, fields6] = await conn.query("SELECT * FROM `order` join `my_course` using(order_id) WHERE user_id =? and order_status ='pending' and course_id =?", [req.params.userid, req.params.id])
 
+    const [path_video] = await conn.query("SELECT * FROM my_video join course using(course_id)  WHERE course_id=?; ", [req.params.id])
     if (rows3.length > 0) {
       return res.redirect("/course/" + req.params.id + "/" + req.params.userid + "/learn")
     } else {
-      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3), cart: JSON.stringify(rows6)})
+      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3), cart: JSON.stringify(rows6), video: JSON.stringify(path_video)})
     }
     // }
   } catch (err) {
