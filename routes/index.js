@@ -577,12 +577,14 @@ router.get("/course/:id/:userid", requiredLogin, async function (req, res, next)
       "SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=? and course_id=?",
       [req.params.userid, 1, req.params.id]
     )
+    const [rows6, fields6] = await conn.query("SELECT * FROM `order` join `my_course` using(order_id) WHERE user_id =? and order_status ='pending' and course_id =?", [req.params.userid, req.params.id])
 
     if (rows3.length > 0) {
       return res.redirect("/course/" + req.params.id + "/" + req.params.userid + "/learn")
     } else {
-      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
+      return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3), cart: JSON.stringify(rows6)})
     }
+    // }
   } catch (err) {
     console.log(err)
     await conn.rollback()
