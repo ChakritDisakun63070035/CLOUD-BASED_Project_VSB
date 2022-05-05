@@ -303,6 +303,18 @@ const emailValidator = async (value, helpers) => {
   return value //ถ้าvalidateผ่าน จะreturnค่ากลับไปเพื่อไปเช็คค่า
 }
 
+const courseValidator = async (value, helpers) => {
+  const [rows, fields] = await pool.query("select course_name from course WHERE course_name=?", [value])
+
+  if (rows.length > 0) {
+    // ถ้าหาเจอในฐานข้อมูล หรือ พบเจอชื่อซ้ำ
+    let invalid = new Joi.ValidationError("Duplicate_ERROR")
+    invalid.details = "Duplicate Course Name"
+    throw invalid
+  }
+  return value //ถ้าvalidateผ่าน จะreturnค่ากลับไปเพื่อไปเช็คค่า
+}
+
 schema = Joi.object({
   fname: Joi.string().required().min(3),
   lname: Joi.string().required().min(3),
@@ -311,7 +323,24 @@ schema = Joi.object({
   dob: Joi.string().required(),
   gender: Joi.string().required(),
   role: Joi.string().required(),
+
 })
+schema2 = Joi.object({
+  
+  course_name: Joi.string().required().min(3).external(courseValidator),
+  course_info: Joi.string().required(),
+  course_time: Joi.string().required(),
+  course_price: Joi.string().required(),
+  course_des: Joi.string().required(),
+  preview_video: Joi.string().required(),
+  preview_learn1: Joi.string().required(),
+  preview_learn2: Joi.string().required(),
+  preview_learn3: Joi.string().required(),
+  preview_learn4: Joi.string().required(),
+  
+
+})
+
 
 router.post("/sign-up", alreadyLoggedin, async function (req, res, next) {
   try {
@@ -673,6 +702,16 @@ const cpUpload = upload.fields([
   { name: "preview_image", maxCount: 1 },
 ])
 router.post("/teacher/:id", cpUpload, async function (req, res, next) {
+  try {
+    await schema2.validateAsync(req.body, { abortEarly: false }) //จะvalidateทุกfieldsให้เสร็จก่อน ถ้าเจอปัญหาจะresponseกลับไปเลยว่ามันมีปัญหา
+  } catch (invalid) {
+    console.log(invalid)
+    // alert('Duplicate course name')
+    // req.flash("message", "Incorrect")
+    return res.redirect('/teacher/'+req.params.id)
+    // return res.status(400).json(error2)
+  }
+  
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
@@ -744,6 +783,8 @@ router.post("/teacher/:id", cpUpload, async function (req, res, next) {
 
 // edit-course
 router.post("/teacher/:id/:courseId/:previewId", cpUpload, requiredLogin, async function (req, res, next) {
+  
+  
   const conn = await pool.getConnection()
   await conn.beginTransaction()
 
