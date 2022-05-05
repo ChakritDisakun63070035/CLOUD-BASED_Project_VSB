@@ -5,7 +5,6 @@ const session = require('express-session')
 const flash = require('connect-flash')
 const app = express();
 const axios = require('axios');
-const cookieParser = require('cookie-parser')
 
 
 // set the view engine to ejs
@@ -31,7 +30,6 @@ app.use(session({
 
 app.use(flash())
 
-app.use(cookieParser())
 
 // routers
 const indexRouter = require('./routes/index')

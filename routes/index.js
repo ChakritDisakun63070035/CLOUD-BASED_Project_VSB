@@ -20,8 +20,8 @@ const requiredLogin = async function requiredLogin(req, res, next) {
 const alreadyLoggedin = async function (req, res, next) {
   if (req.session.user) {
     console.log("You already logged-in🤗")
-    req.flash("message", "You aren't signed-in! Please sign-in first.")
-    return res.redirect("/sign-in")
+    req.flash("message", "You already logged-in.")
+    return res.redirect("/allcourse/" + req.session.user)
   } else {
     next()
   }
@@ -63,17 +63,7 @@ router.get("/allcourse/:id", requiredLogin, async function (req, res, next) {
   try {
     const [rows, fields] = await conn.query("SELECT * FROM `course`")
     const [rows1, fields1] = await conn.query("SELECT * FROM `user` WHERE user_id=?", [req.params.id])
-    // const [rows2, fields2] = await conn.query("SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=?", [req.params.id,1])
-    // if(rows2.length > 0){
-    //   let check1 = rows1[0].course_id
-    //   let check2 = rows2[0].course_id
-    //   if(check1 = check2){
-    //     res.redirect('/course/'+check1+'/'+req.params.id+'/learn')
-    //   }
-    // }
-
-    // const [rows2, fields2] = await conn.query("SELECT * FROM `order` WHERE user_id=?", [req.params.id])
-    return res.render("allcourse", { courses: JSON.stringify(rows), users: JSON.stringify(rows1) })
+    return res.render("allcourse", { courses: JSON.stringify(rows), users: JSON.stringify(rows1), message: req.flash("message")})
   } catch (err) {
     console.log(err)
     await conn.rollback()
@@ -322,12 +312,12 @@ router.post("/sign-in", alreadyLoggedin, async function (req, res, next) {
 
     const date = new Date().toString().substring(0, 25);
     if (user.role === "student") {
-      req.session.user = "Logged-in! Welcome Learner😀"
-      console.log(date + ': ' + req.session.user)
+      req.session.user = user.user_id
+      console.log(date + ': ' + "Logged-in! Welcome Learner😀")
       return res.redirect("/allcourse/" + user.user_id)
     } else if (user.role === "teacher") {
-      req.session.user = "Logged-in! Welcome Teacher😀"
-      console.log(date + ': ' + req.session.user)
+      req.session.user = user.user_id
+      console.log(date + ': ' + "Logged-in! Welcome Teacher😀")
       return res.redirect("/teacher/" + user.user_id)
     }
   } catch (err) {
@@ -452,62 +442,10 @@ router.get("/course/:id/:userid", requiredLogin, async function (req, res, next)
     const [rows2, fields2] = await conn.query("SELECT *, DATE_FORMAT(comment_date, GET_FORMAT(DATETIME, 'ISO')) AS comm_date  FROM comments JOIN user ON comment_by_id = user_id WHERE comment_course_id=?;", [req.params.id])
 
     const [rows3, fields3] = await conn.query("SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=?", [req.params.userid, 1])
-    // if(rows3.length > 0){
+
     const [rows4, fields4] = await conn.query("SELECT course_id FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE user_id=? and status_payment=?", [req.params.userid, 1])
-    // console.log(rows4)
-    // var i = 0;
+
     const [rows5, fields5] = await conn.query("SELECT course_id FROM course WHERE course_id IN (SELECT course_id FROM `user` join `order` using (user_id) join my_course using(order_id)  join payment using(order_id) WHERE user_id=?  and status_payment =?)", [req.params.userid, 1])
-    // console.log(rows5.course_id)      
-    // let check1 = req.params.id
-    // let check3 = rows4.course_id
-    // console.log(check1)
-    //     console.log(rows4)
-    // if (rows4.some(rows4 => rows4.course_id = req.params.id)) {
-    //   console.log('true')
-    //   return res.redirect('/course/' + req.params.id + '/' + req.params.userid + '/learn')
-    // } else {
-    //   console.log('no')
-    //   return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-    // }
-
-    // for(let i = 0; i < rows4.length; i++){ 
-
-
-        //   let check1 = req.params.id
-        // let check3 = rows4[0].course_id
-        // let check4 = rows4[1].course_id
-        // let check5 = rows4[2].course_id
-        // let check6 = rows4[3].course_id
-        // let check7 = rows4[4].course_id
-        // let check8 = rows4[5].course_id
-        // let check9 = rows4[6].course_id
-        
-        // console.log(check1)
-        // console.log(check3)
-        // if(check1 != check3 && check1 != check4 && check1 != check5 && check1 != check6 && check1 != check7 
-        //   && check8 != check3 && check1 != check9 ){
-        //   return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-
-        // }
-
-        // else if(check1 = check3){
-        //   res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
-
-        // }
-
-    //   }
-
-
-    //   let check1 = req.params.id
-    //   let check3 = rows3[0].course_id
-    //   console.log(check1)
-    //   console.log(check3)
-    //   if(check1 != check3){
-    //     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
-    //   }
-    //   else if(check1 = check3){
-    //     res.redirect('/course/'+req.params.id+'/'+req.params.userid+'/learn')
-    // } else{
 
     return res.render("preview", { data: JSON.stringify(rows), users: JSON.stringify(rows1), comment: JSON.stringify(rows2), check: JSON.stringify(rows3) })
     // }
