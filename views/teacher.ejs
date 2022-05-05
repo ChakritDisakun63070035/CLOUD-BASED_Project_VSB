@@ -42,10 +42,15 @@
         </div>
       </nav>
     </header>
-    <div class="container">
-      <div class="my-5 text-center alert alert-danger w-50 mx-auto" role="alert" v-if="alert">
-        <span><i class="fs-4 bi bi-exclamation-circle text-danger"></i> Success.</span>
-      </div>
+    <div class="container">.
+      <% if (message.length > 0) { %>
+        <div class="w-50 mx-auto alert alert-danger mt-3 text-center alert-dismissible fade show">
+          <i class="bi bi-exclamation-triangle-fill text-danger iconcart"></i>
+          <%= message %>
+          <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        <% } %>
+        
       <div class="row mt-5">
         <h5>
           My Course
