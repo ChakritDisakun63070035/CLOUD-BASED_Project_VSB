@@ -189,17 +189,36 @@
                       <div v-for="(videos,index) in video">
                         <div v-if="videos.course_id == course_id" class="position-relative">
                           {{videos.path}}
-                          <!-- <div v-if="editcontent_bnt2(videos.video_id)"><span>Change To <input v-model="editContentMessage" type="text" class="form-control"></span></div> -->
-                          <div class="position-absolute bottom-0 end-0 fs-4">
-                            <!-- <span><a @click="editcontent_bnt = 0"><i class="bi bi-pencil-fill text-warning"></i></a></span> -->
+                          <div v-if="index == index_check">
+                            <span><div class="mt-2 mb-2 text-center text-decoration-underline">Change To</div>
+                              <input v-model="editContentMessage" type="text" class="form-control"></span>
+                              <div class="my-2 text-center">
+                              <button type="button" class="btn btn-outline-success" @click="editContent(videos.video_id, index), index_check = ''">Save</button>
+                              <button type="button" class="btn btn-outline-danger" @click="index_check = '', editContentMessage = ''">Cancle</button>
+                             </div>
+                            </div>
+
+                          <div class="position-absolute bottom-0 end-0 fs-4" v-if="index != index_check">
+                            <span><a @click="editcontent_bnt2(videos.video_id, index)"><i class="bi bi-pencil-fill text-warning"></i></a></span>
                             <span><a @click="deleteContent(videos.video_id, index)"><i class="bi bi-trash-fill text-danger"></i></a></span>
                           </div>
                           <hr>
                         </div>
                       </div>
 
+                      <!-- Show Content -->
+                      <!-- <div v-for="(videos,index) in video">
+                        <div v-if="videos.course_id == course_id" class="position-relative">
+                          {{videos.path}}
+                          <div class="position-absolute bottom-0 end-0 fs-4">
+                            <span><a @click="deleteContent(videos.video_id, index)"><i class="bi bi-trash-fill text-danger"></i></a></span>
+                          </div>
+                          <hr>
+                        </div>
+                      </div> -->
+
                       <div class="text-center" v-if="content_bnt === 1">
-                        <button @click="content_bnt = 0" class="btn btn-light mt-1">ADD Content</button>
+                        <button @click="content_bnt = 0,index_check = '', editContentMessage = ''" class="btn btn-light mt-1">ADD Content</button>
                       </div>
                       <div class="text-center" v-if="content_bnt === 0">
                         <div class="mt-1 row bg-light" style="border-radius: 10px;">
@@ -208,7 +227,7 @@
                         </div>
                         <button @click="addContent(users[0].user_id)"
                           class="btn btn-success mt-4 submit">SUBMIT</button>
-                        <button class="btn btn-danger mt-4" @click="content_bnt = 1, contTxt = ''">CANCLE</button>
+                        <button class="btn btn-danger mt-4" @click="content_bnt = 1, contTxt = '',index_check = '', editContentMessage = ''">CANCLE</button>
                       </div>
 
 
@@ -332,8 +351,9 @@
         contTxt: "",
         content_bnt: 1,
         countCont: 1,
+        index_check: '',
         // editcontent_bnt: 1,
-        // editContentMessage: "",
+        editContentMessage: "",
         // video_id: "",
       },
       methods: {
@@ -384,20 +404,22 @@
               this.error = error.message;
             });
         }
+      },editcontent_bnt2(videoId, index){
+        this.index_check = index
       },
-    //   editContent(videoId, index) {
-    //   axios
-    //     .put(`http://localhost:3000/teacher/${videoID}/editcontent/${index$}`, {
-    //       path: this.editContentMessage,
-    //     })
-    //     .then((response) => {
-    //       this.video[index].path = response.data.path;
-    //       this.editToggle = -1;
-    //     })
-    //     .catch((error) => {
-    //       this.error = error.message;
-    //     });
-    // },
+      editContent(videoID, index) {
+      axios
+        .put(`http://localhost:3000/teacher/${videoID}/editcontent/${index}`, {
+          path: this.editContentMessage,
+        })
+        .then((response) => {
+          this.video[index].path = response.data.path;
+          this.editContentMessage = ''
+        })
+        .catch((error) => {
+          this.error = error.message;
+        });
+    },
       },
         computed: {
           computedCourses() {

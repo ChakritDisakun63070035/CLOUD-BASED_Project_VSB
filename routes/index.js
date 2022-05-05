@@ -1134,18 +1134,18 @@ router.delete("/teacher/:videoID/deletecontent/:index", async function (req, res
   }
 })
 
-//Edit Content
-// router.put('/teacher/:videoID/editcontent/:index', async function (req, res, next) {
-//   try {
-//       const [rows1, fields1] = await pool.query(
-//           'UPDATE my_video SET path=? WHERE video_id=?', [req.body.path, req.params.video_id]
-//       )
-//       console.log(rows1)
-//       res.json({ path: req.body.path })
-//   } catch (error) {
-//       res.status(500).json(error)
-//   }
-// });
+// Edit Content
+router.put('/teacher/:videoId/editcontent/:index', async function (req, res, next) {
+  try {
+      const [rows1, fields1] = await pool.query(
+          'UPDATE my_video SET path=? WHERE video_id=?', [req.body.path, req.params.videoId]
+      )
+      console.log(rows1)
+      res.json({ path: req.body.path })
+  } catch (error) {
+      res.status(500).json(error)
+  }
+});
 
 // Delete comment
 router.delete("/course/:id/:userid/:commentID", requiredLogin, async function (req, res, next) {
