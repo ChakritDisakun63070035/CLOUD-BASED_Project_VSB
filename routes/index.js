@@ -110,7 +110,44 @@ router.get("/mycart/:id/", requiredLogin, async function (req, res, next) {
   }
 })
 
-// create cart --> กดปุ่ม add to cart
+// create cart buy now
+router.get("/course/:course_id/create/cart/:user_id/:price/buynow", requiredLogin, async function (req, res, next) {
+  const conn = await pool.getConnection()
+  await conn.beginTransaction()
+  const admin = Math.floor(Math.random() * (7 - 1)) + 1
+  try {
+    const [order, fields1] = await conn.query("SELECT * FROM `order` WHERE user_id=? AND order_status=?", [req.params.user_id, "pending"])
+    if (order.length > 0) {
+      let order_status = order[0].order_status
+      let order_id = order[0].order_id
+      const [additem1, fields1] = await conn.query("INSERT INTO order_item (item_price, course_id, order_id) VALUES(?, ?, ?)", [req.params.price, req.params.course_id, order_id])
+      const [additem2, fields2] = await conn.query("INSERT INTO my_course (course_id, order_id) VALUES(?, ?)", [req.params.course_id, order_id])
+      const [itemprice1, fields4] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [order_id])
+      let total1 = itemprice1[0].total
+      const [orderprice1, fields5] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total1, order_id])
+    } else {
+      const [createcart, fields2] = await conn.query("INSERT INTO `order` (order_date, user_id, admin_id) VALUES(CURDATE(), ?, ?)", [req.params.user_id, admin])
+      const [additem2, fields6] = await conn.query("INSERT INTO `order_item` (item_price, course_id, order_id) VALUES(?, ?, ?)", [
+        req.params.price,
+        req.params.course_id,
+        createcart.insertId,
+      ])
+      const [additem3, fields3] = await conn.query("INSERT INTO my_course (course_id, order_id) VALUES(?, ?)", [req.params.course_id, createcart.insertId])
+      const [itemprice2, fields7] = await conn.query("SELECT SUM(item_price) AS total FROM `order_item` WHERE order_id=?", [createcart.insertId])
+      let total2 = itemprice2[0].total
+
+      const [orderprice2, fields8] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total2, createcart.insertId])
+    }
+    await conn.commit()
+    res.redirect("/mycart/" + req.params.course_id + "/" + req.params.user_id)
+  } catch (err) {
+    await conn.rollback()
+    next(err)
+  } finally {
+    await conn.release()
+  }
+})
+
 router.get("/course/:course_id/create/cart/:user_id/:price", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
