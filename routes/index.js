@@ -139,7 +139,7 @@ router.get("/course/:course_id/create/cart/:user_id/:price/buynow", requiredLogi
       const [orderprice2, fields8] = await conn.query("UPDATE `order` SET price_total=? WHERE order_id=?", [total2, createcart.insertId])
     }
     await conn.commit()
-    res.redirect("/mycart/" + req.params.course_id + "/" + req.params.user_id)
+    res.redirect("/mycart/"+ req.params.user_id)
   } catch (err) {
     await conn.rollback()
     next(err)
@@ -148,6 +148,7 @@ router.get("/course/:course_id/create/cart/:user_id/:price/buynow", requiredLogi
   }
 })
 
+//ปุ่ม add to cart
 router.get("/course/:course_id/create/cart/:user_id/:price", requiredLogin, async function (req, res, next) {
   const conn = await pool.getConnection()
   await conn.beginTransaction()
