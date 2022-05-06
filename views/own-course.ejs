@@ -41,196 +41,196 @@
   </style>
 </head>
 
-
 <body>
+  <div id="app">
+    <div v-for="info in data">
+      <header>
+        <div class="d-inline">
+          <nav class="navbar navbar-expand-lg navbar-light p-0" id="backgroud_nav">
+            <div class="container-fluid" v-for="user in data.slice(0,1)">
+              <a class="navbar-brand" :href="'/home/' + user.user_id">
+                <img src="/uploads/logo.png" alt="" width="45px" height="45px" />
+              </a>
+              <div class="d-flex">
+                <a class="navbar-brand my-auto ms-auto myAnimNav" :href="'/allcourse/' + user.user_id">
+                  <span class="text_nav navhover">
+                    All Course
+                  </span>
+                </a>
+                <a class="navbar-brand my-auto ms-auto myAnimNav" :href="'/allcourse/' + user.user_id +
+                        '/mycourse'">
+                  <span class="text_nav navhover">
+                    My Course
+                  </span>
+                </a>
+                <a class="my-auto ms-auto text_nav myAnimNav" :href="'/mycart/' + user.user_id">
+                  <span class="navhover">
+                    My Cart</span>
+                </a>
+                <li class="nav dropdown">
 
-    <div id="app">
-        <div v-for="info in data">
-            <header>
-                <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
-                    <div class="container-fluid" v-for="user in data.slice(0,1)">
-                        <a class="navbar-brand" :href="'/home/' + user.user_id">
-                            <img src="/uploads/logo.png" alt="" width="60" height="60" />
-                        </a>
-
-                        <div class="d-flex">
-                            <a class="navbar-brand text-decoration-underline nav_hover "  href="">
-                                <i class="bi bi-book fs-4 line"></i>
-                                My Course
-                            </a>
-                            <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                                <i class="bi bi-cart4 fs-4"></i>
-                                My Cart
-                            </a>
-                            <li class="nav dropdown">
-                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown"
-                                    role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    <img :src="info.image" alt="" width="32" height="32"
-                                        class="d-inline-block align-text-top" />
-                                    {{user.user_fname}}
-                                </a>
-                                <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                                    <li><a class="dropdown-item" :href="'/profile/' + user.user_id + '/'">Profile</a>
-                                    </li>
-                                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
-                                </ul>
-                            </li>
-                        </div>
-                    </div>
-                </nav>
-            </header>
-            <div class="container">
-                <div class="row mt-5">
-                    <h5>My Course</h5>
-                </div>
-                <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
-                    <h1 class="position-absolute top-50 start-50 translate-middle">NO COURSE</h1>
-                </div>
-                <div class="row px-4">
-
-                    <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
-                        <a :href="'/course/' + course.course_id + '/' + course.user_id + '/learn'"
-                            class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color:black;">
-                            <img :src="course.course_img" class="card-img-top" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title text-center"><b>
-                                        {{ course.course_name }} </b></h5>
-                                <p class="card-text text-center">
-                                    {{ course.course_info }}
-                                </p>
-                                <div class="row">
-
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            </div>
+                  <a class="nav-link dropdown-toggle my-auto ms-auto text_nav navhover myAnimNav" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>
+                      <img :src="user.image" alt="" width="45" height="45" class="d-inline-block imgNav" />
+                      {{user.user_fname}}</span>
+                  </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    <li>
+                      <a class="dropdown-item" :href="'/profile/' +
+                              user.user_id + '/'">Profile</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a>
+                    </li>
+                  </ul>
+              </div>
+          </nav>
         </div>
-        <br>
-        <footer class="mt-5 footer bg-light">
-            <div class="container" v-for="user in data">
+      </header>
+      <div class="container">
+        <div class="row mt-5">
+          <h5>My Course</h5>
+        </div>
+        <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
+          <h1 class="position-absolute top-50 start-50 translate-middle">NO COURSE</h1>
+        </div>
+        <div class="row px-4">
+
+          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in computedCourses">
+            <a :href="'/course/' + course.course_id + '/' + course.user_id + '/learn'" class="card myAnim bg-light" style="width: 20rem; text-decoration: none; color:black;">
+              <img :src="course.course_img" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h5 class="card-title text-center"><b>
+                    {{ course.course_name }} </b></h5>
+                <p class="card-text text-center">
+                  {{ course.course_info }}
+                </p>
                 <div class="row">
-                    <div class="col-md-4 col-xs-12">
-                        <div class="my-3">
-                            <h4>Course Recommendation</h4>
-                            <div class="line1"></div>
-                            <div class="my-3">
-                                <a class="text-decoration-none text-dark"
-                                    href="http://localhost:3000/allcourse/course/3">
-                                    <p class="ms-3"> Web Design for Beginners</p>
-                                </a>
-                                <a class="text-decoration-none text-dark"
-                                    href="http://localhost:3000/allcourse/course/15">
-                                    <p class="ms-3"> Cyber Security </p>
-                                </a>
-                                <a class="text-decoration-none text-dark"
-                                    href="http://localhost:3000/allcourse/course/4">
-                                    <p class="ms-3"> IELTS Full Course </p>
-                                </a>
-                                <a class="text-decoration-none text-dark"
-                                    href="http://localhost:3000/allcourse/course/7">
-                                    <p class="ms-3"> SQL- Database Programming </p>
-                                </a>
-                                <a class="text-decoration-none text-dark"
-                                    href="http://localhost:3000/allcourse/course/6">
-                                    <p class="ms-3"> C++ Programming Course </p>
-                                </a>
-                                <a class="text-decoration-none text-dark"
-                                    href="http://localhost:3000/allcourse/course/10">
-                                    <p class="ms-3"> Digital marketing </p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
 
-                    <div class="col-md-4 col-xs-12">
-                        <div class="my-3 text-center">
-                            <h4> Navigate</h4>
-                            <div class="line2"></div>
-                            <div class="my-3" >
-                                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
-                                    <p>Home</p>
-                                </a>
-                                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
-                                    <p>All Courses</p>
-                                </a>
-                                <a class="text-decoration-none text-dark"
-                                    :href="'/allcourse/' + user.user_id + '/mycourse'">
-                                    <p>My Course</p>
-                                </a>
-                                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
-                                    <p>My cart</p>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="col-md-4 col-xs-12">
-                        <div class="my-3 text-center">
-                            <h4> Contact </h4>
-                            <div class="line2"></div>
-                            <div class="my-3">
-                                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
-                                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
-                                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters,
-                                    Whitehall, London</p>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <hr>
-                        <div class="my-3 text-center iconfooter">
-                            <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
-                                <i class="bi bi-facebook text-primary mx-2"></i>
-                            </a>
-                            <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
-                                <i class="bi bi-twitter text-info mx-2"></i>
-                            </a>
-                            <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
-                                <i class="bi bi-github text-dark mx-2"></i>
-                            </a>
-                            <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
-                                <i class="bi bi-linkedin text-primary mx-2"></i>
-                            </a>
-                            <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
-                                <i class="bi bi-youtube text-danger mx-2"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </footer>
+              </div>
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
+    <br>
+    <footer class="mt-5 footer bg-light">
+      <div class="container" v-for="user in data">
+        <div class="row">
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3">
+              <h4>Course Recommendation</h4>
+              <div class="line1"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/3">
+                  <p class="ms-3"> Web Design for Beginners</p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/15">
+                  <p class="ms-3"> Cyber Security </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/4">
+                  <p class="ms-3"> IELTS Full Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/7">
+                  <p class="ms-3"> SQL- Database Programming </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/6">
+                  <p class="ms-3"> C++ Programming Course </p>
+                </a>
+                <a class="text-decoration-none text-dark" href="http://localhost:3000/allcourse/course/10">
+                  <p class="ms-3"> Digital marketing </p>
+                </a>
+              </div>
+            </div>
+          </div>
 
-    <script>
-        var app = new Vue({
-            el: "#app",
-            data: {
-                data: JSON.parse(`<%- data %>`),
-                users: JSON.parse(`<%- users %>`),
-                sorted: "",
-                search: "",
-            },
-            // computed: {
-            computed: {
-                filteredList() {
-                    return this.users.filter(post => {
-                        return post.course_name.toLowerCase().includes(this.search.toLowerCase())
-                    })
-                },
-                computedCourses() {
-                    this.users.map((b) => {
-                        if (b.course_info.length > 90) {
-                            b.course_info = b.course_info.substring(0, 90) + "..."
-                        }
-                        return b
-                    })
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Navigate</h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
+                  <p>Home</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
+                  <p>All Courses</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                  <p>My Course</p>
+                </a>
+                <a class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id">
+                  <p>My cart</p>
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-4 col-xs-12">
+            <div class="my-3 text-center">
+              <h4> Contact </h4>
+              <div class="line2"></div>
+              <div class="my-3">
+                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
+                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
+                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters,
+                  Whitehall, London</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="container">
+        <div class="row">
+          <div class="col-12">
+            <hr>
+            <div class="my-3 text-center iconfooter">
+              <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
+                <i class="bi bi-facebook text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
+                <i class="bi bi-twitter text-info mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
+                <i class="bi bi-github text-dark mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
+                <i class="bi bi-linkedin text-primary mx-2"></i>
+              </a>
+              <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
+                <i class="bi bi-youtube text-danger mx-2"></i>
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </footer>
+  </div>
+
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        data: JSON.parse(`<%- data %>`),
+        users: JSON.parse(`<%- users %>`),
+        sorted: "",
+        search: "",
+      },
+      // computed: {
+      computed: {
+        filteredList() {
+          return this.users.filter(post => {
+            return post.course_name.toLowerCase().includes(this.search.toLowerCase())
+          })
+        },
+        computedCourses() {
+          this.users.map((b) => {
+            if (b.course_info.length > 90) {
+              b.course_info = b.course_info.substring(0, 90) + "..."
+            }
+            return b
+          })
 
           function compareAlpha(a, b) {
             if (a.course_name < b.course_name) {

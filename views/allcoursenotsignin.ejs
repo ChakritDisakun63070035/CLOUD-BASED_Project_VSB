@@ -15,7 +15,7 @@
   <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
     <div class="container-fluid">
       <a class="navbar-brand" href="/">
-        <img src="/uploads/logo.png" alt="" width="60" height="60" />
+        <img src="/uploads/logo.png" alt="" width="45" height="45" />
       </a>
       <div class="d-flex">
         <a class="nav-link active text-dark fs-6" aria-current="page" href="/sign-up">Sign up</a>
@@ -46,110 +46,76 @@
           </select>
         </div>
 
-      <div v-if="search === ''">
-        <div class="row mt-4" v-if="sorted === ''">
-          <h5>All Course</h5>
-        </div>
-        <div class="row mt-4" v-if="sorted != ''">
-          <h5>Sort by {{sorted}}</h5>
-        </div>
-        <div class="row px-4">
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
+        <div v-if="search === ''">
+          <div class="row mt-4" v-if="sorted === ''">
+            <h5>All Course</h5>
+          </div>
+          <div class="row mt-4" v-if="sorted != ''">
+            <h5>Sort by {{sorted}}</h5>
+          </div>
+          <div class="row px-4">
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
           computedCourses">
-            <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
+              <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
             bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img :src="course.image" class="my_img card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <b>
-                    {{ course.course_name }} </b>
-                </h5>
-                <p class="card-text text-center">
-                  {{ course.course_info }}
-                </p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">
-                    {{ course.course_price }}฿
+                <img :src="course.image" class="my_img card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-center">
+                    <b>
+                      {{ course.course_name }} </b>
+                  </h5>
+                  <p class="card-text text-center">
+                    {{ course.course_info }}
+                  </p>
+                  <div class="row">
+                    <div class="col-6">Courses price</div>
+                    <div class="col"></div>
+                    <div class="col text-danger">
+                      {{ course.course_price }}฿
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-      <div v-if="search != ''">
-        <div class="row mt-4">
-          <div>
-            <h5>Result of "{{search}}"</h5>
+        <div v-if="search != ''">
+          <div class="row mt-4">
+            <div>
+              <h5>Result of "{{search}}"</h5>
+            </div>
           </div>
-        </div>
-        <div class="row px-4">
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in filteredList">
-            <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
+          <div class="row px-4">
+            <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in filteredList">
+              <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
             bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img :src="course.image" class="my_img card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <b>
-                    {{ course.course_name }} </b>
-                </h5>
-                <p class="card-text text-center">
-                  {{ course.course_info }}
-                </p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">
-                    {{ course.course_price }}฿
+                <img :src="course.image" class="my_img card-img-top" alt="..." />
+                <div class="card-body">
+                  <h5 class="card-title text-center">
+                    <b>
+                      {{ course.course_name }} </b>
+                  </h5>
+                  <p class="card-text text-center">
+                    {{ course.course_info }}
+                  </p>
+                  <div class="row">
+                    <div class="col-6">Courses price</div>
+                    <div class="col"></div>
+                    <div class="col text-danger">
+                      {{ course.course_price }}฿
+                    </div>
                   </div>
                 </div>
-              </div>
-            </a>
+              </a>
+            </div>
           </div>
         </div>
-      </div>
-
-      <div v-if="search === ''">
-        <div class="row mt-4" v-if="sorted === ''">
-          <h5>All Course</h5>
+        <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
+          <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
         </div>
-        <div class="row mt-4" v-if="sorted != ''">
-          <h5>Sort by {{sorted}}</h5>
-        </div>
-        <div class="row px-4">
-          <div class="col-sm-12 col-md-6 col-xl-4 my-3" v-for="course in
-          computedCourses">
-            <a :href="'/allcourse/course/' + course.course_id" class="card myAnim
-            bg-light" style="width: 20rem; text-decoration: none; color: black">
-              <img :src="course.image" class="my_img card-img-top" alt="..." />
-              <div class="card-body">
-                <h5 class="card-title text-center">
-                  <b>
-                    {{ course.course_name }} </b>
-                </h5>
-                <p class="card-text text-center">
-                  {{ course.course_info }}
-                </p>
-                <div class="row">
-                  <div class="col-6">Courses price</div>
-                  <div class="col"></div>
-                  <div class="col text-danger">
-                    {{ course.course_price }}฿
-                  </div>
-                </div>
-              </div>
-            </a>
-          </div>
-        </div>
-      </div>
-      <div class="text-muted text-center nocourse2 position-relative" v-if="filteredList == 0">
-        <h1 class="position-absolute top-50 start-50 translate-middle">NO RESULT</h1>
       </div>
     </div>
     <br>
-  </div>
     <footer class="mt-5 footer bg-light">
       <div class="container">
         <div class="row">
