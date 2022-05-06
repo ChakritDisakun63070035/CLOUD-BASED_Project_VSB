@@ -15,46 +15,46 @@
     <body>
         <div class="" id="app">
             <header>
-                <nav class="navbar navbar-expand-lg navbar-light"
+                <nav class="navbar navbar-expand-lg navbar-light p-0"
                     id="backgroud_nav">
 
                     <div class="container-fluid" v-for="user in users">
 
                         <a class="navbar-brand"
                             :href="'/admin/'+user.admin_id+'/checkpayment'">
-                            <img src="/uploads/logo.png" alt="" width="60"
-                                height="60" />
+                            <img src="/uploads/logo.png" alt="" width="45"
+                                height="45" />
                         </a>
 
                         <div class="d-flex">
                             <a class="navbar-brand
-                                text-decoration-underline"
+                                my-auto ms-auto myAnimNav"
                                 :href="'/admin/'+user.admin_id+'/checkpayment'">
-                                Check Payment
+                                <span class="text_nav navhover">
+                                    Check Payment
+                                </span>
                             </a>
-                            <a class="navbar-brand"
+                            <a class="navbar-brand my-auto ms-auto myAnimNav"
                                 :href="'/admin/'+user.admin_id
                                 +'/myteam'">
-                                My team
+                                <span class="text_nav navhover">
+                                    My team
+                                </span>
                             </a>
                             <li class="nav dropdown">
-                                <a class="nav-link dropdown-toggle
-                                    text-dark" href="#"
-                                    id="navbarScrollingDropdown" role="button"
-                                    data-bs-toggle="dropdown"
-                                    aria-expanded="false">
-                                    <img :src="user.admin_img" alt="" width="32"
-                                        height="32" class="d-inline-block
-                                        align-text-top" />
-                                    {{user.admin_fname}}
-                                </a>
+                                <a class="nav-link dropdown-toggle my-auto ms-auto text_nav navhover myAnimNav" href="#"
+                    id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>
+                      <img :src="user.admin_img" alt="" width="45" height="45" class="d-inline-block imgNav" />
+                      {{user.admin_fname}}</span>
+                  </a>
                                 <ul class="dropdown-menu"
                                     aria-labelledby="navbarScrollingDropdown">
                                     <li><a class="dropdown-item"
                                             :href="'/admin/profile/' +
                                             user.admin_id + '/'">Profile</a></li>
                                     <li><a class="dropdown-item"
-                                        href="/sign-out/">Logout</a></li>
+                                            href="/sign-out/">Logout</a></li>
                                 </ul>
                             </li>
                         </div>

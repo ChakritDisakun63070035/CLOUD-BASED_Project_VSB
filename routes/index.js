@@ -277,18 +277,6 @@ const passwordValidator = (value, helper) => {
   return value
 }
 
-const usernameValidator = async (value, helpers) => {
-  const [rows, fields] = await pool.query("select user_fname from user WHERE user_fname=?", [value])
-
-  if (rows.length > 0) {
-    // ถ้าหาเจอในฐานข้อมูล หรือ พบเจอชื่อซ้ำ
-    throw new Joi.ValidationError("Duplicate_ERROR", {
-      message: "This username is already taken",
-    })
-  }
-  return value //ถ้าvalidateผ่าน จะreturnค่ากลับไปเพื่อไปเช็คค่า
-}
-
 const emailValidator = async (value, helpers) => {
   const [rows, fields] = await pool.query("select email from user WHERE email=?", [value])
 
