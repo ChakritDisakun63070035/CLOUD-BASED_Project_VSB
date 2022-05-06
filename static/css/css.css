@@ -9,8 +9,26 @@ body {
 
 /* color */
 #backgroud_nav {
-  background-color: #82e2ff;
+  background-color: #9addf2;
   color: #000;
+}
+#backgroud_nav:a {
+  background-color: #9addf2;
+  color: #000;
+}
+.text_nav{
+  font-size: 17px;
+  color:#000;
+  text-decoration: none;
+}
+
+.imgNav{
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+a.navhover:hover, span.navhover:hover{
+  color: rgb(1, 55, 142);
 }
 
 
@@ -94,6 +112,10 @@ body {
 
 .inline-block {
   display: inline-block;
+}
+
+a.myAnimNav:hover {
+  animation: myAnim 1s ease 0s 1 normal forwards;
 }
 
 a.myAnim:hover {

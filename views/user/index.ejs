@@ -17,25 +17,34 @@
     <header>
       <div v-for="user in users">
         <div v-if="user.role === 'student'" class="d-inline">
-          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+          <nav class="navbar navbar-expand-lg navbar-light p-0" id="backgroud_nav">
             <div class="container-fluid ">
               <a class="navbar-brand" :href="'/home/' + user.user_id">
                 <img src="/uploads/logo.png" alt="" width="45px" height="45px" />
               </a>
               <div class="d-flex">
-                <a class="navbar-brand bgnav_mycourse" :href="'/allcourse/' + user.user_id +
+                <a class="navbar-brand my-auto ms-auto myAnimNav" :href="'/allcourse/' + user.user_id +
                   '/mycourse'">
-                  <i class="bi bi-book fs-4"></i>
-                  My Course
+                  <span class="text_nav navhover">
+                  All Course
+                </span>
                 </a>
-                <a class="navbar-brand" :href="'/mycart/' + user.user_id">
-                  <i class="bi bi-cart4 fs-4"></i>
-                  My Cart
+                <a class="navbar-brand my-auto ms-auto myAnimNav" :href="'/allcourse/' + user.user_id +
+                  '/mycourse'">
+                  <span class="text_nav navhover">
+                  My Course
+                </span>
+                </a>
+                <a class="my-auto ms-auto text_nav myAnimNav" :href="'/mycart/' + user.user_id">
+                  <span class="navhover">
+                  My Cart</span>
                 </a>
                 <li class="nav dropdown">
-                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
-                    {{user.user_fname}}
+                  
+                  <a class="nav-link dropdown-toggle my-auto ms-auto text_nav navhover myAnimNav" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <span>
+                    <img :src="user.image" alt="" width="45" height="45" class="d-inline-block imgNav"/>
+                    {{user.user_fname}}</span>
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
                     <li><a class="dropdown-item" :href="'/profile/' +
@@ -49,25 +58,29 @@
 
         </div>
         <div v-else-if="user.role === 'teacher'" class="d-inline">
-          <nav class="navbar navbar-expand-lg navbar-light" id="backgroud_nav">
+          <nav class="navbar navbar-expand-lg navbar-light p-0" id="backgroud_nav">
             <div class="container-fluid">
               <a class="navbar-brand" :href="'/home/' + user.user_id">
-                <img src="/uploads/logo.png" alt="" width="60" height="60" />
+                <img src="/uploads/logo.png" alt="" width="45" height="45" />
               </a>
               <div class="d-flex">
-                <a class="navbar-brand" :href="'/teacher/' + user.user_id">
-                  <i class="bi bi-book fs-4"></i>
+                <a class="text_nav myAnimNav my-auto ms-auto" :href="'/teacher/' + user.user_id">
                   My Course
                 </a>
                 <li class="nav dropdown">
-                  <a class="nav-link dropdown-toggle text-dark" href="#" id="navbarScrollingDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    <img :src="user.image" alt="" width="32" height="32" class="d-inline-block align-text-top" />
-                    {{user.user_fname}}
+                  <a class="nav-link dropdown-toggle text_nav my-auto ms-auto myAnimNav" href="#" id="navbarScrollingDropdown" role="button"
+                    data-bs-toggle="dropdown" aria-expanded="false">
+                    <img :src="user.image" alt="" width="45" height="45" class="d-inline-block imgNav" />
+                    {{ user.user_fname }}
                   </a>
                   <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                    <li><a class="dropdown-item" :href="'/profile/' +
-                        user.user_id + '/'">Profile</a></li>
-                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
+                    <li>
+                      <a class="dropdown-item" :href="'/profile/' +
+                        user.user_id + '/'">Profile</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a>
+                    </li>
                   </ul>
                 </li>
               </div>
@@ -91,8 +104,7 @@
             universities <br />and companies.
           </p>
         </div>
-        <div class="col">
-        </div>
+        <div class="col"></div>
       </div>
       <div class="row mb-5">
         <div class="col" v-for="user in users">
@@ -112,8 +124,7 @@
             <div class="col-md-6">
               <div class="card-body">
                 <small class="card-title">
-                  <b>
-                    {{ course.course_name }} </b>
+                  <b> {{ course.course_name }} </b>
                 </small>
               </div>
             </div>
@@ -121,8 +132,8 @@
         </div>
       </div>
     </div>
-    
-    <br>
+
+    <br />
     <footer class="mt-5 footer bg-light">
       <div class="container">
         <div class="row">
@@ -132,22 +143,22 @@
               <div class="line1"></div>
               <div class="my-3" v-for="user in users">
                 <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
-                  <p class="ms-3"> Web Design for Beginners</p>
+                  <p class="ms-3">Web Design for Beginners</p>
                 </a>
                 <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
-                  <p class="ms-3"> Cyber Security </p>
+                  <p class="ms-3">Cyber Security</p>
                 </a>
                 <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
-                  <p class="ms-3"> IELTS Full Course </p>
+                  <p class="ms-3">IELTS Full Course</p>
                 </a>
                 <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
-                  <p class="ms-3"> SQL- Database Programming </p>
+                  <p class="ms-3">SQL- Database Programming</p>
                 </a>
                 <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
-                  <p class="ms-3"> C++ Programming Course </p>
+                  <p class="ms-3">C++ Programming Course</p>
                 </a>
                 <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
-                  <p class="ms-3"> Digital marketing </p>
+                  <p class="ms-3">Digital marketing</p>
                 </a>
               </div>
             </div>
@@ -155,7 +166,7 @@
 
           <div class="col-md-4 col-xs-12">
             <div class="my-3 text-center">
-              <h4> Navigate</h4>
+              <h4>Navigate</h4>
               <div class="line2"></div>
               <div class="my-3" v-for="user in users">
                 <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
@@ -164,13 +175,16 @@
                 <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
                   <p>All Courses</p>
                 </a>
-                <a v-if="user.role == 'student'" class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id + '/mycourse'">
+                <a v-if="user.role == 'student'" class="text-decoration-none text-dark"
+                  :href="'/allcourse/' + user.user_id + '/mycourse'">
                   <p>My Course</p>
                 </a>
-                <a v-else-if="user.role == 'teacher'" class="text-decoration-none text-dark" :href="'/teacher/' + user.user_id">
+                <a v-else-if="user.role == 'teacher'" class="text-decoration-none text-dark"
+                  :href="'/teacher/' + user.user_id">
                   <p>My Course</p>
                 </a>
-                <a v-if="user.role == 'student'" class="text-decoration-none text-dark" :href="'/mycart/' + user.user_id" >
+                <a v-if="user.role == 'student'" class="text-decoration-none text-dark"
+                  :href="'/mycart/' + user.user_id">
                   <p>My cart</p>
                 </a>
               </div>
@@ -179,12 +193,21 @@
 
           <div class="col-md-4 col-xs-12">
             <div class="my-3 text-center">
-              <h4> Contact </h4>
+              <h4>Contact</h4>
               <div class="line2"></div>
               <div class="my-3">
-                <p><i class="text-primary bi bi-envelope-fill"></i> VSB@email.com</p>
-                <p><i class="text-success bi bi-telephone-fill"></i> 02-333-22-32</p>
-                <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry of Magic Headquarters, Whitehall, London</p>
+                <p>
+                  <i class="text-primary bi bi-envelope-fill"></i>
+                  VSB@email.com
+                </p>
+                <p>
+                  <i class="text-success bi bi-telephone-fill"></i>
+                  02-333-22-32
+                </p>
+                <p>
+                  <i class="text-warning bi bi-geo-alt-fill"></i> Ministry of
+                  Magic Headquarters, Whitehall, London
+                </p>
               </div>
             </div>
           </div>
@@ -194,7 +217,7 @@
       <div class="container">
         <div class="row">
           <div class="col-12">
-            <hr>
+            <hr />
             <div class="my-3 text-center iconfooter">
               <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
                 <i class="bi bi-facebook text-primary mx-2"></i>
@@ -218,40 +241,45 @@
     </footer>
   </div>
   <script>
-    document.addEventListener('DOMContentLoaded', function(event) {
+    document.addEventListener("DOMContentLoaded", function (event) {
       // array with texts to type in typewriter
-      var dataText = ["Learn without limits", "Light tomorrow with today", "Every moment is a fresh beginning!"];
+      var dataText = [
+        "Learn without limits",
+        "Light tomorrow with today",
+        "Every moment is a fresh beginning!",
+      ];
 
       // type one text in the typwriter
       // keeps calling itself until the text is finished
       function typeWriter(text, i, fnCallback) {
         // chekc if text isn't finished yet
-        if (i < (text.length)) {
+        if (i < text.length) {
           // add next character to h1
-          document.querySelector("h3").innerHTML = text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
+          document.querySelector("h3").innerHTML =
+            text.substring(0, i + 1) + '<span aria-hidden="true"></span>';
 
           // wait for a while and call this function again for next character
-          setTimeout(function() {
-            typeWriter(text, i + 1, fnCallback)
+          setTimeout(function () {
+            typeWriter(text, i + 1, fnCallback);
           }, 100);
         }
         // text finished, call callback if there is a callback function
-        else if (typeof fnCallback == 'function') {
+        else if (typeof fnCallback == "function") {
           // call callback after timeout
           setTimeout(fnCallback, 900);
         }
       }
       // start a typewriter animation for a text in the dataText array
       function StartTextAnimation(i) {
-        if (typeof dataText[i] == 'undefined') {
-          setTimeout(function() {
+        if (typeof dataText[i] == "undefined") {
+          setTimeout(function () {
             StartTextAnimation(0);
           }, 20000);
         }
         // check if dataText[i] exists
         if (i < dataText[i].length) {
           // text exists! start typewriter animation
-          typeWriter(dataText[i], 0, function() {
+          typeWriter(dataText[i], 0, function () {
             // after callback (and whole text has been animated), start next text
             StartTextAnimation(i + 1);
           });
@@ -267,7 +295,7 @@
         courses: JSON.parse(`<%- courses %>`),
         users: JSON.parse(`<%- users %>`),
       },
-    })
+    });
   </script>
 </body>
 
