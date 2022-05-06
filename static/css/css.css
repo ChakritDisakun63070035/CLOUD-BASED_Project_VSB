@@ -123,6 +123,16 @@ a.myAnim:hover {
   box-shadow: 0 0 15px gray;
 }
 
+a.myAnim2:hover {
+  animation: myAnim 1s ease 0s 1 normal forwards;
+  color: rgb(0, 9, 137);
+}
+
+div.myAnim1:hover {
+  animation: myAnim 1s ease 0s 1 normal forwards;
+  /* box-shadow: 0 0 15px gray; */
+}
+
 @keyframes myAnim {
   0% {
     transform: scale(1);
@@ -181,7 +191,14 @@ a.myAnim:hover {
 /* .modalcolor{
   background-color: rgb(250, 250, 250);
 } */
-
+.nav_hover{
+  /* background-color:#fff; */
+  color:#000;
+}
+.nav_hover:active{
+  color: #eeecec;
+  /* color: rgb(0, 0, 0); */
+}
 .mycourse_img {
   width: 319px;
   height: 319px;
@@ -217,3 +234,17 @@ a.myAnim:hover {
   margin-left: 10em;
 }
 
+.section-index{
+  width: 100%;
+  height: 40vh;
+  /* border: 1px solid black; */
+  margin-top:50px;
+}
+
+.topic{
+  box-shadow: rgba(0, 0, 0, 0.45) 0px 25px 20px -20px;
+}
+.space{
+  width: 100%;
+  height: 10vh;
+}

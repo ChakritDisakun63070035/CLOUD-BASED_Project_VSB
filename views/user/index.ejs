@@ -1,16 +1,16 @@
 <html lang="en">
 
-<head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>VSB</title>
-  <link rel="icon" href="/uploads/logo.png" />
-  <link href="/css/bootstrap.css" rel="stylesheet" />
-  <link href="/css/css.css" rel="stylesheet" />
-  <script src="/js/bootstrap.bundle.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
-</head>
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>VSB</title>
+    <link rel="icon" href="/uploads/logo.png" />
+    <link href="/css/bootstrap.css" rel="stylesheet" />
+    <link href="/css/css.css" rel="stylesheet" />
+    <script src="/js/bootstrap.bundle.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+  </head>
 
 <body>
   <div class="" id="app">
@@ -46,15 +46,36 @@
                     <img :src="user.image" alt="" width="45" height="45" class="d-inline-block imgNav"/>
                     {{user.user_fname}}</span>
                   </a>
-                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
-                    <li><a class="dropdown-item" :href="'/profile/' +
-                        user.user_id + '/'">Profile</a></li>
-                    <li><a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a></li>
-                  </ul>
-                </li>
-              </div>
-            </div>
-          </nav>
+                  <div class="d-flex">
+                    <a class="navbar-brand" :href="'/allcourse/' + user.user_id
+                      +
+                      '/mycourse'">
+                      <i class="bi bi-book fs-4"></i>
+                      My Course
+                    </a>
+                    <a class="navbar-brand" :href="'/mycart/' + user.user_id">
+                      <i class="bi bi-cart4 fs-4"></i>
+                      My Cart
+                    </a>
+                    <li class="nav dropdown">
+                      <a class="nav-link dropdown-toggle text-dark" href="#"
+                        id="navbarScrollingDropdown" role="button"
+                        data-bs-toggle="dropdown" aria-expanded="false">
+                        <img :src="user.image" alt="" width="32" height="32"
+                          class="d-inline-block align-text-top" />
+                        {{user.user_fname}}
+                      </a>
+                      <ul class="dropdown-menu"
+                        aria-labelledby="navbarScrollingDropdown">
+                        <li><a class="dropdown-item" :href="'/profile/' +
+                            user.user_id + '/'">Profile</a></li>
+                        <li><a class="dropdown-item" :href="'/sign-out/' +
+                            user.user_id">Logout</a></li>
+                      </ul>
+                    </li>
+                  </div>
+                </div>
+              </nav>
 
         </div>
         <div v-else-if="user.role === 'teacher'" class="d-inline">
@@ -129,119 +150,282 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </div>
+          <div class="space">
 
-    <br />
-    <footer class="mt-5 footer bg-light">
-      <div class="container">
-        <div class="row">
-          <div class="col-md-4 col-xs-12">
-            <div class="my-3">
-              <h4>Course Recommendation</h4>
-              <div class="line1"></div>
-              <div class="my-3" v-for="user in users">
-                <a class="text-decoration-none text-dark" :href="'/course/3/' + user.user_id">
-                  <p class="ms-3">Web Design for Beginners</p>
-                </a>
-                <a class="text-decoration-none text-dark" :href="'/course/15/' + user.user_id">
-                  <p class="ms-3">Cyber Security</p>
-                </a>
-                <a class="text-decoration-none text-dark" :href="'/course/4/' + user.user_id">
-                  <p class="ms-3">IELTS Full Course</p>
-                </a>
-                <a class="text-decoration-none text-dark" :href="'/course/7/' + user.user_id">
-                  <p class="ms-3">SQL- Database Programming</p>
-                </a>
-                <a class="text-decoration-none text-dark" :href="'/course/6/' + user.user_id">
-                  <p class="ms-3">C++ Programming Course</p>
-                </a>
-                <a class="text-decoration-none text-dark" :href="'/course/10/' + user.user_id">
-                  <p class="ms-3">Digital marketing</p>
-                </a>
+          </div>
+          <div class="section-index">
+            <div class="row p-5 d-flex justify-content-center">
+              <div class="col-md-4 col-sm-4 m-auto">
+
+                <div class="myAnim1 d-flex justify-content-center">
+
+                  <img
+                    src="/uploads/home1.png"
+                    alt="Girl in a jacket" width="30%" height="30%"
+                    class="d-flex
+                    justify-content-center">
+
+                </div>
+                <p class="text-center my-2">
+                  Get help from experienced professionals to take your course to
+                  the next level.
+                </p>
+
+              </div>
+              <div class="col-md-4 col-sm-4 m-auto">
+
+                <div class="myAnim1 d-flex justify-content-center">
+
+                  <img
+                    src="/uploads/home2.png"
+                    alt="Girl in a jacket" width="30%" height="30%"
+                    class="d-flex
+                    justify-content-center">
+
+                </div>
+                <p class="text-center my-2">
+                  Preview and see every change to make it exactly the way you
+                  want.
+                </p>
+
+              </div>
+              <div class="col-md-4 col-sm-4 m-auto">
+
+                <div class="myAnim1 d-flex justify-content-center">
+
+                  <img
+                    src="/uploads/home3.png"
+                    alt="Girl in a jacket" width="30%" height="30%"
+                    class="d-flex
+                    justify-content-center">
+
+                </div>
+                <p class="text-center my-2">
+                  VSB online platform learning offering video based
+                  micro-learning content for teams..
+
+                </p>
+
+              </div>
+            </div>
+          </div>
+          <div class="section-index">
+            <div class="p-5">
+              <div class="row">
+                <h3>Popular Topics</h3>
+              </div>
+              <div class="row mt-4">
+                <div class="col-md-3 col-sm-3 m-auto">
+                  <div class="card topic" style="width: 18rem;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <img
+                            src="/uploads/home4.png"
+                            alt="Girl in a jacket" width="100%"
+                            height="100%"
+                            class="d-flex justify-content-center">
+                        </div>
+                        <div class="col-sm-9 mt-2">
+                          <p>Software Development</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-3 m-auto">
+                  <div class="card topic" style="width: 18rem;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <img
+                            src="/uploads/home5.png"
+                            alt="Girl in a jacket" width="100%"
+                            height="100%"
+                            class="d-flex justify-content-center">
+                        </div>
+                        <div class="col-sm-9 mt-2">
+                          <p>Business</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-3 m-auto">
+                  <div class="card topic" style="width: 18rem;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <img
+                            src="/uploads/home6.png"
+                            alt="Girl in a jacket" width="100%"
+                            height="100%"
+                            class="d-flex justify-content-center">
+                        </div>
+                        <div class="col-sm-9 mt-2">
+                          <p>Foreign Language</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                <div class="col-md-3 col-sm-3 m-auto">
+                  <div class="card topic" style="width: 18rem;">
+                    <div class="card-body">
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <img
+                            src="/uploads/home7.png"
+                            alt="Girl in a jacket" width="100%"
+                            height="100%"
+                            class="d-flex justify-content-center">
+                        </div>
+                        <div class="col-sm-9 mt-2">
+                          <p>Social Science</p>
+                        </div>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="space">
+
+          </div>
+        </div>
+
+        <br>
+        <footer class="mt-5 footer bg-light">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-4 col-xs-12">
+                <div class="my-3">
+                  <h4>Course Recommendation</h4>
+                  <div class="line1"></div>
+                  <div class="my-3" v-for="user in users">
+                    <a class="text-decoration-none text-dark"
+                      :href="'/course/3/'
+                      + user.user_id">
+                      <p class="ms-3"> Web Design for Beginners</p>
+                    </a>
+                    <a class="text-decoration-none text-dark"
+                      :href="'/course/15/'
+                      + user.user_id">
+                      <p class="ms-3"> Cyber Security </p>
+                    </a>
+                    <a class="text-decoration-none text-dark"
+                      :href="'/course/4/'
+                      + user.user_id">
+                      <p class="ms-3"> IELTS Full Course </p>
+                    </a>
+                    <a class="text-decoration-none text-dark"
+                      :href="'/course/7/'
+                      + user.user_id">
+                      <p class="ms-3"> SQL- Database Programming </p>
+                    </a>
+                    <a class="text-decoration-none text-dark"
+                      :href="'/course/6/'
+                      + user.user_id">
+                      <p class="ms-3"> C++ Programming Course </p>
+                    </a>
+                    <a class="text-decoration-none text-dark"
+                      :href="'/course/10/'
+                      + user.user_id">
+                      <p class="ms-3"> Digital marketing </p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-xs-12">
+                <div class="my-3 text-center">
+                  <h4> Navigate</h4>
+                  <div class="line2"></div>
+                  <div class="my-3" v-for="user in users">
+                    <a class="text-decoration-none text-dark" :href="'/home/' +
+                      user.user_id">
+                      <p>Home</p>
+                    </a>
+                    <a class="text-decoration-none text-dark"
+                      :href="'/allcourse/'
+                      + user.user_id">
+                      <p>All Courses</p>
+                    </a>
+                    <a v-if="user.role == 'student'" class="text-decoration-none
+                      text-dark" :href="'/allcourse/' + user.user_id +
+                      '/mycourse'">
+                      <p>My Course</p>
+                    </a>
+                    <a v-else-if="user.role == 'teacher'"
+                      class="text-decoration-none text-dark" :href="'/teacher/'
+                      + user.user_id">
+                      <p>My Course</p>
+                    </a>
+                    <a v-if="user.role == 'student'" class="text-decoration-none
+                      text-dark" :href="'/mycart/' + user.user_id">
+                      <p>My cart</p>
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-4 col-xs-12">
+                <div class="my-3 text-center">
+                  <h4> Contact </h4>
+                  <div class="line2"></div>
+                  <div class="my-3">
+                    <p><i class="text-primary bi bi-envelope-fill"></i>
+                      VSB@email.com</p>
+                    <p><i class="text-success bi bi-telephone-fill"></i>
+                      02-333-22-32</p>
+                    <p><i class="text-warning bi bi-geo-alt-fill"></i> Ministry
+                      of
+                      Magic Headquarters, Whitehall, London
+                    </p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div class="col-md-4 col-xs-12">
-            <div class="my-3 text-center">
-              <h4>Navigate</h4>
-              <div class="line2"></div>
-              <div class="my-3" v-for="user in users">
-                <a class="text-decoration-none text-dark" :href="'/home/' + user.user_id">
-                  <p>Home</p>
-                </a>
-                <a class="text-decoration-none text-dark" :href="'/allcourse/' + user.user_id">
-                  <p>All Courses</p>
-                </a>
-                <a v-if="user.role == 'student'" class="text-decoration-none text-dark"
-                  :href="'/allcourse/' + user.user_id + '/mycourse'">
-                  <p>My Course</p>
-                </a>
-                <a v-else-if="user.role == 'teacher'" class="text-decoration-none text-dark"
-                  :href="'/teacher/' + user.user_id">
-                  <p>My Course</p>
-                </a>
-                <a v-if="user.role == 'student'" class="text-decoration-none text-dark"
-                  :href="'/mycart/' + user.user_id">
-                  <p>My cart</p>
-                </a>
+          <div class="container">
+            <div class="row">
+              <div class="col-12">
+                <hr>
+                <div class="my-3 text-center iconfooter">
+                  <a class="text-decoration-none"
+                    href="https://www.facebook.com/harrypottermovie">
+                    <i class="bi bi-facebook text-primary mx-2"></i>
+                  </a>
+                  <a class="text-decoration-none"
+                    href="https://twitter.com/HarryPotterFilm">
+                    <i class="bi bi-twitter text-info mx-2"></i>
+                  </a>
+                  <a class="text-decoration-none"
+                    href="https://github.com/ChutimaNakaew/Project_VSB">
+                    <i class="bi bi-github text-dark mx-2"></i>
+                  </a>
+                  <a class="text-decoration-none"
+                    href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
+                    <i class="bi bi-linkedin text-primary mx-2"></i>
+                  </a>
+                  <a class="text-decoration-none"
+                    href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
+                    <i class="bi bi-youtube text-danger mx-2"></i>
+                  </a>
+                </div>
               </div>
             </div>
           </div>
-
-          <div class="col-md-4 col-xs-12">
-            <div class="my-3 text-center">
-              <h4>Contact</h4>
-              <div class="line2"></div>
-              <div class="my-3">
-                <p>
-                  <i class="text-primary bi bi-envelope-fill"></i>
-                  VSB@email.com
-                </p>
-                <p>
-                  <i class="text-success bi bi-telephone-fill"></i>
-                  02-333-22-32
-                </p>
-                <p>
-                  <i class="text-warning bi bi-geo-alt-fill"></i> Ministry of
-                  Magic Headquarters, Whitehall, London
-                </p>
-              </div>
-            </div>
-          </div>
-        </div>
+        </footer>
       </div>
-
-      <div class="container">
-        <div class="row">
-          <div class="col-12">
-            <hr />
-            <div class="my-3 text-center iconfooter">
-              <a class="text-decoration-none" href="https://www.facebook.com/harrypottermovie">
-                <i class="bi bi-facebook text-primary mx-2"></i>
-              </a>
-              <a class="text-decoration-none" href="https://twitter.com/HarryPotterFilm">
-                <i class="bi bi-twitter text-info mx-2"></i>
-              </a>
-              <a class="text-decoration-none" href="https://github.com/ChutimaNakaew/Project_VSB">
-                <i class="bi bi-github text-dark mx-2"></i>
-              </a>
-              <a class="text-decoration-none" href="https://www.linkedin.com/in/harry-potter-9b3b89102/">
-                <i class="bi bi-linkedin text-primary mx-2"></i>
-              </a>
-              <a class="text-decoration-none" href="https://www.youtube.com/watch?v=z4K2F_OALPQ">
-                <i class="bi bi-youtube text-danger mx-2"></i>
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </footer>
-  </div>
-  <script>
-    document.addEventListener("DOMContentLoaded", function (event) {
+      <script>
+    document.addEventListener('DOMContentLoaded', function(event) {
       // array with texts to type in typewriter
       var dataText = [
         "Learn without limits",
@@ -297,6 +481,6 @@
       },
     });
   </script>
-</body>
+    </body>
 
-</html>
+  </html>
