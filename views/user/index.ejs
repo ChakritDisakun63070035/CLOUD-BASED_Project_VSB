@@ -47,6 +47,15 @@
                       <img :src="user.image" alt="" width="45" height="45" class="d-inline-block imgNav" />
                       {{user.user_fname}}</span>
                   </a>
+                  <ul class="dropdown-menu" aria-labelledby="navbarScrollingDropdown">
+                    <li>
+                      <a class="dropdown-item" :href="'/profile/' +
+                        user.user_id + '/'">Profile</a>
+                    </li>
+                    <li>
+                      <a class="dropdown-item" :href="'/sign-out/' + user.user_id">Logout</a>
+                    </li>
+                  </ul>
             </div>
           </nav>
 
