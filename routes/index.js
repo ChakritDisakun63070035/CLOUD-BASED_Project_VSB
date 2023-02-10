@@ -395,7 +395,7 @@ router.post("/sign-in", alreadyLoggedin, async function (req, res, next) {
     // ADMIN
     if (rows3.length > 0) {
       if (!admin) {
-        req.flash("message", "Incorrect Username")
+        req.flash("message", "This user does not exist")
         return res.redirect("/sign-in")
       }
       if (!(await bcrypt.compare(password, admin.admin_pass))) {
@@ -410,7 +410,7 @@ router.post("/sign-in", alreadyLoggedin, async function (req, res, next) {
 
     // USER --> student & teacher
     if (!user) {
-      req.flash("message", "Incorrect Username")
+      req.flash("message", "This user does not exist")
       return res.redirect("/sign-in")
     }
 
