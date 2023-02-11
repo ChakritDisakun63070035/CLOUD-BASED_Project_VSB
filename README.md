@@ -3,8 +3,8 @@
 Learning Courses Web Application
 
 Teacher
-email : tom12@gmail.com
-password : Tom1234567
+email : 
+password : 
 
 Admin#1 
 email : ks@email.com
