@@ -3,8 +3,8 @@
 Learning Courses Web Application
 
 Teacher
-email : 
-password : 
+email :           
+password :          
 
 Admin#1 
 email : ks@email.com
