@@ -2,9 +2,13 @@
 
 Learning Courses Web Application
 
+Teacher
+email : tom12@gmail.com
+password : Tom1234567
+
 Admin#1 
-email: ks@email.com
-password: ks112211
+email : ks@email.com
+password : ks112211
 
 Admin#2
 email: ds@email.com
