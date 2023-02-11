@@ -2,14 +2,13 @@
 
 Learning Courses Web Application
          
-User:    email: test@gmail.com
-         password: test1234
+User
+email: test@gmail.com
+password: test1234
 
-Teacher:    email: teacher@gmail.com
-         password: teacher1234
-
-
-
+Teacher
+email: teacher@gmail.com
+password: teacher1234
 
 Admin#1 
 email : ks@email.com
