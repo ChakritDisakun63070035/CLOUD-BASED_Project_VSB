@@ -11,6 +11,8 @@
   <script src="/js/bootstrap.bundle.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
   <script src="https://unpkg.com/vue@2.2.6/dist/vue.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
 
 <body>
@@ -152,8 +154,129 @@
                   </div>
                 </div>
               </div>
+              <!-- Button trigger modal -->
+              <div class="row">
+              <button type="button" class="btn btn-primary w-50" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                {{count_student}} นักเรียนในคอร์สนี้
+              </button>
+              <div v-for="user in users">
+                <div v-if="user.role == 'student'">
+                  <button class="mb-3 bg-warning" style="border-radius: 10px; padding: 20px;" data-bs-toggle="modal" data-bs-target="#share_note">
+                    <i class="fa-solid fa-file-pdf"></i> Student Share Note</button>
+                </div>
+                <div class="modal fade" id="share_note" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <div class="modal-header">
+                       <h5 class="modal-title">Share Note</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                      </div>
+    
+                      <div class="modal-body">
+                        <form class="needs-validation" novalidate
+                          enctype="multipart/form-data">
+        
+                          <div class="file mb-3">
+                            <input 
+                              class="file-input"
+                              type="file" 
+                              id="pdf-file"  
+                              name="student_file" 
+                              @change="selectFile" 
+                              accept="application/pdf"  
+                            />
+                            
+                            <button @click="addStudentFile(info.course_id, user.user_id)" class="btn btn-warning">Upload</button>
+                             
+                          </div>
+
+                        </form>
+                      </div>
+                      <div class="modal-footer">
+                            
+                      </div>
+
+                      <div class="modal-header">
+                        <h5 class="modal-title" id="staticBackdropLabel">Note</h5>
+                      </div>
+
+                      <div class="modal-body" v-for="(student, index) in studentfile">
+                        <i class="fa-regular fa-file-pdf"></i>
+                        <a class="sets" style="text-decoration: none; color: black;" :href="'http://localhost:3000' + student.document_name.replace('\\', '/')" download> 
+                          Notes of {{student.user_fname}} {{student.user_lname}} </a>
+                        <img :src="student.image" class="img-fluid rounded-circle" width="40" height="40">
+                        <i 
+                          v-if="user.user_id == student.user_id" class="fas fa-trash-alt ml-3 sets"
+                          style="font-size: 20px; float: right; margin-right: 40px; margin-top: 10px;"
+                          data-bs-toggle="modal" data-bs-target="#delete_document_student"
+                          @click="modalDeleteDocument(student.document_id)"
+                          
+                        ></i> 
+                      </div>
+
+                      <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="modal fade" id="delete_document_student" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+                  aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                  <div class="modal-dialog" style="width: 450px; margin-top: 180px;">
+                    <div class="modal-content" style="border: #ffc107 2px solid; border-radius: 6px;">
+                      <center>
+                      <div class="modal-body">
+                        <h5 class="modal-title" style="margin-bottom: 30px;">Do you want to delete your document?</h5>
+                        
+                        <button
+                          class="btn btn-warning"
+                          style="margin-right: 20px;"
+                          @click="deleteDocument(info.course_id, deletedocument)"
+                        >
+                          Confirm
+                        </button>
+                        
+                        <button
+                          class="btn btn-secondary"
+                          data-bs-dismiss="modal"
+                          style="margin-left: 20px;"
+                        >
+                          Cancel
+                        </button>
+                      </div>
+                    </center>
+
+                    </div>
+                  </div>
+                 
+                </div>
+              </div>
             </div>
+            </div>
+            
             <div class="col-md-5 col-sm-12">
+              <button class="mb-3 bg-warning" style="border-radius: 10px; padding: 20px;" data-bs-toggle="modal" data-bs-target="#download_document">
+                Download Document</button>
+                <div class="modal fade" id="download_document" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+          aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="staticBackdropLabel">Course Documents</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <div class="modal-body" v-for="(doc, index) in document">
+              <i class="fa-regular fa-file-pdf"></i>
+              <a class="sets" style="text-decoration: none; color: black;" :href="'http://localhost:3000' + doc.document_name.replace('\\', '/')" download>
+                 Documents{{index + 1}} </a>
+            </div>
+           
+          </div>
+        </div>
+      </div>
               <div class="list-group">
                 <div class="list-group-item bg-secondary text-light" aria-current="true">
                   Course content
@@ -283,25 +406,122 @@
         </div>
       </div>
     </footer>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">นักเรียนในคอร์สนี้</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <div class="mt-3 row bg-light" style="border-radius: 10px;" v-for="(info, index) in student">
+              <div class="col-3 col-sm-3 col-md-2 text-center mt-2 mb-2"> <img :src="info.image" style="width:70px; height:70px; object-fit:cover;" /> </div>
+              <div class="col-9 col-sm-9 col-md-10 mt-2 position-relative">
+                <h5>  {{parseInt(index)+1}}. {{info.user_fname}} {{info.user_lname}}
+                  <span class="badge bg-success" v-if="info.role === 'student'">{{info.role}}</span>
+                  <span class="badge bg-warning" v-if="info.role === 'teacher'">{{info.role}}</span>
+                </h5>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </body>
 <script>
+  
   var app = new Vue({
     el: "#app",
     data: {
       data: JSON.parse(`<%- data %>`),
       users: JSON.parse(`<%- users %>`),
       video: JSON.parse(`<%- video %>`),
+      student: JSON.parse(`<%- student %>`),
       video_content: "",
       name_content: "",
+      document: "",
+      file: "",
+      studentfile: "",
+      deletedocument: null,
+      
     },
     methods: {
+      deleteDocument(courseId, documentId){
+        axios
+            .delete(`http://localhost:3000/deletedocument/${courseId}/${documentId}`)
+            .then((response) => {
+              console.log(response)
+              window.location.reload();
+            })
+            .catch((error) => {
+              console.log(error)
+            });
+      },
+      modalDeleteDocument(documentId) {
+        this.deletedocument = documentId;
+        console.log(documentId);
+      },
+      selectFile(event) {
+        this.file = event.target.files[0];
+      },
+      addStudentFile(courseID, userID){
+        const formData = new FormData();
+        formData.append("document", this.file);
+        axios
+          .post(`http://localhost:3000/adddocument/${courseID}/${userID}`, formData)
+          .then((response) => {
+            console.log(response)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
       learn(videos, index) {
         this.video_content = videos.path
         this.name_content = videos.course_name + ': Part ' + parseInt(index + 1)
       },
+      getDocumentForTeacher(courseID){
+        axios
+          .get(`http://localhost:3000/getdocumentteacher/${courseID}`)
+          .then((response) => {
+            this.document = response.data
+            console.log(response)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      getDocumentForStudent(courseID){
+        axios
+          .get(`http://localhost:3000/getdocumentstudent/${courseID}`)
+          .then((response) => {
+            this.studentfile = response.data
+            console.log(response)
+          })
+          .catch((error) => {
+            console.log(error)
+          })
+      },
+      
+    },
+    mounted() {
+     
+      var url = window.location.pathname;
+      var course_id = url.split('/')[2];
+      this.getDocumentForStudent(course_id)
+      this.getDocumentForTeacher(course_id)
+      
     }
   })
 </script>
+<style>.sets:hover{
+  color:#ffc107 !important;
+}</style>
+
 
 </html>
