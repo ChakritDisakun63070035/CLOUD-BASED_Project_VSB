@@ -773,6 +773,10 @@ router.get(
         "SELECT * FROM my_video join course using(course_id)  WHERE course_id=?; ",
         [req.params.id]
       );
+      const [student] = await conn.query(
+        "SELECT * FROM `user` join `order` using (user_id) join my_course using(order_id) join payment using(order_id) WHERE status_payment=? and course_id=?",
+        [1, req.params.id]
+      );
       if (rows3.length > 0) {
         return res.redirect(
           "/course/" + req.params.id + "/" + req.params.userid + "/learn"
@@ -785,6 +789,7 @@ router.get(
           check: JSON.stringify(rows3),
           cart: JSON.stringify(rows6),
           video: JSON.stringify(path_video),
+          student: JSON.stringify(student),
         });
       }
       // }
