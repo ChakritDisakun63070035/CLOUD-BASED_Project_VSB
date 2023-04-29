@@ -14,7 +14,7 @@ RUN npm ci
 COPY . .
 
 # Build the React application for production
-RUN npm run build
+# RUN npm run build
 
 # Use Nginx to serve the React application
 FROM nginx:1.21
