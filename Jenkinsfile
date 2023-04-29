@@ -21,6 +21,13 @@ pipeline {
                 sh 'npm install --force'
             }
         }
+        
+        stage('Build') {
+            steps {
+                echo 'Building...'
+                sh 'npm run build'
+            }
+        }
 
         stage('Deploy') {
             steps {
