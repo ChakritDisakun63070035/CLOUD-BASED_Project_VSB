@@ -1,14 +1,19 @@
-const mysql = require('mysql2/promise');
+const mysql = require('mysql');
 
-const pool = mysql.createPool({
-  host: 'localhost',
-  user: 'root',
-  port: 3307,
-  password: '087493765ผรื',
-  database: 'db',
+const db = mysql.createConnection({
+  host: 'vsb-db.cccarfojkixq.us-east-1.rds.amazonaws.com',
+  user: 'admin',
+  password: 'Vsb12345',
+  database: 'my_db',
   waitForConnections: true,
   connectionLimit: 10,
-  queueLimit: 0
+  queueLimit: 0,
 });
 
-module.exports = pool;
+db.connect((err) => {
+  if(err){
+    console.log(err.message)
+    return;
+  }
+  console.log("Database connected")
+});
