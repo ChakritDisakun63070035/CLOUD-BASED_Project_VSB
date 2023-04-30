@@ -1,6 +1,6 @@
 const mysql = require('mysql');
 
-const db = mysql.createConnection({
+const pool = mysql.createConnection({
   host: 'vsb-db.cccarfojkixq.us-east-1.rds.amazonaws.com',
   user: 'admin',
   password: 'Vsb12345',
@@ -10,7 +10,7 @@ const db = mysql.createConnection({
   queueLimit: 0,
 });
 
-db.connect((err) => {
+pool.connect((err) => {
   if(err){
     console.log(err.message)
     return;
